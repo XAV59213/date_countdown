@@ -1,7 +1,7 @@
 # Souvenirs et Célébrations
 
 <p align="center">
-  <img src="brand/logo.svg" alt="Souvenirs et Célébrations" width="640">
+  <img src="brand/logo.png" alt="Souvenirs et Célébrations" width="640">
 </p>
 
 **Souvenirs et Célébrations** (`date-countdown`) est une intégration personnalisée pour [Home Assistant](https://www.home-assistant.io) qui permet de suivre les jours restants avant des événements personnels : anniversaires, anniversaires de mariage, promotions, mémoriaux ou événements spéciaux.
@@ -9,7 +9,7 @@
 Entièrement configurable via l’interface graphique, aucun YAML requis. Les capteurs sont automatiquement créés pour vos dashboards Lovelace, automatisations, notifications ou alertes.
 
 <p align="center">
-  <img src="brand/icon.svg" alt="Icône" width="128">
+  <img src="brand/icon.png" alt="Icône" width="128">
 </p>
 
 <a href="https://www.buymeacoffee.com/xav59213"> <img src="https://img.buymeacoffee.com/button-api/?text=xav59213&emoji=&slug=xav59213&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" />
@@ -73,7 +73,7 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
 
 ---
 
-## 🛰️ Capteurs générés
+## 🜎 Capteurs générés
 
 Format :
 ```
@@ -172,8 +172,8 @@ logger:
 | `const.py`                             | Types, formats, intitulés, noces                |
 | `translations/fr.json`                 | Traduction en français                          |
 | `manifest.json`                        | Métadonnées HACS                                |
-| `brand/icon.svg`                       | Icône                                           |
-| `brand/logo.svg`                       | Logo                                            |
+| `brand/icon.png`                       | Icône HACS (512×512)                            |
+| `brand/logo.png`                       | Logo                                            |
 
 ---
 
