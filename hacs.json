@@ -2,6 +2,5 @@
   "name": "Souvenirs et Célébrations",
   "content_in_root": false,
   "homeassistant": "2024.6.0",
-  "hacs": "1.1.0",
   "render_readme": true
 }
