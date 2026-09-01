@@ -4,7 +4,7 @@
   <img src="brand/logo.png" alt="Souvenirs et Célébrations" width="640">
 </p>
 
-**Souvenirs et Célébrations** (`date-countdown`) est une intégration personnalisée pour [Home Assistant](https://www.home-assistant.io) qui permet de suivre les jours restants avant des événements personnels : anniversaires, anniversaires de mariage, promotions, mémoriaux ou événements spéciaux.
+**Souvenirs et Célébrations** (`date_countdown`) est une intégration personnalisée pour [Home Assistant](https://www.home-assistant.io) qui permet de suivre les jours restants avant des événements personnels : anniversaires, anniversaires de mariage, promotions, mémoriaux ou événements spéciaux.
 
 Entièrement configurable via l’interface graphique, aucun YAML requis. Les capteurs sont automatiquement créés pour vos dashboards Lovelace, automatisations, notifications ou alertes.
 
@@ -47,7 +47,7 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
 2. Cliquez sur **⋮ > Dépôt personnalisé**
 3. Ajoutez ce dépôt :
    ```
-   https://github.com/XAV59213/date-countdown
+   https://github.com/XAV59213/date_countdown
    ```
    Type : **Intégration**
 4. Installez **Souvenirs et Célébrations**
@@ -73,7 +73,7 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
 
 ---
 
-## 🜎 Capteurs générés
+## 🐞 Capteurs générés
 
 Format :
 ```
@@ -181,11 +181,11 @@ logger:
 
 - Auteur : [@XAV59213](https://github.com/XAV59213)
 - Licence : [MIT](LICENSE)
-- Dépôt : [https://github.com/XAV59213/date-countdown](https://github.com/XAV59213/date-countdown)
+- Dépôt : [https://github.com/XAV59213/date_countdown](https://github.com/XAV59213/date_countdown)
 
 ---
 
 ## 📢 Support
 
 💬 Pour toute question, bug ou suggestion :
-➡️ [Créer une issue sur GitHub](https://github.com/XAV59213/date-countdown/issues)
+➡️ [Créer une issue sur GitHub](https://github.com/XAV59213/date_countdown/issues)
