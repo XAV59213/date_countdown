@@ -26,9 +26,6 @@
       "invalid_date_format": "Format de date invalide. Utilisez JJ/MM/AAAA.",
       "invalid_memorial_date": "Date de décès invalide. Utilisez JJ/MM/AAAA.",
       "creation_failed": "Impossible de créer l'entrée."
-    },
-    "abort": {
-      "already_configured": "Cette intégration est déjà configurée."
     }
   }
 }
