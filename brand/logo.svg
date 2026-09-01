@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="320" viewBox="0 0 1024 320" role="img" aria-label="Souvenirs et Célébrations">
+  <rect width="1024" height="320" rx="28" fill="#FFF8EC"/>
+  <g transform="translate(36,36)">
+    <rect width="248" height="248" rx="52" fill="#F7E3B4"/>
+    <g transform="translate(46,28)">
+      <rect x="8" y="28" width="140" height="128" rx="16" fill="#F8E7B8" stroke="#C9941A" stroke-width="6"/>
+      <rect x="8" y="28" width="140" height="36" rx="16" fill="#E0B03A"/>
+      <rect x="8" y="48" width="140" height="16" fill="#E0B03A"/>
+      <rect x="36" y="18" width="10" height="28" rx="5" fill="#8A6A12"/>
+      <rect x="110" y="18" width="10" height="28" rx="5" fill="#8A6A12"/>
+      <g fill="#E8C56A">
+        <rect x="28" y="78" width="16" height="16" rx="3"/>
+        <rect x="52" y="78" width="16" height="16" rx="3"/>
+        <rect x="76" y="78" width="16" height="16" rx="3"/>
+        <rect x="100" y="78" width="16" height="16" rx="3"/>
+        <rect x="28" y="102" width="16" height="16" rx="3"/>
+        <rect x="52" y="102" width="16" height="16" rx="3"/>
+        <rect x="76" y="102" width="16" height="16" rx="3"/>
+        <rect x="100" y="102" width="16" height="16" rx="3"/>
+      </g>
+    </g>
+    <path d="M168 148c-16-18-44-10-44 12 0 28 44 50 44 50s44-22 44-50c0-22-28-30-44-12z" fill="#7A1F32"/>
+  </g>
+  <text x="320" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="#7A1F32">Souvenirs</text>
+  <text x="320" y="214" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-style="italic" fill="#C9941A">et Célébrations</text>
+  <line x1="320" y1="236" x2="720" y2="236" stroke="#E0B03A" stroke-width="2"/>
+  <text x="320" y="268" font-family="Arial, Helvetica, sans-serif" font-size="16" letter-spacing="3" fill="#8A6A12">HOME ASSISTANT · HACS</text>
+</svg>

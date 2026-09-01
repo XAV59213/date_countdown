@@ -1,10 +1,18 @@
-# 📆 Date Countdown
+# Souvenirs et Célébrations
 
-**Date Countdown** est une intégration personnalisée pour [Home Assistant](https://www.home-assistant.io) qui permet de suivre les jours restants avant des événements personnels tels que : anniversaires, anniversaires de mariage, promotions, mémoriaux ou événements spéciaux.
+<p align="center">
+  <img src="brand/logo.svg" alt="Souvenirs et Célébrations" width="640">
+</p>
 
-Entièrement configurable via l’interface graphique, aucun YAML requis. Les capteurs sont automatiquement créés pour une utilisation dans vos dashboards Lovelace, automatisations, notifications ou alertes.
+**Souvenirs et Célébrations** (`date-countdown`) est une intégration personnalisée pour [Home Assistant](https://www.home-assistant.io) qui permet de suivre les jours restants avant des événements personnels : anniversaires, anniversaires de mariage, promotions, mémoriaux ou événements spéciaux.
 
-<a href="https://www.buymeacoffee.com/xav59213"> <img src="https://img.buymeacoffee.com/button-api/?text=xav59213&emoji=&slug=xav59213&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /> 
+Entièrement configurable via l’interface graphique, aucun YAML requis. Les capteurs sont automatiquement créés pour vos dashboards Lovelace, automatisations, notifications ou alertes.
+
+<p align="center">
+  <img src="brand/icon.svg" alt="Icône" width="128">
+</p>
+
+<a href="https://www.buymeacoffee.com/xav59213"> <img src="https://img.buymeacoffee.com/button-api/?text=xav59213&emoji=&slug=xav59213&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" />
 
 ---
 
@@ -39,13 +47,13 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
 2. Cliquez sur **⋮ > Dépôt personnalisé**
 3. Ajoutez ce dépôt :
    ```
-   https://github.com/XAV59213/date_countdown
+   https://github.com/XAV59213/date-countdown
    ```
    Type : **Intégration**
-4. Installez **Date Countdown**
+4. Installez **Souvenirs et Célébrations**
 5. Redémarrez Home Assistant
 6. Allez dans **Paramètres > Appareils & Services > Ajouter une intégration**
-7. Recherchez **Date Countdown**
+7. Recherchez **Souvenirs et Célébrations** ou **Date Countdown**
 
 ---
 
@@ -55,7 +63,7 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
 
 - Type : sélectionnez parmi les 5 types disponibles
 - Nom (obligatoire), Prénom (optionnel)
-- Date : `JJ/MM/AAAA`  
+- Date : `JJ/MM/AAAA`
 - Pour les mémoriaux : date de décès (optionnelle)
 
 ### 🔁 Modifier ou supprimer
@@ -67,7 +75,7 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
 
 ## 🛰️ Capteurs générés
 
-Format :  
+Format :
 ```
 sensor.<type>_<nom>_<date>
 ```
@@ -164,6 +172,8 @@ logger:
 | `const.py`                             | Types, formats, intitulés, noces                |
 | `translations/fr.json`                 | Traduction en français                          |
 | `manifest.json`                        | Métadonnées HACS                                |
+| `brand/icon.svg`                       | Icône                                           |
+| `brand/logo.svg`                       | Logo                                            |
 
 ---
 
@@ -171,12 +181,11 @@ logger:
 
 - Auteur : [@XAV59213](https://github.com/XAV59213)
 - Licence : [MIT](LICENSE)
-- Dépôt : [https://github.com/XAV59213/date_countdown](https://github.com/XAV59213/date_countdown)
+- Dépôt : [https://github.com/XAV59213/date-countdown](https://github.com/XAV59213/date-countdown)
 
 ---
 
 ## 📢 Support
 
-💬 Pour toute question, bug ou suggestion :  
-➡️ [Créer une issue sur GitHub](https://github.com/XAV59213/date_countdown/issues)
-
+💬 Pour toute question, bug ou suggestion :
+➡️ [Créer une issue sur GitHub](https://github.com/XAV59213/date-countdown/issues)
