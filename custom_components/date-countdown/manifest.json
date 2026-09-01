@@ -1,10 +1,12 @@
 {
   "domain": "date_countdown",
   "name": "Souvenirs et Célébrations",
-  "version": "1.1.4",
-  "documentation": "https://github.com/XAV59213/date_countdown",
-  "requirements": [],
   "codeowners": ["@XAV59213"],
+  "config_flow": true,
+  "documentation": "https://github.com/XAV59213/date-countdown",
+  "integration_type": "hub",
   "iot_class": "local_polling",
-  "config_flow": true
+  "issue_tracker": "https://github.com/XAV59213/date-countdown/issues",
+  "requirements": [],
+  "version": "1.2.8"
 }
