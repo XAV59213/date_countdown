@@ -1,4 +1,4 @@
-"""Custom component for Date Countdown in Home Assistant."""
+"""Custom component Souvenirs et Célébrations for Home Assistant."""
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -10,12 +10,12 @@ CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up the Date Countdown component."""
+    """Set up the component."""
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Date Countdown from a config entry."""
+    """Set up from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(async_update_entry))

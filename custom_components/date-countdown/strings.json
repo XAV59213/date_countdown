@@ -1,0 +1,31 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Souvenirs et Célébrations",
+        "description": "Sélectionnez le type d'événement à configurer.",
+        "data": {
+          "type": "Type d'événement"
+        }
+      },
+      "event_details": {
+        "title": "Détails de l'événement",
+        "description": "Ajoutez les détails de l'événement (dates au format JJ/MM/AAAA).",
+        "data": {
+          "name": "Nom",
+          "first_name": "Prénom (optionnel)",
+          "date": "Date",
+          "death_date": "Date de décès (optionnel)",
+          "start_date": "Date de début du travail",
+          "is_penible": "Travaux pénibles",
+          "career_type": "Type de carrière"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Format de date invalide. Utilisez JJ/MM/AAAA.",
+      "invalid_memorial_date": "Date de décès invalide. Utilisez JJ/MM/AAAA.",
+      "creation_failed": "Impossible de créer l'entrée."
+    }
+  }
+}
