@@ -16,3 +16,10 @@ jobs:
       - uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
+
+  zip:
+    name: Zip HACS
+    needs: release
+    uses: ./.github/workflows/release-zip.yaml
+    with:
+      tag: ${{ github.ref_name }}
