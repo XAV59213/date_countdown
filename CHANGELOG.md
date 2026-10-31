@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié — 1.2.13
+## 1.2.13 — 2026-10-31
 
 ### Ajouté
 - Carte Lovelace native **« Informations » 🎂** (`custom:date-countdown-informations-card`), servie et enregistrée automatiquement par l'intégration (aucune ressource manuelle).
