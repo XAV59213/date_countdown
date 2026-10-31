@@ -1,0 +1,73 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Memories and Celebrations",
+        "description": "Select the type of event to configure.",
+        "data": {
+          "type": "Event type"
+        }
+      },
+      "event_details": {
+        "title": "Event details",
+        "description": "Enter the event details (dates in DD/MM/YYYY format).",
+        "data": {
+          "name": "Name of the event or person",
+          "first_name": "First name (optional)",
+          "date": "Date of birth (for memorial) or date (other types)",
+          "type": "Event type",
+          "death_date": "Date of death (optional, for memorial)",
+          "start_date": "Work start date (for retirement)",
+          "is_penible": "Arduous work (reduces the years required for the medal)",
+          "career_type": "Career type"
+        }
+      },
+      "init": {
+        "description": "Select the action to edit an event",
+        "data": {
+          "action": "Action"
+        }
+      },
+      "select_event": {
+        "description": "Select an event to edit from the list below.",
+        "data": {
+          "event": "Event"
+        }
+      },
+      "edit_event_type": {
+        "description": "Select the type of event to edit.",
+        "data": {
+          "type": "Event type"
+        }
+      },
+      "edit_event": {
+        "description": "Edit the event details (dates in DD/MM/YYYY format).",
+        "data": {
+          "name": "Name of the event or person",
+          "first_name": "First name (optional)",
+          "date": "Date of birth (for memorial) or date (other types)",
+          "type": "Event type",
+          "death_date": "Date of death (optional, for memorial)",
+          "start_date": "Work start date (for retirement)",
+          "is_penible": "Arduous work (reduces the years required for the medal)",
+          "career_type": "Career type"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Invalid date format. Use DD/MM/YYYY (for example, 01/06/1980).",
+      "no_events": "No event configured. Please create an event first through the initial setup.",
+      "event_required": "Please select an event to edit from the drop-down list.",
+      "invalid_action": "Invalid action. Please select 'Edit'.",
+      "update_failed": "Failed to update the event. Check the logs for more details.",
+      "invalid_memorial_date": "Invalid date of death for the memorial event. Use DD/MM/YYYY with a valid date (for example, 08/01/2018).",
+      "config_entry_not_found": "Configuration entry not found. Please reinstall the integration.",
+      "creation_failed": "Unable to create the entry."
+    },
+    "options": {
+      "action": {
+        "edit": "Edit an event"
+      }
+    }
+  }
+}
