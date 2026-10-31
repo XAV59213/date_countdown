@@ -7,6 +7,13 @@ _LOGGER = logging.getLogger(__name__)
 DOMAIN = "date_countdown"
 PLATFORMS = ["sensor", "calendar"]
 DATE_FORMAT = "DD/MM/YYYY"
+
+# Carte Lovelace native (servie par l'intégration)
+URL_BASE = "/date_countdown"
+CARD_FILENAME = "date-countdown-card.js"
+STATIC_CARD_PATH = f"{URL_BASE}/{CARD_FILENAME}"
+VERSION = "1.2.13"  # aligné sur manifest.json (cache ?v=)
+
 EVENT_TYPES = ["birthday", "anniversary", "memorial", "promotion", "special_event", "retirement"]
 
 # Catégories d'âge pour les anniversaires, une pour chaque âge de 0 à 120 ans
