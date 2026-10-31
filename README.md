@@ -219,7 +219,7 @@ logger:
 ## 👨‍💻 Crédits
 
 - Auteur : [@XAV59213](https://github.com/XAV59213)
-- Licence : [MIT](LICENSE)
+- Licence : [MIT](https://github.com/XAV59213/date_countdown/blob/main/LICENSE)
 - Dépôt : [https://github.com/XAV59213/date_countdown](https://github.com/XAV59213/date_countdown)
 
 ---
