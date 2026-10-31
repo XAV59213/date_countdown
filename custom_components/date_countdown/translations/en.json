@@ -63,9 +63,11 @@
       "invalid_memorial_date": "Invalid date of death for the memorial event. Use DD/MM/YYYY with a valid date (for example, 08/01/2018).",
       "config_entry_not_found": "Configuration entry not found. Please reinstall the integration.",
       "creation_failed": "Unable to create the entry."
-    },
-    "options": {
-      "action": {
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
         "edit": "Edit an event"
       }
     }

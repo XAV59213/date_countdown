@@ -60,9 +60,11 @@
       "update_failed": "Échec de la mise à jour de l'événement. Vérifiez les logs pour plus de détails.",
       "invalid_memorial_date": "Date de décès invalide pour l'événement mémorial. Utilisez JJ/MM/AAAA avec une date valide (par exemple, 08/01/2018).",
       "config_entry_not_found": "Entrée de configuration introuvable. Veuillez réinstaller l'intégration."
-    },
-    "options": {
-      "action": {
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
         "edit": "Modifier un événement"
       }
     }
