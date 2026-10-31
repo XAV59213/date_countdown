@@ -100,6 +100,34 @@ sensor.memorial_jean_01011950:
 
 ---
 
+## 🎂 Carte Lovelace
+
+L'intégration fournit sa propre carte **« Informations »**, chargée automatiquement (aucune ressource à ajouter, rien à copier dans `www`).
+
+**Ajout via l'interface** : Tableau de bord → ✏️ Modifier → **Ajouter une carte** → chercher **« Souvenirs et Célébrations — Informations »**. L'éditeur permet de régler le titre, de choisir les capteurs d'événements (vide = tous les anniversaires détectés) et les options d'affichage.
+
+Exemple de rendu :
+
+> **Informations** 🎂
+> Aujourd'hui, pas d'anniversaire.
+> Le prochain anniversaire est dans 54 jours
+> Océane aura 25 ans
+> et sera un(e) Super-Héros des To-Do Lists !
+
+**YAML** :
+
+```yaml
+type: custom:date-countdown-informations-card
+title: Informations
+entities:            # facultatif
+  - sensor.anniversaire_oceane
+show_icon: true
+show_category: true
+show_upcoming: true
+```
+
+> Si la carte n'apparaît pas après une mise à jour, vider le cache du navigateur. En dernier recours, ajouter manuellement la ressource `/date_countdown/date-countdown-card.js` (module JavaScript).
+
 ## 🖼️ Exemple Lovelace (mémoriaux à venir)
 
 ```yaml

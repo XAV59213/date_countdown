@@ -1,0 +1,9 @@
+# Carte « Informations » 🎂 (livrée avec l'intégration, aucune ressource à ajouter)
+type: custom:date-countdown-informations-card
+title: Informations
+# Facultatif : sans "entities", tous les anniversaires sont détectés automatiquement
+entities:
+  - sensor.anniversaire_oceane
+show_icon: true
+show_category: true
+show_upcoming: true
