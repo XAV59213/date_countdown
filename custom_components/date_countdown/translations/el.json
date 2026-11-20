@@ -209,7 +209,84 @@
       },
       "retirement": {
         "name": "{person} - Συνταξιοδότηση"
+      },
+      "days_remaining": {
+        "name": "Ημέρες που απομένουν"
+      },
+      "next_date": {
+        "name": "Επόμενη ημερομηνία"
+      },
+      "age": {
+        "name": "Ηλικία",
+        "unit_of_measurement": "έτη"
+      },
+      "next_age": {
+        "name": "Ηλικία στα επόμενα γενέθλια",
+        "unit_of_measurement": "έτη"
+      },
+      "age_category": {
+        "name": "Κατηγορία ηλικίας"
+      },
+      "wedding": {
+        "name": "Όνομα επετείου γάμου"
+      },
+      "years_elapsed": {
+        "name": "Χρόνια που πέρασαν",
+        "unit_of_measurement": "έτη"
+      },
+      "age_if_alive": {
+        "name": "Ηλικία αν ζούσε",
+        "unit_of_measurement": "έτη"
+      },
+      "years_since_death": {
+        "name": "Χρόνια από τον θάνατο",
+        "unit_of_measurement": "έτη"
+      },
+      "death_anniversary_days": {
+        "name": "Ημέρες έως την επέτειο θανάτου"
+      },
+      "retirement_date": {
+        "name": "Ημερομηνία συνταξιοδότησης"
+      },
+      "years_worked": {
+        "name": "Χρόνια εργασίας",
+        "unit_of_measurement": "έτη"
+      },
+      "work_medal": {
+        "name": "Μετάλλιο εργασίας",
+        "state": {
+          "none": "Κανένα",
+          "silver": "Ασημένιο",
+          "vermeil": "Vermeil",
+          "gold": "Χρυσό",
+          "grand_gold": "Μεγάλο χρυσό"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Σήμερα (η μεγάλη μέρα)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Γενέθλια"
+    },
+    "anniversary": {
+      "name": "{person} - Επέτειος γάμου"
+    },
+    "memorial": {
+      "name": "{person} - Μνημόσυνο"
+    },
+    "promotion": {
+      "name": "{person} - Προαγωγή"
+    },
+    "special_event": {
+      "name": "{person} - Ειδική εκδήλωση"
+    },
+    "retirement": {
+      "name": "{person} - Συνταξιοδότηση"
     }
   }
 }

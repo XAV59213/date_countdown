@@ -209,7 +209,84 @@
       },
       "retirement": {
         "name": "{person} - Pension"
+      },
+      "days_remaining": {
+        "name": "Återstående dagar"
+      },
+      "next_date": {
+        "name": "Nästa datum"
+      },
+      "age": {
+        "name": "Ålder",
+        "unit_of_measurement": "år"
+      },
+      "next_age": {
+        "name": "Ålder vid nästa födelsedag",
+        "unit_of_measurement": "år"
+      },
+      "age_category": {
+        "name": "Ålderskategori"
+      },
+      "wedding": {
+        "name": "Bröllopsdagens namn"
+      },
+      "years_elapsed": {
+        "name": "Förflutna år",
+        "unit_of_measurement": "år"
+      },
+      "age_if_alive": {
+        "name": "Ålder om vid liv",
+        "unit_of_measurement": "år"
+      },
+      "years_since_death": {
+        "name": "År sedan bortgången",
+        "unit_of_measurement": "år"
+      },
+      "death_anniversary_days": {
+        "name": "Dagar till dödsdagen"
+      },
+      "retirement_date": {
+        "name": "Pensionsdatum"
+      },
+      "years_worked": {
+        "name": "Arbetade år",
+        "unit_of_measurement": "år"
+      },
+      "work_medal": {
+        "name": "Arbetsmedalj",
+        "state": {
+          "none": "Ingen",
+          "silver": "Silver",
+          "vermeil": "Vermeil",
+          "gold": "Guld",
+          "grand_gold": "Storguld"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Idag (den stora dagen)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Födelsedag"
+    },
+    "anniversary": {
+      "name": "{person} - Bröllopsdag"
+    },
+    "memorial": {
+      "name": "{person} - Minnesdag"
+    },
+    "promotion": {
+      "name": "{person} - Befordran"
+    },
+    "special_event": {
+      "name": "{person} - Särskild händelse"
+    },
+    "retirement": {
+      "name": "{person} - Pension"
     }
   }
 }

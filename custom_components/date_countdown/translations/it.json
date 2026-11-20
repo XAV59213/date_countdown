@@ -209,7 +209,84 @@
       },
       "retirement": {
         "name": "{person} - Pensione"
+      },
+      "days_remaining": {
+        "name": "Giorni rimanenti"
+      },
+      "next_date": {
+        "name": "Prossima data"
+      },
+      "age": {
+        "name": "Età",
+        "unit_of_measurement": "anni"
+      },
+      "next_age": {
+        "name": "Età al prossimo compleanno",
+        "unit_of_measurement": "anni"
+      },
+      "age_category": {
+        "name": "Categoria d'età"
+      },
+      "wedding": {
+        "name": "Nozze"
+      },
+      "years_elapsed": {
+        "name": "Anni trascorsi",
+        "unit_of_measurement": "anni"
+      },
+      "age_if_alive": {
+        "name": "Età se in vita",
+        "unit_of_measurement": "anni"
+      },
+      "years_since_death": {
+        "name": "Anni dalla scomparsa",
+        "unit_of_measurement": "anni"
+      },
+      "death_anniversary_days": {
+        "name": "Giorni all'anniversario della scomparsa"
+      },
+      "retirement_date": {
+        "name": "Data di pensionamento"
+      },
+      "years_worked": {
+        "name": "Anni lavorati",
+        "unit_of_measurement": "anni"
+      },
+      "work_medal": {
+        "name": "Medaglia del lavoro",
+        "state": {
+          "none": "Nessuna",
+          "silver": "Argento",
+          "vermeil": "Vermeil",
+          "gold": "Oro",
+          "grand_gold": "Grande Oro"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Oggi (giorno X)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Compleanno"
+    },
+    "anniversary": {
+      "name": "{person} - Anniversario di matrimonio"
+    },
+    "memorial": {
+      "name": "{person} - Commemorazione"
+    },
+    "promotion": {
+      "name": "{person} - Promozione"
+    },
+    "special_event": {
+      "name": "{person} - Evento speciale"
+    },
+    "retirement": {
+      "name": "{person} - Pensione"
     }
   }
 }

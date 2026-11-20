@@ -209,7 +209,84 @@
       },
       "retirement": {
         "name": "{person} - Ruhestand"
+      },
+      "days_remaining": {
+        "name": "Verbleibende Tage"
+      },
+      "next_date": {
+        "name": "Nächstes Datum"
+      },
+      "age": {
+        "name": "Alter",
+        "unit_of_measurement": "Jahre"
+      },
+      "next_age": {
+        "name": "Alter am nächsten Geburtstag",
+        "unit_of_measurement": "Jahre"
+      },
+      "age_category": {
+        "name": "Alterskategorie"
+      },
+      "wedding": {
+        "name": "Hochzeitsjubiläum"
+      },
+      "years_elapsed": {
+        "name": "Vergangene Jahre",
+        "unit_of_measurement": "Jahre"
+      },
+      "age_if_alive": {
+        "name": "Alter, wenn noch am Leben",
+        "unit_of_measurement": "Jahre"
+      },
+      "years_since_death": {
+        "name": "Jahre seit dem Tod",
+        "unit_of_measurement": "Jahre"
+      },
+      "death_anniversary_days": {
+        "name": "Tage bis zum Todestag"
+      },
+      "retirement_date": {
+        "name": "Ruhestandsdatum"
+      },
+      "years_worked": {
+        "name": "Gearbeitete Jahre",
+        "unit_of_measurement": "Jahre"
+      },
+      "work_medal": {
+        "name": "Arbeitsmedaille",
+        "state": {
+          "none": "Keine",
+          "silver": "Silber",
+          "vermeil": "Vermeil",
+          "gold": "Gold",
+          "grand_gold": "Großgold"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Heute (Tag X)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Geburtstag"
+    },
+    "anniversary": {
+      "name": "{person} - Hochzeitstag"
+    },
+    "memorial": {
+      "name": "{person} - Gedenktag"
+    },
+    "promotion": {
+      "name": "{person} - Beförderung"
+    },
+    "special_event": {
+      "name": "{person} - Besonderes Ereignis"
+    },
+    "retirement": {
+      "name": "{person} - Ruhestand"
     }
   }
 }

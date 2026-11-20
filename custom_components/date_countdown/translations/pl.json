@@ -209,7 +209,84 @@
       },
       "retirement": {
         "name": "{person} - Emerytura"
+      },
+      "days_remaining": {
+        "name": "Pozostałe dni"
+      },
+      "next_date": {
+        "name": "Następna data"
+      },
+      "age": {
+        "name": "Wiek",
+        "unit_of_measurement": "lat"
+      },
+      "next_age": {
+        "name": "Wiek w następne urodziny",
+        "unit_of_measurement": "lat"
+      },
+      "age_category": {
+        "name": "Kategoria wiekowa"
+      },
+      "wedding": {
+        "name": "Nazwa rocznicy ślubu"
+      },
+      "years_elapsed": {
+        "name": "Minione lata",
+        "unit_of_measurement": "lat"
+      },
+      "age_if_alive": {
+        "name": "Wiek, gdyby żył(a)",
+        "unit_of_measurement": "lat"
+      },
+      "years_since_death": {
+        "name": "Lata od śmierci",
+        "unit_of_measurement": "lat"
+      },
+      "death_anniversary_days": {
+        "name": "Dni do rocznicy śmierci"
+      },
+      "retirement_date": {
+        "name": "Data przejścia na emeryturę"
+      },
+      "years_worked": {
+        "name": "Przepracowane lata",
+        "unit_of_measurement": "lat"
+      },
+      "work_medal": {
+        "name": "Medal za pracę",
+        "state": {
+          "none": "Brak",
+          "silver": "Srebrny",
+          "vermeil": "Vermeil",
+          "gold": "Złoty",
+          "grand_gold": "Wielki Złoty"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Dziś (wielki dzień)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Urodziny"
+    },
+    "anniversary": {
+      "name": "{person} - Rocznica ślubu"
+    },
+    "memorial": {
+      "name": "{person} - Upamiętnienie"
+    },
+    "promotion": {
+      "name": "{person} - Awans"
+    },
+    "special_event": {
+      "name": "{person} - Wydarzenie specjalne"
+    },
+    "retirement": {
+      "name": "{person} - Emerytura"
     }
   }
 }

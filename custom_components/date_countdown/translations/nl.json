@@ -209,7 +209,84 @@
       },
       "retirement": {
         "name": "{person} - Pensioen"
+      },
+      "days_remaining": {
+        "name": "Resterende dagen"
+      },
+      "next_date": {
+        "name": "Volgende datum"
+      },
+      "age": {
+        "name": "Leeftijd",
+        "unit_of_measurement": "jaar"
+      },
+      "next_age": {
+        "name": "Leeftijd op volgende verjaardag",
+        "unit_of_measurement": "jaar"
+      },
+      "age_category": {
+        "name": "Leeftijdscategorie"
+      },
+      "wedding": {
+        "name": "Huwelijksjubileum"
+      },
+      "years_elapsed": {
+        "name": "Verstreken jaren",
+        "unit_of_measurement": "jaar"
+      },
+      "age_if_alive": {
+        "name": "Leeftijd indien in leven",
+        "unit_of_measurement": "jaar"
+      },
+      "years_since_death": {
+        "name": "Jaren sinds overlijden",
+        "unit_of_measurement": "jaar"
+      },
+      "death_anniversary_days": {
+        "name": "Dagen tot sterfdag"
+      },
+      "retirement_date": {
+        "name": "Pensioendatum"
+      },
+      "years_worked": {
+        "name": "Gewerkte jaren",
+        "unit_of_measurement": "jaar"
+      },
+      "work_medal": {
+        "name": "Arbeidsmedaille",
+        "state": {
+          "none": "Geen",
+          "silver": "Zilver",
+          "vermeil": "Vermeil",
+          "gold": "Goud",
+          "grand_gold": "Groot Goud"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Vandaag (de grote dag)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Verjaardag"
+    },
+    "anniversary": {
+      "name": "{person} - Trouwdag"
+    },
+    "memorial": {
+      "name": "{person} - Herdenking"
+    },
+    "promotion": {
+      "name": "{person} - Promotie"
+    },
+    "special_event": {
+      "name": "{person} - Speciale gebeurtenis"
+    },
+    "retirement": {
+      "name": "{person} - Pensioen"
     }
   }
 }
