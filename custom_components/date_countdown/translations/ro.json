@@ -19,7 +19,8 @@
           "death_date": "Data decesului (opțional, pentru comemorare)",
           "start_date": "Data începerii activității (pentru pensionare)",
           "is_penible": "Muncă în condiții grele (reduce anii necesari pentru medalie)",
-          "career_type": "Tip de carieră"
+          "career_type": "Tip de carieră",
+          "gender": "Gen (pentru acordul textelor)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Data decesului (opțional, pentru comemorare)",
           "start_date": "Data începerii activității (pentru pensionare)",
           "is_penible": "Muncă în condiții grele (reduce anii necesari pentru medalie)",
-          "career_type": "Tip de carieră"
+          "career_type": "Tip de carieră",
+          "gender": "Gen (pentru acordul textelor)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Modificați un eveniment",
         "notifications": "Configurați notificările 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Nespecificat",
+        "male": "Bărbat",
+        "female": "Femeie"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Zi de naștere",
+        "anniversary": "Aniversare de căsătorie",
+        "memorial": "Comemorare",
+        "promotion": "Promovare",
+        "special_event": "Eveniment special",
+        "retirement": "Pensionare"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Carieră normală (început după 18 ani)",
+        "longue": "Carieră lungă (început înainte de 18 ani)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Data decesului (opțional, pentru comemorare)",
           "start_date": "Data începerii activității (pentru pensionare)",
           "is_penible": "Muncă în condiții grele (reduce anii necesari pentru medalie)",
-          "career_type": "Tip de carieră"
+          "career_type": "Tip de carieră",
+          "gender": "Gen (pentru acordul textelor)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Destinatarii notificărilor (servicii notify.*)",
           "time": "Ora de trimitere",
           "reminder_days": "Memento cu N zile înainte (0 = dezactivat)",
-          "persistent": "Creați și o notificare persistentă Home Assistant"
+          "persistent": "Creați și o notificare persistentă Home Assistant",
+          "entities": "Entități de notificare (notify.send_message)",
+          "death_anniversary": "Memento pentru aniversarea decesului (comemorări)"
         },
         "data_description": {
           "targets": "Unul sau mai multe servicii notify.* (de ex. notify.mobile_app_telefonul_meu). Puteți introduce și un nume manual.",
           "time": "Implicit 09:00. Dacă Home Assistant repornește după această oră în ziua evenimentului, notificarea este trimisă o singură dată la pornire.",
           "reminder_days": "Exemplu: 7 pentru a fi anunțat cu o săptămână înainte. 0 dezactivează mementoul.",
-          "persistent": "Afișează mesajul și în notificările Home Assistant."
+          "persistent": "Afișează mesajul și în notificările Home Assistant.",
+          "entities": "Entități notify moderne (ex. notify.telefonul_meu), trimise prin notify.send_message. Se pot combina cu serviciile de mai sus.",
+          "death_anniversary": "Trimite și o notificare separată la aniversarea datei decesului (și mementoul cu N zile înainte, dacă este setat)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Senzorul {entity_id} nu aparține integrării Amintiri și Sărbători."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Zi de naștere"
+      },
+      "anniversary": {
+        "name": "{person} - Aniversare de căsătorie"
+      },
+      "memorial": {
+        "name": "{person} - Comemorare"
+      },
+      "promotion": {
+        "name": "{person} - Promovare"
+      },
+      "special_event": {
+        "name": "{person} - Eveniment special"
+      },
+      "retirement": {
+        "name": "{person} - Pensionare"
+      }
     }
   }
 }

@@ -19,7 +19,8 @@
           "death_date": "Dødsdato (valgfrit, for mindedag)",
           "start_date": "Startdato for arbejde (for pension)",
           "is_penible": "Hårdt arbejde (reducerer antallet af år, der kræves til medaljen)",
-          "career_type": "Karrieretype"
+          "career_type": "Karrieretype",
+          "gender": "Køn (til bøjning af tekster)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Dødsdato (valgfrit, for mindedag)",
           "start_date": "Startdato for arbejde (for pension)",
           "is_penible": "Hårdt arbejde (reducerer antallet af år, der kræves til medaljen)",
-          "career_type": "Karrieretype"
+          "career_type": "Karrieretype",
+          "gender": "Køn (til bøjning af tekster)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Rediger en begivenhed",
         "notifications": "Konfigurer notifikationer 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Ikke angivet",
+        "male": "Mand",
+        "female": "Kvinde"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Fødselsdag",
+        "anniversary": "Bryllupsdag",
+        "memorial": "Mindedag",
+        "promotion": "Forfremmelse",
+        "special_event": "Særlig begivenhed",
+        "retirement": "Pension"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Normal karriere (start efter 18)",
+        "longue": "Lang karriere (start før 18)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Dødsdato (valgfrit, for mindedag)",
           "start_date": "Startdato for arbejde (for pension)",
           "is_penible": "Hårdt arbejde (reducerer antallet af år, der kræves til medaljen)",
-          "career_type": "Karrieretype"
+          "career_type": "Karrieretype",
+          "gender": "Køn (til bøjning af tekster)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Notifikationsmål (notify.*-tjenester)",
           "time": "Afsendelsestidspunkt",
           "reminder_days": "Påmindelse N dage før (0 = deaktiveret)",
-          "persistent": "Opret også en vedvarende notifikation i Home Assistant"
+          "persistent": "Opret også en vedvarende notifikation i Home Assistant",
+          "entities": "Notifikationsentiteter (notify.send_message)",
+          "death_anniversary": "Påmindelse om dødsdagen (mindedage)"
         },
         "data_description": {
           "targets": "En eller flere notify.*-tjenester (f.eks. notify.mobile_app_min_telefon). Du kan også indtaste et navn.",
           "time": "Standard 09:00. Hvis Home Assistant genstartes efter dette tidspunkt på dagen for begivenheden, sendes notifikationen én gang ved opstart.",
           "reminder_days": "Eksempel: 7 for at blive påmindet en uge før. 0 deaktiverer påmindelsen.",
-          "persistent": "Viser også beskeden i Home Assistants notifikationer."
+          "persistent": "Viser også beskeden i Home Assistants notifikationer.",
+          "entities": "Moderne notify-entiteter (f.eks. notify.min_telefon), sendt med notify.send_message. Kan kombineres med tjenesterne ovenfor.",
+          "death_anniversary": "Sender også en separat notifikation på årsdagen for dødsdatoen (og påmindelsen N dage før, hvis indstillet)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Sensoren {entity_id} tilhører ikke Minder og Fejringer."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Fødselsdag"
+      },
+      "anniversary": {
+        "name": "{person} - Bryllupsdag"
+      },
+      "memorial": {
+        "name": "{person} - Mindedag"
+      },
+      "promotion": {
+        "name": "{person} - Forfremmelse"
+      },
+      "special_event": {
+        "name": "{person} - Særlig begivenhed"
+      },
+      "retirement": {
+        "name": "{person} - Pension"
+      }
     }
   }
 }

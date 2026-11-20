@@ -18,6 +18,7 @@ from .const import (
     WORK_MEDAL_PENIBLE_LEVELS,
 )
 from .date_utils import anniversary_in_year, years_elapsed
+from .i18n import GENDER_UNSPECIFIED, Texts, age_category as tr_age_category, event_type_label, medal_name, wedding_name
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,7 +48,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             death_date=event.get("death_date"),
             is_penible=event.get("is_penible", False),
             career_type=event.get("career_type", "normale"),
-            entry_id=entry.entry_id
+            entry_id=entry.entry_id,
+            gender=event.get("gender", GENDER_UNSPECIFIED),
+            language=hass.config.language,
         ))
 
     if calendars:
@@ -68,7 +71,9 @@ class DateCountdownCalendar(CalendarEntity):
         death_date: Optional[str],
         is_penible: bool,
         career_type: str,
-        entry_id: str
+        entry_id: str,
+        gender: str = GENDER_UNSPECIFIED,
+        language: str = "fr",
     ):
         """Initialize the calendar entity."""
         self._name = name
@@ -81,7 +86,9 @@ class DateCountdownCalendar(CalendarEntity):
         self._event_date = self._parse_date(event_date)
         self._death_date = self._parse_date(death_date) if death_date else None
         self._attr_unique_id = f"{event_type}_{name.lower().replace(' ', '_')}_{event_date.replace('/', '')}"
-        self._attr_name = f"{first_name} {name} - {event_type}".strip()
+        self._gender = gender
+        self._language = language
+        self._attr_name = f"{f'{first_name} {name}'.strip()} - {event_type_label(event_type, language)}"
         self._entry_id = entry_id
         self._next_event: Optional[CalendarEvent] = None
 
@@ -128,7 +135,7 @@ class DateCountdownCalendar(CalendarEntity):
                 # Retraite passée : indiquer comme événement terminé
                 start = datetime.combine(retirement_date, time(0, 0), tzinfo=tzinfo)
                 end = datetime.combine(retirement_date, time(23, 59), tzinfo=tzinfo)
-                summary = f"{self._attr_name} (Retraite atteinte)"
+                summary = self._t.fmt("cal_retired", name=self._attr_name)
                 return CalendarEvent(start=start, end=end, summary=summary)
 
             # Retraite future : retourner la date de retraite
@@ -136,7 +143,9 @@ class DateCountdownCalendar(CalendarEntity):
             end = datetime.combine(retirement_date, time(23, 59), tzinfo=tzinfo)
             years_worked = retirement_date.year - self._event_date.year
             work_medal = self._calculate_work_medal(years_worked)
-            summary = f"{self._attr_name} (Retraite dans {years_worked} ans, Médaille: {work_medal or 'Aucune'})"
+            summary = self._t.fmt(
+                "cal_retirement", name=self._attr_name, years=self._t.years(years_worked), medal=self._medal(work_medal)
+            )
             return CalendarEvent(start=start, end=end, summary=summary)
 
         # Pour les autres types, retourner l'événement annuel le plus proche
@@ -161,36 +170,42 @@ class DateCountdownCalendar(CalendarEntity):
                 return level
         return None
 
+    @property
+    def _lang(self) -> str:
+        hass = getattr(self, "hass", None)
+        return (hass.config.language if hass is not None else None) or self._language
+
+    @property
+    def _t(self) -> Texts:
+        return Texts(self._lang, self._gender)
+
+    def _medal(self, medal: Optional[str]) -> str:
+        return medal_name(medal, self._lang) if medal else self._t.fmt("cal_no_medal")
+
     def _generate_event_summary(self, years: int) -> str:
         """Generate a summary for the calendar event based on event type and years."""
+        t = self._t
         summary = f"{self._attr_name}"
         if self._event_type == "birthday":
             age_category = None
             for (min_age, max_age), category in AGE_CATEGORIES.items():
                 if min_age <= years <= max_age:
-                    age_category = category
+                    age_category = tr_age_category(years, category, self._lang, self._gender)
                     break
-            if age_category:
-                summary += f" ({years} ans, {age_category})"
-            else:
-                summary += f" ({years} ans)"
+            summary += f" ({t.years(years)}, {age_category})" if age_category else f" ({t.years(years)})"
         elif self._event_type == "anniversary":
-            wedding_type = WEDDING_ANNIVERSARIES.get(years)
-            if wedding_type:
-                summary += f" ({years} ans, {wedding_type})"
-            else:
-                summary += f" ({years} ans)"
+            wedding_type = wedding_name(years, WEDDING_ANNIVERSARIES.get(years), self._lang)
+            summary += f" ({t.years(years)}, {wedding_type})" if wedding_type else f" ({t.years(years)})"
         elif self._event_type == "memorial":
-            age_if_alive = years
             years_since_death = None
             if self._death_date:
-                years_since_death = years_elapsed(self._death_date, date.today())
+                years_since_death = years_elapsed(self._death_date, dt_util.now().date())
             if years_since_death is not None:
-                summary += f" (Âge si vivant: {age_if_alive} ans, Depuis décès: {years_since_death} ans)"
+                summary = t.fmt("cal_memorial", name=summary, age=t.years(years), since=t.years(years_since_death))
             else:
-                summary += f" (Âge si vivant: {age_if_alive} ans)"
+                summary = t.fmt("cal_memorial_nosince", name=summary, age=t.years(years))
         elif self._event_type in ["promotion", "special_event"]:
-            summary += f" ({years} ans)"
+            summary += f" ({t.years(years)})"
         return summary
 
     async def async_get_events(self, hass: HomeAssistant, start_date: datetime, end_date: datetime) -> List[CalendarEvent]:
@@ -222,7 +237,7 @@ class DateCountdownCalendar(CalendarEntity):
                 end = datetime.combine(retirement_date, time(23, 59), tzinfo=tzinfo)
                 years_worked = retirement_date.year - self._event_date.year
                 work_medal = self._calculate_work_medal(years_worked)
-                summary = f"{self._attr_name} (Retraite, Médaille: {work_medal or 'Aucune'})"
+                summary = self._t.fmt("cal_retirement_event", name=self._attr_name, medal=self._medal(work_medal))
                 events.append(CalendarEvent(start=start, end=end, summary=summary))
             return events
 

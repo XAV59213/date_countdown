@@ -21,7 +21,9 @@ from homeassistant.util import dt as dt_util
 
 from .const import (
     CONF_NOTIFICATIONS,
+    CONF_NOTIFY_DEATH,
     CONF_NOTIFY_ENABLED,
+    CONF_NOTIFY_ENTITIES,
     CONF_NOTIFY_PERSISTENT,
     CONF_NOTIFY_REMINDER_DAYS,
     CONF_NOTIFY_TARGETS,
@@ -32,14 +34,17 @@ from .const import (
     EVENT_TYPES,
     NOTIFY_STORAGE_KEY,
     NOTIFY_STORAGE_VERSION,
-    NOTIFY_TITLE,
 )
+from .date_utils import anniversary_in_year
+from .i18n import GENDER_UNSPECIFIED, Texts, notify_title
 from .sensor import DateCountdownSensor
 
 _LOGGER = logging.getLogger(__name__)
 
 KIND_DAY = "jour_j"
 KIND_REMINDER = "rappel"
+KIND_DEATH = "anniv_deces"
+KIND_DEATH_REMINDER = "rappel_deces"
 RETRY_DELAY_SECONDS = 600
 STORE_RETENTION_DAYS = 30
 
@@ -48,8 +53,6 @@ DATA_STORE = "_notify_store"
 
 # Services notify qui n'acceptent pas un simple {message, title}
 _EXCLUDED_NOTIFY_SERVICES = {"send_message"}
-
-_VOWELS = "aeiouyàâäéèêëîïôöùûüÿæœAEIOUYÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÆŒ"
 
 
 # ---------------------------------------------------------------------------
@@ -62,6 +65,9 @@ def get_notification_options(entry: ConfigEntry) -> dict[str, Any]:
     targets = raw.get(CONF_NOTIFY_TARGETS) or []
     if isinstance(targets, str):
         targets = [targets]
+    entities = raw.get(CONF_NOTIFY_ENTITIES) or []
+    if isinstance(entities, str):
+        entities = [entities]
     try:
         reminder = int(raw.get(CONF_NOTIFY_REMINDER_DAYS, DEFAULT_NOTIFY_REMINDER_DAYS) or 0)
     except (TypeError, ValueError):
@@ -72,6 +78,8 @@ def get_notification_options(entry: ConfigEntry) -> dict[str, Any]:
         CONF_NOTIFY_TIME: normalize_time(raw.get(CONF_NOTIFY_TIME, DEFAULT_NOTIFY_TIME)),
         CONF_NOTIFY_REMINDER_DAYS: max(0, reminder),
         CONF_NOTIFY_PERSISTENT: bool(raw.get(CONF_NOTIFY_PERSISTENT, False)),
+        CONF_NOTIFY_ENTITIES: [str(e) for e in entities if e],
+        CONF_NOTIFY_DEATH: bool(raw.get(CONF_NOTIFY_DEATH, False)),
     }
 
 
@@ -89,6 +97,11 @@ def parse_time(value: Any) -> time:
 def normalize_time(value: Any) -> str:
     """Normalise un horaire au format HH:MM:SS."""
     return parse_time(value).strftime("%H:%M:%S")
+
+
+def available_notify_entities(hass: HomeAssistant) -> list[str]:
+    """Entités notify.* modernes (utilisées via notify.send_message)."""
+    return sorted(hass.states.async_entity_ids("notify"))
 
 
 def available_notify_targets(hass: HomeAssistant) -> list[str]:
@@ -112,7 +125,7 @@ def iter_events(entry: ConfigEntry) -> list[dict[str, Any]]:
     ]
 
 
-def _new_sensor(event: dict[str, Any]) -> DateCountdownSensor:
+def _new_sensor(event: dict[str, Any], language: str = "fr") -> DateCountdownSensor:
     return DateCountdownSensor(
         event["name"],
         event.get("first_name", ""),
@@ -122,23 +135,16 @@ def _new_sensor(event: dict[str, Any]) -> DateCountdownSensor:
         event.get("start_date"),
         event.get("is_penible", False),
         event.get("career_type", "normale"),
+        gender=event.get("gender", GENDER_UNSPECIFIED),
+        language=language,
     )
 
 
-def _compute(event: dict[str, Any], day: date) -> tuple[int | None, dict[str, Any]]:
+def _compute(event: dict[str, Any], day: date, language: str = "fr") -> tuple[int | None, dict[str, Any]]:
     """Calcule (jours restants, attributs) pour un événement à une date donnée."""
-    sensor = _new_sensor(event)
+    sensor = _new_sensor(event, language)
     sensor.update_for_date(day)
     return sensor.state, sensor.extra_state_attributes
-
-
-def _ans(n: int) -> str:
-    return f"{n} an" if abs(n) == 1 else f"{n} ans"
-
-
-def _de(name: str) -> str:
-    """'de Paul' / 'd’Océane'."""
-    return f"d’{name}" if name and name[0] in _VOWELS else f"de {name}"
 
 
 def _names(event: dict[str, Any]) -> tuple[str, str]:
@@ -150,90 +156,124 @@ def _names(event: dict[str, Any]) -> tuple[str, str]:
     return person, full
 
 
-def build_day_message(event: dict[str, Any], attrs: dict[str, Any]) -> str:
-    """Message du jour J, adapté au type d'événement."""
+def _texts(event: dict[str, Any], language: str) -> Texts:
+    return Texts(language, event.get("gender", GENDER_UNSPECIFIED))
+
+
+def build_day_message(event: dict[str, Any], attrs: dict[str, Any], language: str = "fr") -> str:
+    """Message du jour J, adapté au type d'événement, à la langue et au genre."""
+    t = _texts(event, language)
     event_type = event.get("type")
     person, full = _names(event)
     years = attrs.get("years")
+    ctx = {"person": person, "full": full, "n": years, "years": t.years(years) if years is not None else ""}
 
     if event_type == "birthday":
         if years is None or years <= 0:
-            return f"🎂 Aujourd’hui, c’est l’anniversaire {_de(person)} !"
-        msg = f"🎂 Aujourd’hui, {person} a {_ans(years)} !"
+            return t.fmt("day_birthday_noage", **ctx)
+        msg = t.fmt("day_birthday", **ctx)
         if attrs.get("age_category"):
             msg += f" {attrs['age_category']}"
         return msg
 
     if event_type == "anniversary":
         if years is None or years <= 0:
-            return f"💍 Aujourd’hui, c’est le mariage {_de(full)} !"
-        msg = f"💍 Aujourd’hui, {full} fête {_ans(years)} de mariage"
+            return t.fmt("day_anniversary_noage", **ctx)
+        msg = t.fmt("day_anniversary", **ctx)
         if attrs.get("wedding_type"):
-            return f"{msg} : {attrs['wedding_type']} !"
-        return f"{msg} !"
+            return msg + t.fmt("day_anniversary_wedding", wedding=attrs["wedding_type"])
+        return msg + t.fmt("day_anniversary_end")
 
     if event_type == "memorial":
-        msg = f"🕯️ Aujourd’hui, {person} aurait eu {_ans(years)}." if years else f"🕯️ Aujourd’hui, nous pensons à {person}."
+        msg = t.fmt("day_memorial", **ctx) if years else t.fmt("day_memorial_noage", **ctx)
         since = attrs.get("years_since_death")
         if since:
-            msg += f" Disparu(e) depuis {_ans(since)}."
-        return f"{msg} Une pensée en sa mémoire."
+            msg += t.fmt("memorial_since", since=t.years(since), since_dat=t.years_dative(since))
+        return msg + t.fmt("memorial_end")
 
     if event_type == "promotion":
         if years and years > 0:
-            return f"🏆 Aujourd’hui, {full} fête {_ans(years)} de promotion !"
-        return f"🏆 Aujourd’hui : promotion {_de(full)} !"
+            return t.fmt("day_promotion", **ctx)
+        return t.fmt("day_promotion_noage", **ctx)
 
     if event_type == "special_event":
         if years and years > 0:
-            return f"⭐ Aujourd’hui : {full} ({_ans(years)}) !"
-        return f"⭐ Aujourd’hui : {full} !"
+            return t.fmt("day_special", **ctx)
+        return t.fmt("day_special_noage", **ctx)
 
     if event_type == "retirement":
         worked = attrs.get("years_worked")
-        msg = f"🏖️ Aujourd’hui, {person} part à la retraite"
-        msg += f" après {_ans(worked)} de travail !" if worked else " !"
+        msg = t.fmt("day_retirement", **ctx)
+        msg += t.fmt("day_retirement_worked", worked=t.years(worked)) if worked else t.fmt("day_retirement_end")
         if attrs.get("work_medal"):
-            msg += f" Médaille du travail : {attrs['work_medal']}."
+            msg += t.fmt("day_retirement_medal", medal=attrs["work_medal"])
         return msg
 
-    return f"📅 Aujourd’hui : {full} !"
+    return t.fmt("day_other", **ctx)
 
 
-def build_reminder_message(event: dict[str, Any], attrs: dict[str, Any], days: int) -> str:
+def build_reminder_message(event: dict[str, Any], attrs: dict[str, Any], days: int, language: str = "fr") -> str:
     """Message de rappel J-N (ex. « Dans 7 jours : anniversaire d’Océane (25 ans) »)."""
+    t = _texts(event, language)
     event_type = event.get("type")
     person, full = _names(event)
     years = attrs.get("years")
-    when = "Demain" if days == 1 else f"Dans {days} jours"
-    suffix = f" ({_ans(years)})" if years and years > 0 else ""
+    when = t.fmt("when_tomorrow") if days == 1 else t.fmt("when_days", days=days)
+    suffix = f" ({t.years(years)})" if years and years > 0 else ""
+    ctx = {"person": person, "full": full, "suffix": suffix, "n": years, "years": t.years(years) if years else ""}
 
     if event_type == "birthday":
-        body = f"anniversaire {_de(person)}{suffix}"
+        body = t.fmt("rem_birthday", **ctx)
     elif event_type == "anniversary":
-        body = f"anniversaire de mariage {_de(full)}{suffix}"
+        body = t.fmt("rem_anniversary", **ctx)
         if attrs.get("wedding_type"):
-            body += f" – {attrs['wedding_type']}"
+            body += t.fmt("rem_wedding", wedding=attrs["wedding_type"])
     elif event_type == "memorial":
-        body = f"souvenir {_de(person)}"
+        body = t.fmt("rem_memorial", **ctx)
         if years:
-            body += f", qui aurait eu {_ans(years)}"
+            body += t.fmt("rem_memorial_age", **ctx)
     elif event_type == "promotion":
-        body = f"anniversaire de la promotion {_de(full)}{suffix}" if suffix else f"promotion {_de(full)}"
+        body = t.fmt("rem_promotion", **ctx) if suffix else t.fmt("rem_promotion_noage", **ctx)
     elif event_type == "special_event":
-        body = f"{full}{suffix}"
+        body = t.fmt("rem_special", **ctx)
     elif event_type == "retirement":
-        body = f"départ à la retraite {_de(person)}"
+        body = t.fmt("rem_retirement", **ctx)
     else:
         body = full
-    return f"⏳ {when} : {body}"
+    return t.fmt("reminder", when=when, body=body)
+
+
+def _death_date(event: dict[str, Any]) -> date | None:
+    try:
+        day, month, year = map(int, str(event.get("death_date") or "").split("/"))
+        return date(year, month, day)
+    except (ValueError, TypeError):
+        return None
+
+
+def build_death_anniversary_message(event: dict[str, Any], years: int, language: str = "fr") -> str:
+    t = _texts(event, language)
+    person, _ = _names(event)
+    return t.fmt("death_anniversary", person=person, since=t.years(years), since_dat=t.years_dative(years))
+
+
+def build_death_reminder_message(event: dict[str, Any], years: int, days: int, language: str = "fr") -> str:
+    t = _texts(event, language)
+    person, _ = _names(event)
+    when = t.fmt("when_tomorrow") if days == 1 else t.fmt("when_days", days=days)
+    body = t.fmt("rem_death", person=person, since=t.years(years))
+    return t.fmt("reminder", when=when, body=body)
 
 
 def compute_due_messages(
-    event: dict[str, Any], today: date, reminder_days: int = 0
+    event: dict[str, Any],
+    today: date,
+    reminder_days: int = 0,
+    language: str = "fr",
+    death_anniversary: bool = False,
 ) -> list[tuple[str, str]]:
     """Liste des (type d'envoi, message) à envoyer aujourd'hui pour un événement."""
-    state, attrs = _compute(event, today)
+    state, attrs = _compute(event, today, language)
     if state is None:
         return []
     due: list[tuple[str, str]] = []
@@ -241,25 +281,39 @@ def compute_due_messages(
     is_day = state == 0
     if is_day and event.get("type") == "retirement":
         # Le capteur reste à 0 après la retraite : jour J seulement si hier était J-1.
-        prev_state, _ = _compute(event, today - timedelta(days=1))
+        prev_state, _ = _compute(event, today - timedelta(days=1), language)
         is_day = prev_state == 1
     if is_day:
-        due.append((KIND_DAY, build_day_message(event, attrs)))
+        due.append((KIND_DAY, build_day_message(event, attrs, language)))
 
     if reminder_days and reminder_days > 0 and state == reminder_days:
-        due.append((f"{KIND_REMINDER}_{reminder_days}", build_reminder_message(event, attrs, reminder_days)))
+        due.append((f"{KIND_REMINDER}_{reminder_days}", build_reminder_message(event, attrs, reminder_days, language)))
+
+    # Anniversaire du décès (mémoriaux) : notification distincte, anti-doublon propre
+    death = _death_date(event) if death_anniversary and event.get("type") == "memorial" else None
+    if death is not None:
+        this_year = anniversary_in_year(death.month, death.day, today.year)
+        if this_year == today and today.year > death.year:
+            due.append((KIND_DEATH, build_death_anniversary_message(event, today.year - death.year, language)))
+        if reminder_days and reminder_days > 0:
+            target = today + timedelta(days=reminder_days)
+            if anniversary_in_year(death.month, death.day, target.year) == target and target.year > death.year:
+                due.append((
+                    f"{KIND_DEATH_REMINDER}_{reminder_days}",
+                    build_death_reminder_message(event, target.year - death.year, reminder_days, language),
+                ))
     return due
 
 
-def build_preview_message(event: dict[str, Any], today: date) -> str:
+def build_preview_message(event: dict[str, Any], today: date, language: str = "fr") -> str:
     """Message représentatif pour le service de test."""
-    state, attrs = _compute(event, today)
+    state, attrs = _compute(event, today, language)
     if state is None:
         _, full = _names(event)
         return f"📅 {full}"
     if state == 0:
-        return build_day_message(event, attrs)
-    return build_reminder_message(event, attrs, state)
+        return build_day_message(event, attrs, language)
+    return build_reminder_message(event, attrs, state, language)
 
 
 def event_key(event: dict[str, Any]) -> str:
@@ -385,11 +439,13 @@ class NotificationManager:
         async with self._lock:
             today = dt_util.now().date()
             reminder = self.options[CONF_NOTIFY_REMINDER_DAYS]
+            death = self.options[CONF_NOTIFY_DEATH]
+            language = self.hass.config.language
             sent = 0
             failed = False
             for event in iter_events(self.entry):
                 event_id = event_key(event)
-                for kind, message in compute_due_messages(event, today, reminder):
+                for kind, message in compute_due_messages(event, today, reminder, language, death):
                     key = NotificationStore.make_key(self.entry.entry_id, event_id, today, kind)
                     if self.store.was_sent(key):
                         continue
@@ -414,16 +470,32 @@ class NotificationManager:
         for event in iter_events(self.entry):
             if wanted and event_key(event) not in wanted:
                 continue
-            message = f"🧪 Test – {build_preview_message(event, today)}"
+            language = self.hass.config.language
+            message = _texts(event, language).fmt("test", message=build_preview_message(event, today, language))
             notification_id = f"{DOMAIN}_{self.entry.entry_id}_{event_key(event)}_test"
             if await self.async_deliver(message, notification_id, test=True):
                 count += 1
         return count
 
+    async def _async_call(self, target: str, data: dict[str, Any]) -> bool:
+        try:
+            await self.hass.services.async_call("notify", target, data, blocking=True)
+        except Exception as err:  # noqa: BLE001 - une cible ne doit pas bloquer les autres
+            _LOGGER.warning("Échec de la notification via notify.%s (%s) : %s", target, data.get("entity_id", ""), err)
+            return False
+        return True
+
     async def async_deliver(self, message: str, notification_id: str, test: bool = False) -> bool:
-        """Envoie le message à toutes les cibles ; un échec n'empêche pas les autres."""
+        """Envoie le message à toutes les cibles ; un échec n'empêche pas les autres.
+
+        - services notify.* classiques (ex. notify.mobile_app_pixel) : {message, title} ;
+        - entités notify.* modernes : notify.send_message avec entity_id
+          (une ancienne cible qui n'est plus un service mais une entité est aussi prise en charge).
+        """
+        title = notify_title(self.hass.config.language)
         targets = list(self.options[CONF_NOTIFY_TARGETS])
-        persistent = self.options[CONF_NOTIFY_PERSISTENT] or (test and not targets)
+        entities = list(self.options[CONF_NOTIFY_ENTITIES])
+        persistent = self.options[CONF_NOTIFY_PERSISTENT] or (test and not targets and not entities)
         success = False
         for target in targets:
             domain, _, service = target.partition(".")
@@ -432,21 +504,29 @@ class NotificationManager:
             if domain != "notify":
                 _LOGGER.warning("Cible de notification ignorée (pas un service notify) : %s", target)
                 continue
-            if not self.hass.services.has_service(domain, service):
+            if self.hass.services.has_service("notify", service):
+                success |= await self._async_call(service, {"message": message, "title": title})
+            elif self.hass.states.get(f"notify.{service}") is not None:
+                if f"notify.{service}" not in entities:
+                    entities.append(f"notify.{service}")
+            else:
                 _LOGGER.warning("Service de notification introuvable : %s", target)
-                continue
-            try:
-                await self.hass.services.async_call(
-                    domain, service, {"message": message, "title": NOTIFY_TITLE}, blocking=True
-                )
-                success = True
-            except Exception as err:  # noqa: BLE001 - une cible ne doit pas bloquer les autres
-                _LOGGER.warning("Échec de la notification via %s : %s", target, err)
+        if entities:
+            if self.hass.services.has_service("notify", "send_message"):
+                for entity_id in entities:
+                    if self.hass.states.get(entity_id) is None:
+                        _LOGGER.warning("Entité de notification introuvable : %s", entity_id)
+                        continue
+                    success |= await self._async_call(
+                        "send_message", {"entity_id": entity_id, "message": message, "title": title}
+                    )
+            else:
+                _LOGGER.warning("Service notify.send_message indisponible : entités ignorées %s", entities)
         if persistent:
             persistent_notification.async_create(
-                self.hass, message, title=NOTIFY_TITLE, notification_id=notification_id
+                self.hass, message, title=title, notification_id=notification_id
             )
             success = True
-        if not targets and not persistent:
+        if not targets and not entities and not persistent:
             _LOGGER.warning("Notifications activées sans cible pour %s", self.entry.title)
         return success

@@ -10,6 +10,7 @@ from homeassistant.util import dt as dt_util
 
 from .const import CONF_NOTIFICATIONS, CONF_NOTIFY_ENABLED, DOMAIN, EVENT_TYPES, WEDDING_ANNIVERSARIES, AGE_CATEGORIES, AGE_CATEGORY_ICONS, WORK_MEDAL_LEVELS, WORK_MEDAL_PENIBLE_LEVELS
 from .date_utils import anniversary_in_year, years_elapsed
+from .i18n import GENDER_UNSPECIFIED, age_category as tr_age_category, medal_name, normalize_gender, wedding_name
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -62,11 +63,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             event.get("death_date"),
             event.get("start_date"),
             event.get("is_penible", False),
-            event.get("career_type", "normale")
+            event.get("career_type", "normale"),
+            gender=event.get("gender", GENDER_UNSPECIFIED),
+            language=hass.config.language,
         )
         event_sensor.notifications_enabled = notify_enabled
         sensors.append(event_sensor)
-        _LOGGER.info("Created DateCountdownSensor with unique_id: %s, name: %s", event_sensor.unique_id, event_sensor.name)
+        _LOGGER.info("Created DateCountdownSensor with unique_id: %s", event_sensor.unique_id)
 
     if not sensors:
         _LOGGER.warning("No sensors were created for Date Countdown integration. Check configuration and events.")
@@ -91,7 +94,9 @@ class DateCountdownSensor(SensorEntity):
         death_date: Optional[str] = None,
         start_date: Optional[str] = None,
         is_penible: bool = False,
-        career_type: str = "normale"
+        career_type: str = "normale",
+        gender: str = GENDER_UNSPECIFIED,
+        language: str = "fr",
     ) -> None:
         """Initialize the sensor."""
         self._name = name
@@ -113,11 +118,17 @@ class DateCountdownSensor(SensorEntity):
         self._work_medal = None
         self._age_at_death = None  # Nouvelle variable pour l'âge au décès
         self._retirement_date = None
+        self._days_to_death_anniversary = None
+        self._gender = normalize_gender(gender)
+        self._language = language
         self.notifications_enabled = False
         unique_id_base = f"{event_type}_{name.lower().replace(' ', '_')}"
         unique_id_date = (start_date or event_date or "").replace('/', '')
         self._attr_unique_id = f"{unique_id_base}_{unique_id_date}"
-        self._attr_name = self._get_friendly_name()
+        # Nom traduit par Home Assistant (translations/*.json : entity.sensor.<type>.name)
+        self._attr_has_entity_name = True
+        self._attr_translation_key = event_type
+        self._attr_translation_placeholders = {"person": self._person_label()}
         self._attr_unit_of_measurement = "days"
         self._attr_icon = {
             "birthday": "mdi:cake",
@@ -128,23 +139,17 @@ class DateCountdownSensor(SensorEntity):
             "retirement": "mdi:beach"
         }.get(event_type, "mdi:calendar")
         _LOGGER.debug("Initialized DateCountdownSensor: unique_id=%s, name=%s, date=%s, start_date=%s, is_penible=%s, career_type=%s",
-                      self._attr_unique_id, self._attr_name, self._event_date, self._start_date, self._is_penible, self._career_type)
+                      self._attr_unique_id, self._person_label(), self._event_date, self._start_date, self._is_penible, self._career_type)
 
-    def _get_friendly_name(self) -> str:
-        """Return the friendly name in the format 'Name - Event Type'."""
-        prefix = f"{self._first_name} {self._name}".strip() if self._first_name else self._name
-        event_type_labels = {
-            "birthday": "Anniversaire",
-            "anniversary": "Anniversaire de mariage",
-            "memorial": "Mémorial",
-            "promotion": "Promotion",
-            "special_event": "Événement spécial",
-            "retirement": "Retraite"
-        }
-        event_type_name = event_type_labels.get(self._event_type, self._event_type)
-        friendly_name = f"{prefix} - {event_type_name}"
-        _LOGGER.debug("Generated friendly name for sensor %s: %s", self._attr_unique_id, friendly_name)
-        return friendly_name
+    def _person_label(self) -> str:
+        """« Prénom Nom » (ou le nom seul)."""
+        return f"{self._first_name} {self._name}".strip() if self._first_name else self._name
+
+    @property
+    def language(self) -> str:
+        """Langue des textes générés : celle de Home Assistant si l'entité est ajoutée."""
+        hass = getattr(self, "hass", None)
+        return (hass.config.language if hass is not None else None) or self._language
 
     @property
     def state(self) -> Optional[int]:
@@ -157,7 +162,7 @@ class DateCountdownSensor(SensorEntity):
         attributes = {
             "event_type": self._event_type,
             "first_name": self._first_name,
-            "friendly_name": self._attr_name,
+            "gender": self._gender,
             "notifications_enabled": self.notifications_enabled,
         }
         if self._event_type == "retirement":
@@ -173,15 +178,15 @@ class DateCountdownSensor(SensorEntity):
             if self._years_retired is not None:
                 attributes["years_retired"] = self._years_retired
             if self._work_medal:
-                attributes["work_medal"] = self._work_medal
+                attributes["work_medal"] = medal_name(self._work_medal, self.language)
         else:
             attributes["event_date"] = self._event_date
             if self._years is not None:
                 attributes["years"] = self._years
             if self._event_type == "birthday" and self._age_category:
-                attributes["age_category"] = self._age_category
+                attributes["age_category"] = tr_age_category(self._years, self._age_category, self.language, self._gender)
             if self._event_type == "anniversary" and self._wedding_type:
-                attributes["wedding_type"] = self._wedding_type
+                attributes["wedding_type"] = wedding_name(self._years, self._wedding_type, self.language)
             if self._event_type == "memorial":
                 if self._death_date:
                     attributes["death_date"] = self._death_date
@@ -191,6 +196,8 @@ class DateCountdownSensor(SensorEntity):
                     attributes["years_since_death"] = self._years_since_death
                 if self._age_at_death is not None:
                     attributes["age_at_death"] = self._age_at_death
+                if self._days_to_death_anniversary is not None:
+                    attributes["days_to_death_anniversary"] = self._days_to_death_anniversary
         _LOGGER.debug("Returning attributes for sensor %s: %s", self._attr_unique_id, attributes)
         return attributes
 
@@ -287,6 +294,7 @@ class DateCountdownSensor(SensorEntity):
             else:
                 self._wedding_type = None
 
+            self._days_to_death_anniversary = None
             if self._event_type == "memorial":
                 self._age_if_alive = years_elapsed(event_date, today)
                 if self._death_date:
@@ -294,6 +302,10 @@ class DateCountdownSensor(SensorEntity):
                         day, month, year = map(int, self._death_date.split('/'))
                         death_date = date(year, month, day)
                         self._years_since_death = years_elapsed(death_date, today)
+                        next_death = anniversary_in_year(death_date.month, death_date.day, today.year)
+                        if next_death < today:
+                            next_death = anniversary_in_year(death_date.month, death_date.day, today.year + 1)
+                        self._days_to_death_anniversary = (next_death - today).days
                         self._age_at_death = death_date.year - event_date.year
                         if (death_date.month, death_date.day) < (event_date.month, event_date.day):
                             self._age_at_death -= 1

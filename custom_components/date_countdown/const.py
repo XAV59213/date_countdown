@@ -352,6 +352,8 @@ CONF_NOTIFY_TARGETS = "targets"
 CONF_NOTIFY_TIME = "time"
 CONF_NOTIFY_REMINDER_DAYS = "reminder_days"
 CONF_NOTIFY_PERSISTENT = "persistent"
+CONF_NOTIFY_ENTITIES = "entities"  # entités notify.* modernes (service notify.send_message)
+CONF_NOTIFY_DEATH = "death_anniversary"  # rappel de l'anniversaire du décès (mémoriaux)
 
 DEFAULT_NOTIFY_TIME = "09:00:00"
 DEFAULT_NOTIFY_REMINDER_DAYS = 0

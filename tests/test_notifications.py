@@ -7,6 +7,7 @@ from pytest_homeassistant_custom_component.common import MockConfigEntry, async_
 
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.data_entry_flow import FlowResultType
+from homeassistant.helpers import entity_registry as er
 from homeassistant.util import dt as dt_util
 
 from custom_components.date_countdown.const import DOMAIN
@@ -114,13 +115,16 @@ async def test_options_flow_notifications(hass: HomeAssistant):
     )
     assert result3["type"] is FlowResultType.CREATE_ENTRY
     await hass.async_block_till_done()
-    assert entry.options["events"] == [BIRTHDAY]
+    # Migration douce : genre « non précisé » ajouté à l'événement existant
+    assert entry.options["events"] == [{**BIRTHDAY, "gender": "unspecified"}]
     assert entry.options["notifications"] == {
         "enabled": True,
         "targets": ["notify.mobile_app_pixel"],
         "time": "08:30:00",
         "reminder_days": 7,
         "persistent": True,
+        "entities": [],
+        "death_anniversary": False,
     }
 
 
@@ -151,6 +155,7 @@ async def test_options_edit_keeps_notifications(hass: HomeAssistant):
 # --- Envoi le jour J + anti-doublon ---------------------------------------
 
 async def _setup(hass, notif):
+    hass.config.language = "fr"
     entry = _entry(notif)
     entry.add_to_hass(hass)
     assert await hass.config_entries.async_setup(entry.entry_id)
@@ -204,7 +209,7 @@ async def test_service_by_entity_id(hass: HomeAssistant):
     calls = _register_notify(hass, "ok")
     notif = {"enabled": True, "targets": ["notify.ok"], "time": "23:59:59", "reminder_days": 0, "persistent": False}
     await _setup(hass, notif)
-    await hass.services.async_call(
-        DOMAIN, "send_test_notification", {"entity_id": "sensor.oceane_dupont_anniversaire"}, blocking=True
-    )
+    entity_id = er.async_get(hass).async_get_entity_id("sensor", DOMAIN, "birthday_dupont_15062001")
+    assert hass.states.get(entity_id).name == "Océane Dupont - Anniversaire"
+    await hass.services.async_call(DOMAIN, "send_test_notification", {"entity_id": entity_id}, blocking=True)
     assert len(calls) == 1

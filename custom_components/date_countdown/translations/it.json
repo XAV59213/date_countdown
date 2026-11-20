@@ -19,7 +19,8 @@
           "death_date": "Data di morte (facoltativa, per commemorazione)",
           "start_date": "Data di inizio lavoro (per pensionamento)",
           "is_penible": "Lavoro usurante (riduce gli anni richiesti per la medaglia)",
-          "career_type": "Tipo di carriera"
+          "career_type": "Tipo di carriera",
+          "gender": "Genere (concordanza dei testi)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Data di morte (facoltativa, per commemorazione)",
           "start_date": "Data di inizio lavoro (per pensionamento)",
           "is_penible": "Lavoro usurante (riduce gli anni richiesti per la medaglia)",
-          "career_type": "Tipo di carriera"
+          "career_type": "Tipo di carriera",
+          "gender": "Genere (concordanza dei testi)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Modifica un evento",
         "notifications": "Configura le notifiche 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Non specificato",
+        "male": "Uomo",
+        "female": "Donna"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Compleanno",
+        "anniversary": "Anniversario di matrimonio",
+        "memorial": "Commemorazione",
+        "promotion": "Promozione",
+        "special_event": "Evento speciale",
+        "retirement": "Pensione"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Carriera normale (inizio dopo i 18 anni)",
+        "longue": "Carriera lunga (inizio prima dei 18 anni)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Data di morte (facoltativa, per commemorazione)",
           "start_date": "Data di inizio lavoro (per pensionamento)",
           "is_penible": "Lavoro usurante (riduce gli anni richiesti per la medaglia)",
-          "career_type": "Tipo di carriera"
+          "career_type": "Tipo di carriera",
+          "gender": "Genere (concordanza dei testi)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Destinatari delle notifiche (servizi notify.*)",
           "time": "Orario di invio",
           "reminder_days": "Promemoria N giorni prima (0 = disattivato)",
-          "persistent": "Crea anche una notifica persistente di Home Assistant"
+          "persistent": "Crea anche una notifica persistente di Home Assistant",
+          "entities": "Entità di notifica (notify.send_message)",
+          "death_anniversary": "Promemoria dell'anniversario della scomparsa (commemorazioni)"
         },
         "data_description": {
           "targets": "Uno o più servizi notify.* (ad es. notify.mobile_app_mio_telefono). Puoi anche digitare un nome.",
           "time": "Predefinito 09:00. Se Home Assistant si riavvia dopo quest'ora il giorno dell'evento, la notifica viene inviata una sola volta all'avvio.",
           "reminder_days": "Esempio: 7 per essere avvisato una settimana prima. 0 disattiva il promemoria.",
-          "persistent": "Mostra il messaggio anche nelle notifiche di Home Assistant."
+          "persistent": "Mostra il messaggio anche nelle notifiche di Home Assistant.",
+          "entities": "Entità notify moderne (es. notify.mio_telefono), inviate con notify.send_message. Combinabili con i servizi sopra.",
+          "death_anniversary": "Invia anche una notifica separata nell'anniversario della data di morte (e il promemoria di N giorni se impostato)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Il sensore {entity_id} non appartiene a Ricordi e Celebrazioni."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Compleanno"
+      },
+      "anniversary": {
+        "name": "{person} - Anniversario di matrimonio"
+      },
+      "memorial": {
+        "name": "{person} - Commemorazione"
+      },
+      "promotion": {
+        "name": "{person} - Promozione"
+      },
+      "special_event": {
+        "name": "{person} - Evento speciale"
+      },
+      "retirement": {
+        "name": "{person} - Pensione"
+      }
     }
   }
 }

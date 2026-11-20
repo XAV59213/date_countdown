@@ -15,6 +15,8 @@ from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.selector import (
     BooleanSelector,
+    EntitySelector,
+    EntitySelectorConfig,
     NumberSelector,
     NumberSelectorConfig,
     NumberSelectorMode,
@@ -26,7 +28,9 @@ from homeassistant.helpers.selector import (
 
 from .const import (
     CONF_NOTIFICATIONS,
+    CONF_NOTIFY_DEATH,
     CONF_NOTIFY_ENABLED,
+    CONF_NOTIFY_ENTITIES,
     CONF_NOTIFY_PERSISTENT,
     CONF_NOTIFY_REMINDER_DAYS,
     CONF_NOTIFY_TARGETS,
@@ -36,7 +40,27 @@ from .const import (
     EVENT_TYPES,
     MAX_NOTIFY_REMINDER_DAYS,
 )
+from .i18n import GENDERS, GENDER_UNSPECIFIED, event_type_label, normalize_gender
 from .notifications import available_notify_targets, get_notification_options, normalize_time
+
+# Types d'événements concernant une personne : genre proposé (accords des textes)
+GENDERED_TYPES = ("birthday", "memorial", "retirement", "promotion")
+CAREER_TYPES = ["normale", "longue"]
+
+
+def _select(options: list[str], key: str, mode: SelectSelectorMode = SelectSelectorMode.DROPDOWN) -> SelectSelector:
+    """Sélecteur traduit (translations/*.json : selector.<key>.options)."""
+    return SelectSelector(SelectSelectorConfig(options=options, translation_key=key, mode=mode))
+
+
+def _type_schema(default: str | None = None) -> vol.Schema:
+    key = vol.Required("type", default=default) if default else vol.Required("type")
+    return vol.Schema({key: _select(list(EVENT_TYPES), "event_type")})
+
+
+def _gender_field(schema: dict, event_type: str, default: str = GENDER_UNSPECIFIED) -> None:
+    if event_type in GENDERED_TYPES:
+        schema[vol.Optional("gender", default=normalize_gender(default))] = _select(GENDERS, "gender")
 
 OPTIONS_ACTIONS = ["edit", "notifications"]
 
@@ -55,22 +79,14 @@ def _action_schema(default: str = "edit") -> vol.Schema:
 
 _LOGGER = logging.getLogger(__name__)
 
-def _generate_entry_title(events: list) -> str:
+def _generate_entry_title(events: list, language: str = "fr") -> str:
     """Generate a title for the config entry based on the list of events."""
     if not events:
         return "Compte à rebours d'événements (vide)"
-    event_type_labels = {
-        "birthday": "Anniversaire",
-        "anniversary": "Anniversaire de mariage",
-        "memorial": "Mémorial",
-        "promotion": "Promotion",
-        "special_event": "Événement spécial",
-        "retirement": "Retraite"
-    }
     event_names = []
     for event in events[:2]:
         prefix = f"{event.get('first_name', '')} {event['name']}".strip()
-        event_type_name = event_type_labels.get(event["type"], event["type"])
+        event_type_name = event_type_label(event["type"], language)
         event_names.append(f"{prefix} - {event_type_name}")
     title = ", ".join(event_names)
     if len(events) > 2:
@@ -81,6 +97,7 @@ class DateCountdownConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Date Countdown."""
 
     VERSION = 1
+    MINOR_VERSION = 2  # 1.2 : champ « gender » sur chaque événement
 
     def __init__(self):
         """Initialize the config flow."""
@@ -94,21 +111,10 @@ class DateCountdownConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             _LOGGER.info("Selected event type: %s", self._event_type)
             return await self.async_step_event_details()
 
-        event_type_options = {
-            "birthday": "Anniversaire",
-            "anniversary": "Anniversaire de mariage",
-            "memorial": "Mémorial",
-            "promotion": "Promotion",
-            "special_event": "Événement spécial",
-            "retirement": "Retraite"
-        }
-
         _LOGGER.info("Showing form for step 'user' to select event type")
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({
-                vol.Required("type", description="Type d'événement"): vol.In(event_type_options),
-            }),
+            data_schema=_type_schema(),
             description_placeholders={"date_format": DATE_FORMAT}
         )
 
@@ -163,6 +169,8 @@ class DateCountdownConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         "type": self._event_type
                     }
                 ]
+                if self._event_type in GENDERED_TYPES:
+                    initial_events[0]["gender"] = normalize_gender(user_input.get("gender"))
                 if self._event_type == "retirement":
                     initial_events[0]["start_date"] = user_input["start_date"]
                     initial_events[0]["is_penible"] = user_input.get("is_penible", False)
@@ -175,11 +183,11 @@ class DateCountdownConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 _LOGGER.debug("Prepared initial_events: %s", initial_events)
                 try:
                     result = self.async_create_entry(
-                        title=_generate_entry_title(initial_events),
+                        title=_generate_entry_title(initial_events, self.hass.config.language),
                         data={},
                         options={"events": initial_events}
                     )
-                    _LOGGER.info("Entry created successfully, title: %s", _generate_entry_title(initial_events))
+                    _LOGGER.info("Entry created successfully, title: %s", _generate_entry_title(initial_events, self.hass.config.language))
                     return result
                 except Exception as e:
                     _LOGGER.error("Failed to create entry: %s", e)
@@ -187,16 +195,12 @@ class DateCountdownConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         # Schéma pour la retraite
         if self._event_type == "retirement":
-            career_type_options = {
-                "longue": "Carrière longue (début avant 18 ans)",
-                "normale": "Carrière normale (début après 18 ans)"
-            }
             schema = {
                 vol.Required("name", description="Nom de l'événement ou de la personne"): str,
                 vol.Optional("first_name", description="Prénom (optionnel)"): str,
                 vol.Required("start_date", description=f"Date de début du travail (format: {DATE_FORMAT})"): str,
                 vol.Optional("is_penible", description="Travaux pénibles (réduit les années pour la médaille)"): bool,
-                vol.Required("career_type", description="Type de carrière", default="normale"): vol.In(career_type_options)
+                vol.Required("career_type", default="normale"): _select(CAREER_TYPES, "career_type")
             }
         else:
             date_label = "Date de naissance" if self._event_type == "memorial" else "Date"
@@ -208,6 +212,7 @@ class DateCountdownConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if self._event_type == "memorial":
                 schema[vol.Optional("death_date", description=f"Date de décès (format: {DATE_FORMAT})")] = str
 
+        _gender_field(schema, self._event_type)
         _LOGGER.info("Showing form for step 'event_details' with event_type: %s", self._event_type)
         return self.async_show_form(
             step_id="event_details",
@@ -289,11 +294,12 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
         if user_input is not None:
             enabled = bool(user_input.get(CONF_NOTIFY_ENABLED, False))
             targets = [str(t).strip() for t in user_input.get(CONF_NOTIFY_TARGETS, []) if str(t).strip()]
+            entities = [str(e) for e in user_input.get(CONF_NOTIFY_ENTITIES, []) or [] if e]
             persistent = bool(user_input.get(CONF_NOTIFY_PERSISTENT, False))
             for target in targets:
                 if not target.startswith("notify.") or target == "notify.":
                     errors[CONF_NOTIFY_TARGETS] = "invalid_notify_target"
-            if enabled and not targets and not persistent:
+            if enabled and not targets and not entities and not persistent:
                 errors["base"] = "no_notify_target"
             if not errors:
                 notifications = {
@@ -302,6 +308,8 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                     CONF_NOTIFY_TIME: normalize_time(user_input.get(CONF_NOTIFY_TIME)),
                     CONF_NOTIFY_REMINDER_DAYS: int(user_input.get(CONF_NOTIFY_REMINDER_DAYS, 0) or 0),
                     CONF_NOTIFY_PERSISTENT: persistent,
+                    CONF_NOTIFY_ENTITIES: entities,
+                    CONF_NOTIFY_DEATH: bool(user_input.get(CONF_NOTIFY_DEATH, False)),
                 }
                 _LOGGER.info("Notifications mises à jour pour %s : %s", self._entry_id, notifications)
                 return self.async_create_entry(
@@ -321,6 +329,9 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                     mode=SelectSelectorMode.DROPDOWN,
                 )
             ),
+            vol.Optional(CONF_NOTIFY_ENTITIES, default=current[CONF_NOTIFY_ENTITIES]): EntitySelector(
+                EntitySelectorConfig(domain="notify", multiple=True)
+            ),
             vol.Required(CONF_NOTIFY_TIME, default=current[CONF_NOTIFY_TIME]): TimeSelector(),
             vol.Required(CONF_NOTIFY_REMINDER_DAYS, default=current[CONF_NOTIFY_REMINDER_DAYS]): NumberSelector(
                 NumberSelectorConfig(
@@ -330,6 +341,7 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                     mode=NumberSelectorMode.BOX,
                 )
             ),
+            vol.Required(CONF_NOTIFY_DEATH, default=current[CONF_NOTIFY_DEATH]): BooleanSelector(),
             vol.Required(CONF_NOTIFY_PERSISTENT, default=current[CONF_NOTIFY_PERSISTENT]): BooleanSelector(),
         })
         return self.async_show_form(step_id="notifications", data_schema=schema, errors=errors)
@@ -348,7 +360,8 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
         event_options = {}
         for i, event in enumerate(self.events):
             if "name" in event and "type" in event:
-                event_options[str(i)] = f"{event['name']} ({event['type']})"
+                label = f"{event.get('first_name', '')} {event['name']}".strip()
+                event_options[str(i)] = f"{label} ({event_type_label(event['type'], self.hass.config.language)})"
             else:
                 _LOGGER.warning("Invalid event at index %s: %s", i, event)
                 continue
@@ -397,20 +410,9 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
             return await self.async_step_edit_event()
 
         event = self.events[event_index]
-        event_type_options = {
-            "birthday": "Anniversaire",
-            "anniversary": "Anniversaire de mariage",
-            "memorial": "Mémorial",
-            "promotion": "Promotion",
-            "special_event": "Événement spécial",
-            "retirement": "Retraite"
-        }
-
         return self.async_show_form(
             step_id="edit_event_type",
-            data_schema=vol.Schema({
-                vol.Required("type", description="Type d'événement", default=event["type"]): vol.In(event_type_options),
-            }),
+            data_schema=_type_schema(event["type"]),
             description_placeholders={"date_format": DATE_FORMAT}
         )
 
@@ -465,6 +467,8 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                     "first_name": user_input.get("first_name", ""),
                     "type": self._event_type
                 }
+                if self._event_type in GENDERED_TYPES:
+                    event_data["gender"] = normalize_gender(user_input.get("gender", event.get("gender")))
                 if self._event_type == "retirement":
                     event_data["start_date"] = user_input["start_date"]
                     event_data["is_penible"] = user_input.get("is_penible", False)
@@ -480,7 +484,7 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                     config_entry = self.hass.config_entries.async_get_entry(self._entry_id)
                     self.hass.config_entries.async_update_entry(
                         config_entry,
-                        title=_generate_entry_title(self.events)
+                        title=_generate_entry_title(self.events, self.hass.config.language)
                     )
                     _LOGGER.info("Saving edited event for config entry %s", self._entry_id)
                     # Conserve les autres options (notifications) ; le listener recharge l'entrée
@@ -493,16 +497,12 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                     errors["base"] = "update_failed"
 
         if self._event_type == "retirement":
-            career_type_options = {
-                "longue": "Carrière longue (début avant 18 ans)",
-                "normale": "Carrière normale (début après 18 ans)"
-            }
             schema = {
                 vol.Required("name", description="Nom de l'événement ou de la personne", default=event.get("name", "")): str,
                 vol.Optional("first_name", description="Prénom (optionnel)", default=event.get("first_name", "")): str,
                 vol.Required("start_date", description=f"Date de début du travail (format: {DATE_FORMAT})", default=event.get("start_date", "")): str,
                 vol.Optional("is_penible", description="Travaux pénibles (réduit les années pour la médaille)", default=event.get("is_penible", False)): bool,
-                vol.Required("career_type", description="Type de carrière", default=event.get("career_type", "normale")): vol.In(career_type_options)
+                vol.Required("career_type", default=event.get("career_type", "normale")): _select(CAREER_TYPES, "career_type")
             }
         else:
             date_label = "Date de naissance" if self._event_type == "memorial" else "Date"
@@ -514,6 +514,7 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
             if self._event_type == "memorial":
                 schema[vol.Optional("death_date", description=f"Date de décès (format: {DATE_FORMAT})", default=event.get("death_date", ""))] = str
 
+        _gender_field(schema, self._event_type, event.get("gender", GENDER_UNSPECIFIED))
         _LOGGER.info("Showing form for step 'edit_event' with event_type: %s", self._event_type)
         return self.async_show_form(
             step_id="edit_event",

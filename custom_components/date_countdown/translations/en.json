@@ -19,7 +19,8 @@
           "death_date": "Date of death (optional, for memorial)",
           "start_date": "Work start date (for retirement)",
           "is_penible": "Arduous work (reduces the years required for the medal)",
-          "career_type": "Career type"
+          "career_type": "Career type",
+          "gender": "Gender (for text agreement)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Date of death (optional, for memorial)",
           "start_date": "Work start date (for retirement)",
           "is_penible": "Arduous work (reduces the years required for the medal)",
-          "career_type": "Career type"
+          "career_type": "Career type",
+          "gender": "Gender (for text agreement)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Edit an event",
         "notifications": "Configure notifications 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Not specified",
+        "male": "Man",
+        "female": "Woman"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Birthday",
+        "anniversary": "Wedding anniversary",
+        "memorial": "Memorial",
+        "promotion": "Promotion",
+        "special_event": "Special event",
+        "retirement": "Retirement"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Normal career (started after 18)",
+        "longue": "Long career (started before 18)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Date of death (optional, for memorial)",
           "start_date": "Work start date (for retirement)",
           "is_penible": "Arduous work (reduces the years required for the medal)",
-          "career_type": "Career type"
+          "career_type": "Career type",
+          "gender": "Gender (for text agreement)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Notification targets (notify.* services)",
           "time": "Sending time",
           "reminder_days": "Reminder N days before (0 = disabled)",
-          "persistent": "Also create a Home Assistant persistent notification"
+          "persistent": "Also create a Home Assistant persistent notification",
+          "entities": "Notification entities (notify.send_message)",
+          "death_anniversary": "Death anniversary reminder (memorials)"
         },
         "data_description": {
           "targets": "One or more notify.* services (e.g. notify.mobile_app_my_phone). You can also type a name.",
           "time": "Default 09:00. If Home Assistant restarts after this time on the day, the notification is sent once at startup.",
           "reminder_days": "Example: 7 to be warned one week before. 0 disables the reminder.",
-          "persistent": "Also shows the message in Home Assistant notifications."
+          "persistent": "Also shows the message in Home Assistant notifications.",
+          "entities": "Modern notify entities (e.g. notify.my_phone), sent with notify.send_message. Can be combined with the services above.",
+          "death_anniversary": "Also sends a separate notification on the anniversary of the death date (and the N-day reminder if set)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Sensor {entity_id} does not belong to Memories and Celebrations."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Birthday"
+      },
+      "anniversary": {
+        "name": "{person} - Wedding anniversary"
+      },
+      "memorial": {
+        "name": "{person} - Memorial"
+      },
+      "promotion": {
+        "name": "{person} - Promotion"
+      },
+      "special_event": {
+        "name": "{person} - Special event"
+      },
+      "retirement": {
+        "name": "{person} - Retirement"
+      }
     }
   }
 }

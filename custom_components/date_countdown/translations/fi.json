@@ -19,7 +19,8 @@
           "death_date": "Kuolinpäivä (valinnainen, muistopäivää varten)",
           "start_date": "Työuran alkamispäivä (eläkkeelle siirtymistä varten)",
           "is_penible": "Raskas työ (vähentää mitaliin vaadittavia vuosia)",
-          "career_type": "Uratyyppi"
+          "career_type": "Uratyyppi",
+          "gender": "Sukupuoli (tekstien taivutusta varten)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Kuolinpäivä (valinnainen, muistopäivää varten)",
           "start_date": "Työuran alkamispäivä (eläkkeelle siirtymistä varten)",
           "is_penible": "Raskas työ (vähentää mitaliin vaadittavia vuosia)",
-          "career_type": "Uratyyppi"
+          "career_type": "Uratyyppi",
+          "gender": "Sukupuoli (tekstien taivutusta varten)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Muokkaa tapahtumaa",
         "notifications": "Määritä ilmoitukset 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Ei määritetty",
+        "male": "Mies",
+        "female": "Nainen"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Syntymäpäivä",
+        "anniversary": "Hääpäivä",
+        "memorial": "Muistopäivä",
+        "promotion": "Ylennys",
+        "special_event": "Erityinen tapahtuma",
+        "retirement": "Eläkkeelle jääminen"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Tavallinen ura (aloitus 18 vuoden jälkeen)",
+        "longue": "Pitkä ura (aloitus ennen 18 vuotta)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Kuolinpäivä (valinnainen, muistopäivää varten)",
           "start_date": "Työuran alkamispäivä (eläkkeelle siirtymistä varten)",
           "is_penible": "Raskas työ (vähentää mitaliin vaadittavia vuosia)",
-          "career_type": "Uratyyppi"
+          "career_type": "Uratyyppi",
+          "gender": "Sukupuoli (tekstien taivutusta varten)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Ilmoitusten kohteet (notify.*-palvelut)",
           "time": "Lähetysaika",
           "reminder_days": "Muistutus N päivää etukäteen (0 = pois käytöstä)",
-          "persistent": "Luo myös pysyvä Home Assistant -ilmoitus"
+          "persistent": "Luo myös pysyvä Home Assistant -ilmoitus",
+          "entities": "Ilmoitusentiteetit (notify.send_message)",
+          "death_anniversary": "Muistutus kuoleman vuosipäivästä (muistopäivät)"
         },
         "data_description": {
           "targets": "Yksi tai useampi notify.*-palvelu (esim. notify.mobile_app_oma_puhelin). Voit myös kirjoittaa nimen itse.",
           "time": "Oletus 09:00. Jos Home Assistant käynnistyy uudelleen tämän ajan jälkeen tapahtumapäivänä, ilmoitus lähetetään kerran käynnistyksen yhteydessä.",
           "reminder_days": "Esimerkki: 7, jos haluat muistutuksen viikkoa aiemmin. 0 poistaa muistutuksen käytöstä.",
-          "persistent": "Näyttää viestin myös Home Assistantin ilmoituksissa."
+          "persistent": "Näyttää viestin myös Home Assistantin ilmoituksissa.",
+          "entities": "Modernit notify-entiteetit (esim. notify.oma_puhelin), lähetetään notify.send_message-palvelulla. Voidaan yhdistää yllä oleviin palveluihin.",
+          "death_anniversary": "Lähettää myös erillisen ilmoituksen kuolinpäivän vuosipäivänä (ja N päivän muistutuksen, jos asetettu)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Anturi {entity_id} ei kuulu Muistot ja Juhlat -integraatioon."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Syntymäpäivä"
+      },
+      "anniversary": {
+        "name": "{person} - Hääpäivä"
+      },
+      "memorial": {
+        "name": "{person} - Muistopäivä"
+      },
+      "promotion": {
+        "name": "{person} - Ylennys"
+      },
+      "special_event": {
+        "name": "{person} - Erityinen tapahtuma"
+      },
+      "retirement": {
+        "name": "{person} - Eläkkeelle jääminen"
+      }
     }
   }
 }
