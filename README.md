@@ -126,6 +126,8 @@ L'intégration fournit sa propre carte **« Informations »**, chargée automati
 
 **Ajout via l'interface** : Tableau de bord → ✏️ Modifier → **Ajouter une carte** → chercher **« Souvenirs et Célébrations — Informations »**. L'éditeur permet de régler le titre, de choisir les capteurs d'événements (vide = tous les anniversaires détectés) et les options d'affichage.
 
+![Carte Informations](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/informations.png)
+
 Exemple de rendu :
 
 > **Informations** 🎂
@@ -159,13 +161,24 @@ En plus de la carte **Informations**, l'intégration livre **4 cartes natives** 
 | Frise des mois | `custom:date-countdown-timeline-card` | Les N prochains mois et leurs événements |
 | Mémoriaux | `custom:date-countdown-memorial-card` | Carte sobre en mémoire des disparus |
 
+**Aperçu de toutes les cartes** (thème clair, puis sombre) :
+
+![Aperçu de toutes les cartes](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/apercu-global.png)
+
+<details><summary>Thème sombre</summary>
+
+![Aperçu de toutes les cartes, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/apercu-global-sombre.png)
+
+</details>
+
 Badges : **Aujourd'hui !** (rose), **Demain / J-1 à J-6** (orange), **J-7 à J-29** (bleu), au-delà gris. 🔔 = notifications natives actives pour l'événement.
 
 ### 📋 Liste / Agenda
 
 | | |
 |---|---|
-| ![Liste](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste.png) | ![Liste compacte, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste-compacte-sombre.png) |
+| ![Liste](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste.png) | ![Liste le jour J](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste-jour-j.png) |
+| ![Liste compacte](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste-compacte.png) | ![Liste compacte, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste-compacte-sombre.png) |
 
 Sections 🎂 Anniversaires, 💍 Mariages, 🕯️ Mémoriaux, 🏆 Promotions, ⭐ Événements, 🏖️ Retraites, triées par proximité. Chaque ligne affiche la date (« mercredi 13 janvier »), l'âge à venir, la catégorie d'âge, les noces, l'âge qu'aurait eu la personne, la médaille du travail…
 
@@ -196,6 +209,7 @@ horizon_days: 120
 | | |
 |---|---|
 | ![Compte à rebours](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours.png) | ![Jour J avec confettis](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours-jour-j.png) |
+| ![Choix automatique (mariages)](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours-auto.png) | ![Thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours-sombre.png) |
 
 Le prochain événement (ou celui choisi) en grand : nombre de jours, anneau de progression sur l'année (sur la carrière pour une retraite), sous-titre « Océane aura 25 ans · Super-Héros des To-Do Lists ». Le jour J : 🎉, fond festif et confettis CSS légers (jamais pour un mémorial ; désactivés si le système demande de réduire les animations).
 
@@ -216,7 +230,9 @@ celebrate: true
 
 ### 📅 Frise des mois
 
-![Frise](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/frise-grille.png)
+| | |
+|---|---|
+| ![Frise verticale](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/frise.png) | ![Frise en grille](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/frise-grille.png) |
 
 Les 12 (ou N) prochains mois, en frise verticale ou en grille ; puces colorées par type, badge pour les événements à moins de 30 jours, légende.
 
@@ -238,7 +254,9 @@ show_empty_months: false
 
 ### 🕯️ Mémoriaux
 
-![Mémoriaux](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/memoriaux.png)
+| | |
+|---|---|
+| ![Mémoriaux](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/memoriaux.png) | ![Mémoriaux, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/memoriaux-sombre.png) |
 
 Ton sobre, bougie à la flamme douce : « aurait eu 92 ans le 17 décembre », « disparu(e) depuis 8 ans · † 3 mai 2018 · à 83 ans ».
 
