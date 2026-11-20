@@ -277,7 +277,9 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                     errors={"action": "invalid_action"}
                 )
             _LOGGER.info("Selected action: edit")
-            return await self.async_step_select_event({})
+            # Afficher le formulaire de sélection SANS soumission implicite
+            # (passer {} faisait apparaître l'erreur « event_required » d'office)
+            return await self.async_step_select_event()
 
         _LOGGER.info("Showing form for step 'init' with action: edit")
         return self.async_show_form(
@@ -375,17 +377,17 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
             )
 
         if user_input is not None:
-            if "event" not in user_input or user_input["event"] not in event_options:
+            selected = user_input.get("event")
+            selected = None if selected is None else str(selected).strip()
+            if selected not in event_options:
                 _LOGGER.warning("No valid event selected in user_input: %s", user_input)
                 return self.async_show_form(
                     step_id="select_event",
-                    data_schema=vol.Schema({
-                        vol.Required("event"): vol.In(event_options),
-                    }),
+                    data_schema=self._select_event_schema(event_options),
                     errors={"event": "event_required"}
                 )
 
-            event_index = int(user_input["event"])
+            event_index = int(selected)
             _LOGGER.info("Selected event index: %s for editing", event_index)
             self._event_type = self.events[event_index]["type"]
             self._event_index = event_index
@@ -394,10 +396,20 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
         _LOGGER.info("Showing form for step 'select_event' with %d options", len(event_options))
         return self.async_show_form(
             step_id="select_event",
-            data_schema=vol.Schema({
-                vol.Required("event"): vol.In(event_options),
-            })
+            data_schema=self._select_event_schema(event_options)
         )
+
+    @staticmethod
+    def _select_event_schema(event_options: Dict[str, str]) -> vol.Schema:
+        """Liste des événements, le premier pré-sélectionné (valeur envoyée même sans clic)."""
+        return vol.Schema({
+            vol.Required("event", default=next(iter(event_options))): SelectSelector(
+                SelectSelectorConfig(
+                    options=[{"value": key, "label": label} for key, label in event_options.items()],
+                    mode=SelectSelectorMode.LIST,
+                )
+            ),
+        })
 
     async def async_step_edit_event_type(self, user_input: Optional[Dict[str, Any]] = None) -> FlowResult:
         """Handle selecting the event type for editing an event."""

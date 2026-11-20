@@ -1,5 +1,12 @@
 # Changelog
 
+## Non publié
+
+### Corrigé
+- 🐛 **Options → Modifier un événement** : l’écran « Sélectionnez un événement à modifier » s’affichait d’emblée avec l’erreur « Veuillez sélectionner un événement… », même avec l’événement coché. L’étape de sélection était appelée avec une saisie vide (`{}`) au lieu d’être simplement affichée. Le formulaire s’affiche maintenant sans erreur, le premier événement est pré-sélectionné et la valeur est validée de façon robuste.
+- Message d’erreur « event_required » : « dans la liste » au lieu de « dans la liste déroulante » (fr, en).
+- Tests : `tests/test_options_flow.py` (parcours complet des Options : sélection → type → édition → sauvegarde, notifications ; entrées migrées depuis 1.2.18 et neuves, un ou plusieurs événements).
+
 ## 1.2.19 — 2026-11-20
 
 ### Ajouté
