@@ -12,15 +12,12 @@ from homeassistant.util import dt as dt_util
 from .const import (
     DOMAIN,
     EVENT_TYPES,
-    WEDDING_ANNIVERSARIES,
-    AGE_CATEGORIES,
-    AGE_CATEGORY_ICONS,
     WORK_MEDAL_LEVELS,
     WORK_MEDAL_PENIBLE_LEVELS,
 )
 from .entity import async_event_models, event_device_info
 from .date_utils import anniversary_in_year, years_elapsed
-from .i18n import GENDER_UNSPECIFIED, Texts, age_category as tr_age_category, event_type_label, medal_name, wedding_name
+from .i18n import GENDER_UNSPECIFIED, Texts, age_category as tr_age_category, event_type_label, medal_name, no_medal_label, wedding_name
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -199,21 +196,17 @@ class DateCountdownCalendar(CalendarEntity):
         return Texts(self._lang, self._gender)
 
     def _medal(self, medal: Optional[str]) -> str:
-        return medal_name(medal, self._lang) if medal else self._t.fmt("cal_no_medal")
+        return medal_name(medal, self._lang) if medal else no_medal_label(self._lang)
 
     def _generate_event_summary(self, years: int) -> str:
         """Generate a summary for the calendar event based on event type and years."""
         t = self._t
         summary = f"{self._attr_name}"
         if self._event_type == "birthday":
-            age_category = None
-            for (min_age, max_age), category in AGE_CATEGORIES.items():
-                if min_age <= years <= max_age:
-                    age_category = tr_age_category(years, category, self._lang, self._gender)
-                    break
+            age_category = tr_age_category(years, self._lang, self._gender)
             summary += f" ({t.years(years)}, {age_category})" if age_category else f" ({t.years(years)})"
         elif self._event_type == "anniversary":
-            wedding_type = wedding_name(years, WEDDING_ANNIVERSARIES.get(years), self._lang)
+            wedding_type = wedding_name(years, self._lang)
             summary += f" ({t.years(years)}, {wedding_type})" if wedding_type else f" ({t.years(years)})"
         elif self._event_type == "memorial":
             years_since_death = None

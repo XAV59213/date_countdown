@@ -1,4 +1,4 @@
-"""Catégories d'âge et noces traduites (allemand, espagnol, italien).
+"""Catégories d'âge et noces traduites (français, anglais, allemand, espagnol, italien).
 
 Index = âge (0 à 120) / années de mariage - 1 (1 à 60), même ordre que const.
 Les noces suivent la liste française de l'intégration (traduction des matières).
@@ -131,4 +131,86 @@ WEDDINGS_IT = [
     "Nozze di Lavanda", "Nozze di Cashmere", "Nozze d'Ametista", "Nozze di Cedro", "Nozze d'Oro",
     "Nozze di Camelia", "Nozze di Tormalina", "Nozze di Ciliegio", "Nozze di Zibellino", "Nozze d'Orchidea",
     "Nozze di Lapislazzuli", "Nozze d'Azzurrite", "Nozze d'Acero", "Nozze di Visone", "Nozze di Diamante",
+]
+
+AGE_CATEGORIES_FR = [
+    "Mini Big Bang", "Bébé Fusée", "Tornade de Gribouilles", "Pirate des Bacs à Sable", "Ninja des Gâteaux",
+    "Roi des Toboggans", "Artiste des Stickers", "Champion des Roulettes", "Maître des Legos", "Empereur des Cabanes",
+    "As des Cartes Pokémon", "Pré-Ado TikTokeur", "Rebelle des Émojis", "Guru des Memes", "Ninja des Selfies",
+    "Philosophe des Hashtags", "Roi des Stories Snapchat", "Visionnaire des Reels", "Majeur", "Sorcier des Festivals",
+    "Ninja des Apéros", "Maître des Soirées Impro", "Jedi des Group Chats", "Guru des Playlists Spotify", "As des Brunchs",
+    "Super-Héros des To-Do Lists", "Rockstar des Dimanches Netflix", "Sorcier des Excuses Créatives", "Empereur des Karaokés", "Maître des Challenges TikTok",
+    "Guru des Brunchs", "Ninja des Réunions Zoom", "Jedi des Spreadsheets", "As des Apéros Vins", "Super-Héros du Multitasking",
+    "Rockstar des Anniversaires", "Sorcier des BBQ", "Maître des Blagues Carambar", "Empereur des Soirées Quiz", "Guru des Astuces Cuisine",
+    "Ninja des Parents Débordés", "Jedi des Vacances Planifiées", "As des Jeux de Société", "Super-Héros des Excuses Épiques", "Rockstar des Réunions Parents-Profs",
+    "Sorcier des Budgets Serrés", "Maître des Anecdotes Drôles", "Empereur des Barbecues", "Guru des Soirées Nostalgie", "Ninja des Projets DIY",
+    "Rockstar des Blagues de Papa", "Jedi des Siestes Impromptues", "As des Histoires de Jeunesse", "Super-Héros des Années 80", "Sorcier des Recettes de Grand-Mère",
+    "Maître des Jeux de Cartes", "Empereur des Randonnées", "Guru des Conseils Sages", "Ninja des Soirées Tricot", "Jedi des Documentaires",
+    "Rockstar des Siestes Épiques", "As des Mots Fléchés", "Super-Héros des Jardins", "Sorcier des Histoires Épiques", "Maître des Soirées Scrabble",
+    "Empereur des Balades", "Guru des Souvenirs", "Ninja des Petits-Enfants", "Jedi des Anecdotes", "As des Soirées Bingo",
+    "Rockstar des Récits d’Antan", "Super-Héros des Potagers", "Sorcier des Contes", "Maître des Puzzles", "Empereur des Souvenirs",
+    "Guru des Balancelles", "Ninja des Histoires", "Jedi des Siestes", "As des Récits Légendaires", "Rockstar des Souvenirs",
+    "Sage des Anecdotes Épiques", "Super-Héros des Récits", "Sorcier des Mémoires", "Maître des Histoires", "Empereur des Légendes",
+    "Guru des Contes Épiques", "Ninja des Souvenirs", "Jedi des Récits", "As des Anecdotes", "Rockstar des Mémoires",
+    "Sage des Légendes", "Super-Héros des Contes", "Sorcier des Souvenirs", "Maître des Récits Épiques", "Empereur des Mémoires",
+    "Guru des Histoires", "Ninja des Légendes", "Jedi des Anecdotes", "As des Contes", "Rockstar des Souvenirs",
+    "Légende Cosmique", "Super-Héros Intergalactique", "Sorcier des Étoiles", "Maître des Constellations", "Empereur des Galaxies",
+    "Guru des Univers", "Ninja des Comètes", "Jedi des Astres", "As des Nébuleuses", "Rockstar des Étoiles",
+    "Sage des Voies Lactées", "Super-Héros des Supernovas", "Sorcier des Pulsars", "Maître des Quasars", "Empereur des Trou Noirs",
+    "Guru des Météores", "Ninja des Aurores", "Jedi des Éclipses", "As des Novas", "Rockstar des Galaxies",
+    "Héros Intergalactique",
+]
+
+AGE_CATEGORIES_EN = [
+    "Mini Big Bang", "Rocket Baby", "Scribble Tornado", "Sandbox Pirate", "Cake Ninja",
+    "King of the Slides", "Sticker Artist", "Training-Wheels Champion", "Lego Master", "Emperor of Treehouses",
+    "Pokémon Card Ace", "TikToker Tween", "Emoji Rebel", "Meme Guru", "Selfie Ninja",
+    "Hashtag Philosopher", "King of Snapchat Stories", "Reels Visionary", "Grown-Up", "Festival Wizard",
+    "Happy-Hour Ninja", "Improv Night Master", "Group Chat Jedi", "Spotify Playlist Guru", "Brunch Ace",
+    "Superhero of To-Do Lists", "Netflix Sunday Rockstar", "Wizard of Creative Excuses", "Karaoke Emperor", "TikTok Challenge Master",
+    "Brunch Guru", "Zoom Meeting Ninja", "Spreadsheet Jedi", "Wine Night Ace", "Multitasking Superhero",
+    "Birthday Rockstar", "BBQ Wizard", "Master of Dad-Joke Candy", "Quiz Night Emperor", "Kitchen Hacks Guru",
+    "Ninja of Swamped Parents", "Planned Holidays Jedi", "Board Game Ace", "Superhero of Epic Excuses", "Parent-Teacher Meeting Rockstar",
+    "Tight Budget Wizard", "Master of Funny Anecdotes", "Barbecue Emperor", "Nostalgia Night Guru", "DIY Project Ninja",
+    "Dad-Joke Rockstar", "Power-Nap Jedi", "Ace of Youth Stories", "Superhero of the 80s", "Wizard of Grandma's Recipes",
+    "Card Game Master", "Hiking Emperor", "Wise Advice Guru", "Knitting Night Ninja", "Documentary Jedi",
+    "Epic Nap Rockstar", "Crossword Ace", "Garden Superhero", "Wizard of Epic Stories", "Scrabble Night Master",
+    "Emperor of Strolls", "Memories Guru", "Grandchildren Ninja", "Anecdote Jedi", "Bingo Night Ace",
+    "Rockstar of Old Tales", "Vegetable Garden Superhero", "Fairy-Tale Wizard", "Puzzle Master", "Emperor of Memories",
+    "Porch Swing Guru", "Story Ninja", "Nap Jedi", "Ace of Legendary Tales", "Memories Rockstar",
+    "Sage of Epic Anecdotes", "Storytelling Superhero", "Wizard of Memoirs", "Master of Stories", "Emperor of Legends",
+    "Guru of Epic Tales", "Memories Ninja", "Tales Jedi", "Anecdote Ace", "Memoirs Rockstar",
+    "Sage of Legends", "Fairy-Tale Superhero", "Wizard of Memories", "Master of Epic Tales", "Emperor of Memoirs",
+    "Story Guru", "Legend Ninja", "Anecdote Jedi", "Fairy-Tale Ace", "Memories Rockstar",
+    "Cosmic Legend", "Intergalactic Superhero", "Wizard of the Stars", "Master of Constellations", "Emperor of Galaxies",
+    "Guru of Universes", "Comet Ninja", "Jedi of the Heavens", "Nebula Ace", "Star Rockstar",
+    "Sage of the Milky Ways", "Supernova Superhero", "Pulsar Wizard", "Quasar Master", "Black Hole Emperor",
+    "Meteor Guru", "Aurora Ninja", "Eclipse Jedi", "Nova Ace", "Galaxy Rockstar",
+    "Intergalactic Hero",
+]
+
+# Noces : nom complet (index = années de mariage - 1)
+WEDDINGS_FR = [
+    "Noces de Coton", "Noces de Cuir", "Noces de Froment", "Noces de Cire", "Noces de Bois",
+    "Noces de Chypre", "Noces de Laine", "Noces de Coquelicot", "Noces de Faïence", "Noces d'Étain",
+    "Noces de Corail", "Noces de Soie", "Noces de Muguet", "Noces de Plomb", "Noces de Cristal",
+    "Noces de Saphir", "Noces de Rose", "Noces de Turquoise", "Noces de Cretonne", "Noces de Porcelaine",
+    "Noces d'Opale", "Noces de Bronze", "Noces de Béryl", "Noces de Satin", "Noces d'Argent",
+    "Noces de Jade", "Noces d'Acajou", "Noces de Nickel", "Noces de Velours", "Noces de Perle",
+    "Noces de Basane", "Noces de Cuivre", "Noces de Porphyre", "Noces d'Ambre", "Noces de Rubis",
+    "Noces de Mousseline", "Noces de Papier", "Noces de Mercure", "Noces de Crêpe", "Noces d'Émeraude",
+    "Noces de Fer", "Noces de Nacre", "Noces de Flanelle", "Noces de Topaze", "Noces de Vermeil",
+    "Noces de Lavande", "Noces de Cachemire", "Noces d'Améthyste", "Noces de Cèdre", "Noces d'Or",
+    "Noces de Camélia", "Noces de Tourmaline", "Noces de Merisier", "Noces de Zibeline", "Noces d'Orchidée",
+    "Noces de Lapis-Lazuli", "Noces d'Azurite", "Noces d'Érable", "Noces de Vison", "Noces de Diamant",
+]
+
+# Anglais : matière seule, le texte devient « <matière> anniversary »
+WEDDINGS_EN = [
+    "Cotton", "Leather", "Wheat", "Wax", "Wood", "Cypress", "Wool", "Poppy", "Earthenware", "Tin",
+    "Coral", "Silk", "Lily of the Valley", "Lead", "Crystal", "Sapphire", "Rose", "Turquoise", "Cretonne", "Porcelain",
+    "Opal", "Bronze", "Beryl", "Satin", "Silver", "Jade", "Mahogany", "Nickel", "Velvet", "Pearl",
+    "Sheepskin", "Copper", "Porphyry", "Amber", "Ruby", "Muslin", "Paper", "Mercury", "Crepe", "Emerald",
+    "Iron", "Mother-of-Pearl", "Flannel", "Topaz", "Vermeil", "Lavender", "Cashmere", "Amethyst", "Cedar", "Gold",
+    "Camellia", "Tourmaline", "Cherry Wood", "Sable", "Orchid", "Lapis Lazuli", "Azurite", "Maple", "Mink", "Diamond",
 ]

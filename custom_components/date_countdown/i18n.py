@@ -1,22 +1,32 @@
 """Textes générés côté Python (notifications, catégories d'âge, noces, médailles…).
 
-Ils suivent la langue de Home Assistant (``hass.config.language``) :
-- français, anglais, allemand, espagnol, italien : tous les textes
-  (notifications, types, médailles, catégories d'âge accordées au genre, noces, calendrier) ;
-- autres langues : anglais.
+Le code ne manipule que des clés stables (type d'événement, âge, clé de noces,
+clé de médaille) ; les libellés suivent la langue de Home Assistant
+(``hass.config.language``) :
+- types d'événements, médailles et titre des notifications : les 22 langues de
+  ``translations/*.json`` (mêmes textes que l'interface), repli anglais ;
+- notifications, catégories d'âge (accordées au genre), noces, calendrier :
+  français, anglais, allemand, espagnol, italien ; autres langues : anglais.
 """
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
 import re
 from typing import Any
 
+from .const import WEDDING_ANNIVERSARIES
 from .i18n_data import (
     AGE_CATEGORIES_DE,
+    AGE_CATEGORIES_EN,
     AGE_CATEGORIES_ES,
+    AGE_CATEGORIES_FR,
     AGE_CATEGORIES_IT,
     WEDDINGS_DE,
+    WEDDINGS_EN,
     WEDDINGS_ES,
+    WEDDINGS_FR,
     WEDDINGS_IT,
 )
 
@@ -27,6 +37,48 @@ GENDERS = [GENDER_UNSPECIFIED, GENDER_MALE, GENDER_FEMALE]
 
 SUPPORTED = ("fr", "en", "de", "es", "it")
 FALLBACK = "en"
+
+# ---------------------------------------------------------------------------
+# Catalogue des 22 langues (translations/*.json, chargé une fois à l'import)
+# ---------------------------------------------------------------------------
+
+_TRANSLATIONS_DIR = Path(__file__).parent / "translations"
+
+
+def _load_catalog() -> dict[str, dict[str, Any]]:
+    catalog: dict[str, dict[str, Any]] = {}
+    for path in sorted(_TRANSLATIONS_DIR.glob("*.json")):
+        try:
+            catalog[path.stem] = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):  # fichier illisible : la langue retombe sur l'anglais
+            continue
+    return catalog
+
+
+_CATALOG = _load_catalog()
+_CATALOG_LANGS = {lang.lower(): lang for lang in _CATALOG}
+_LANG_ALIASES = {"no": "nb", "nn": "nb"}
+
+
+def catalog_language(language: str | None) -> str:
+    """'pt-BR', 'pt_br', 'de-AT', 'no'… → fichier translations/<langue>.json disponible (repli : anglais)."""
+    lang = (language or "").strip().lower().replace("_", "-")
+    if lang in _CATALOG_LANGS:
+        return _CATALOG_LANGS[lang]
+    base = lang.split("-", 1)[0]
+    base = _LANG_ALIASES.get(base, base)
+    return _CATALOG_LANGS.get(base, FALLBACK)
+
+
+def _catalog_get(language: str | None, *path: str) -> str | None:
+    for lang in (catalog_language(language), FALLBACK):
+        node: Any = _CATALOG.get(lang, {})
+        for key in path:
+            node = node.get(key) if isinstance(node, dict) else None
+        if isinstance(node, str) and node:
+            return node
+    return None
+
 
 _VOWELS = "aeiouyàâäéèêëîïôöùûüÿæœhAEIOUYÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÆŒH"
 _VOWELS_NO_H = _VOWELS.replace("h", "").replace("H", "")
@@ -49,73 +101,10 @@ def normalize_gender(value: Any) -> str:
 # Libellés
 # ---------------------------------------------------------------------------
 
-EVENT_TYPE_LABELS: dict[str, dict[str, str]] = {
-    "fr": {"birthday": "Anniversaire", "anniversary": "Anniversaire de mariage", "memorial": "Mémorial",
-           "promotion": "Promotion", "special_event": "Événement spécial", "retirement": "Retraite"},
-    "en": {"birthday": "Birthday", "anniversary": "Wedding anniversary", "memorial": "Memorial",
-           "promotion": "Promotion", "special_event": "Special event", "retirement": "Retirement"},
-    "de": {"birthday": "Geburtstag", "anniversary": "Hochzeitstag", "memorial": "Gedenktag",
-           "promotion": "Beförderung", "special_event": "Besonderes Ereignis", "retirement": "Ruhestand"},
-    "es": {"birthday": "Cumpleaños", "anniversary": "Aniversario de boda", "memorial": "Memorial",
-           "promotion": "Ascenso", "special_event": "Evento especial", "retirement": "Jubilación"},
-    "it": {"birthday": "Compleanno", "anniversary": "Anniversario di matrimonio", "memorial": "Commemorazione",
-           "promotion": "Promozione", "special_event": "Evento speciale", "retirement": "Pensione"},
-}
 
-MEDALS: dict[str, dict[str, str]] = {
-    "fr": {"Argent": "Argent", "Vermeil": "Vermeil", "Or": "Or", "Grand Or": "Grand Or"},
-    "en": {"Argent": "Silver", "Vermeil": "Vermeil", "Or": "Gold", "Grand Or": "Grand Gold"},
-    "de": {"Argent": "Silber", "Vermeil": "Vermeil", "Or": "Gold", "Grand Or": "Großgold"},
-    "es": {"Argent": "Plata", "Vermeil": "Vermeil", "Or": "Oro", "Grand Or": "Gran Oro"},
-    "it": {"Argent": "Argento", "Vermeil": "Vermeil", "Or": "Oro", "Grand Or": "Grande Oro"},
-}
 
-NOTIFY_TITLES = {
-    "fr": "Souvenirs et Célébrations",
-    "en": "Memories and Celebrations",
-    "de": "Erinnerungen und Feiern",
-    "es": "Recuerdos y Celebraciones",
-    "it": "Ricordi e Celebrazioni",
-}
 
-# Catégories d'âge en anglais (index = âge, 0 à 120), même ordre que const.AGE_CATEGORIES
-AGE_CATEGORIES_EN = [
-    "Mini Big Bang", "Rocket Baby", "Scribble Tornado", "Sandbox Pirate", "Cake Ninja",
-    "King of the Slides", "Sticker Artist", "Training-Wheels Champion", "Lego Master", "Emperor of Treehouses",
-    "Pokémon Card Ace", "TikToker Tween", "Emoji Rebel", "Meme Guru", "Selfie Ninja",
-    "Hashtag Philosopher", "King of Snapchat Stories", "Reels Visionary", "Grown-Up", "Festival Wizard",
-    "Happy-Hour Ninja", "Improv Night Master", "Group Chat Jedi", "Spotify Playlist Guru", "Brunch Ace",
-    "Superhero of To-Do Lists", "Netflix Sunday Rockstar", "Wizard of Creative Excuses", "Karaoke Emperor", "TikTok Challenge Master",
-    "Brunch Guru", "Zoom Meeting Ninja", "Spreadsheet Jedi", "Wine Night Ace", "Multitasking Superhero",
-    "Birthday Rockstar", "BBQ Wizard", "Master of Dad-Joke Candy", "Quiz Night Emperor", "Kitchen Hacks Guru",
-    "Ninja of Swamped Parents", "Planned Holidays Jedi", "Board Game Ace", "Superhero of Epic Excuses", "Parent-Teacher Meeting Rockstar",
-    "Tight Budget Wizard", "Master of Funny Anecdotes", "Barbecue Emperor", "Nostalgia Night Guru", "DIY Project Ninja",
-    "Dad-Joke Rockstar", "Power-Nap Jedi", "Ace of Youth Stories", "Superhero of the 80s", "Wizard of Grandma's Recipes",
-    "Card Game Master", "Hiking Emperor", "Wise Advice Guru", "Knitting Night Ninja", "Documentary Jedi",
-    "Epic Nap Rockstar", "Crossword Ace", "Garden Superhero", "Wizard of Epic Stories", "Scrabble Night Master",
-    "Emperor of Strolls", "Memories Guru", "Grandchildren Ninja", "Anecdote Jedi", "Bingo Night Ace",
-    "Rockstar of Old Tales", "Vegetable Garden Superhero", "Fairy-Tale Wizard", "Puzzle Master", "Emperor of Memories",
-    "Porch Swing Guru", "Story Ninja", "Nap Jedi", "Ace of Legendary Tales", "Memories Rockstar",
-    "Sage of Epic Anecdotes", "Storytelling Superhero", "Wizard of Memoirs", "Master of Stories", "Emperor of Legends",
-    "Guru of Epic Tales", "Memories Ninja", "Tales Jedi", "Anecdote Ace", "Memoirs Rockstar",
-    "Sage of Legends", "Fairy-Tale Superhero", "Wizard of Memories", "Master of Epic Tales", "Emperor of Memoirs",
-    "Story Guru", "Legend Ninja", "Anecdote Jedi", "Fairy-Tale Ace", "Memories Rockstar",
-    "Cosmic Legend", "Intergalactic Superhero", "Wizard of the Stars", "Master of Constellations", "Emperor of Galaxies",
-    "Guru of Universes", "Comet Ninja", "Jedi of the Heavens", "Nebula Ace", "Star Rockstar",
-    "Sage of the Milky Ways", "Supernova Superhero", "Pulsar Wizard", "Quasar Master", "Black Hole Emperor",
-    "Meteor Guru", "Aurora Ninja", "Eclipse Jedi", "Nova Ace", "Galaxy Rockstar",
-    "Intergalactic Hero",
-]
 
-# Noces en anglais (index = années de mariage, 1 à 60)
-WEDDINGS_EN = [
-    "Cotton", "Leather", "Wheat", "Wax", "Wood", "Cypress", "Wool", "Poppy", "Earthenware", "Tin",
-    "Coral", "Silk", "Lily of the Valley", "Lead", "Crystal", "Sapphire", "Rose", "Turquoise", "Cretonne", "Porcelain",
-    "Opal", "Bronze", "Beryl", "Satin", "Silver", "Jade", "Mahogany", "Nickel", "Velvet", "Pearl",
-    "Sheepskin", "Copper", "Porphyry", "Amber", "Ruby", "Muslin", "Paper", "Mercury", "Crepe", "Emerald",
-    "Iron", "Mother-of-Pearl", "Flannel", "Topaz", "Vermeil", "Lavender", "Cashmere", "Amethyst", "Cedar", "Gold",
-    "Camellia", "Tourmaline", "Cherry Wood", "Sable", "Orchid", "Lapis Lazuli", "Azurite", "Maple", "Mink", "Diamond",
-]
 
 # Formes féminines des catégories d'âge : (masculin, féminin), testées dans l'ordre,
 # première correspondance seulement (mot entier). Les titres absents sont épicènes
@@ -164,46 +153,74 @@ def _feminine(text: str, lang: str) -> str:
     return text
 
 
-_AGE_CATEGORIES = {"en": AGE_CATEGORIES_EN, "de": AGE_CATEGORIES_DE, "es": AGE_CATEGORIES_ES, "it": AGE_CATEGORIES_IT}
-_WEDDINGS = {"de": WEDDINGS_DE, "es": WEDDINGS_ES, "it": WEDDINGS_IT}
+_AGE_CATEGORIES = {
+    "fr": AGE_CATEGORIES_FR, "en": AGE_CATEGORIES_EN, "de": AGE_CATEGORIES_DE,
+    "es": AGE_CATEGORIES_ES, "it": AGE_CATEGORIES_IT,
+}
+_WEDDINGS = {"fr": WEDDINGS_FR, "de": WEDDINGS_DE, "es": WEDDINGS_ES, "it": WEDDINGS_IT}
+
+# Anciennes valeurs françaises (avant 1.2.22) → clés stables, pour compatibilité
+LEGACY_MEDAL_KEYS = {"Argent": "silver", "Vermeil": "vermeil", "Or": "gold", "Grand Or": "grand_gold"}
+MEDAL_KEYS = ("silver", "vermeil", "gold", "grand_gold")
 
 
-def age_category(age: int, category_fr: str | None, language: str, gender: str = GENDER_UNSPECIFIED) -> str | None:
-    """Catégorie d'âge traduite (et accordée au féminin si genre = femme)."""
-    if category_fr is None:
+def age_category(age: int | None, language: str, gender: str = GENDER_UNSPECIFIED) -> str | None:
+    """Catégorie d'âge (clé = l'âge, 0 à 120) traduite et accordée au féminin si genre = femme."""
+    if age is None or not 0 <= age < len(AGE_CATEGORIES_FR):
         return None
     lang = resolve_language(language)
-    if lang == "fr":
-        text = category_fr
-    else:
-        table = _AGE_CATEGORIES[lang]
-        text = table[age] if 0 <= age < len(table) else category_fr
+    text = _AGE_CATEGORIES[lang][age]
     return _feminine(text, lang) if gender == GENDER_FEMALE else text
 
 
-def wedding_name(years: int, wedding_fr: str | None, language: str) -> str | None:
-    if wedding_fr is None:
+def wedding_key(years: int | None) -> str | None:
+    """Clé stable des noces (« silver », « gold »…) pour un nombre d'années de mariage."""
+    return WEDDING_ANNIVERSARIES.get(years) if years is not None else None
+
+
+def wedding_name(years: int | None, language: str) -> str | None:
+    """Nom des noces traduit (ex. 25 → « Noces d'Argent », « Silver anniversary »)."""
+    if wedding_key(years) is None:
         return None
     lang = resolve_language(language)
-    if lang == "fr" or not 1 <= years <= len(WEDDINGS_EN):
-        return wedding_fr
     if lang in _WEDDINGS:
         return _WEDDINGS[lang][years - 1]
     return f"{WEDDINGS_EN[years - 1]} anniversary"
 
 
-def medal_name(medal_fr: str | None, language: str) -> str | None:
-    if medal_fr is None:
+def medal_key(medal: str | None) -> str | None:
+    """Clé stable d'une médaille (accepte aussi les anciennes valeurs françaises)."""
+    if medal is None:
         return None
-    return MEDALS[resolve_language(language)].get(medal_fr, medal_fr)
+    key = LEGACY_MEDAL_KEYS.get(medal, medal)
+    return key if key in MEDAL_KEYS else None
+
+
+def medal_name(medal: str | None, language: str) -> str | None:
+    """Nom de la médaille du travail dans la langue de HA (22 langues, comme le capteur)."""
+    key = medal_key(medal)
+    if key is None:
+        return None
+    return _catalog_get(language, "entity", "sensor", "work_medal", "state", key) or key
+
+
+def no_medal_label(language: str) -> str:
+    return _catalog_get(language, "entity", "sensor", "work_medal", "state", "none") or "None"
 
 
 def event_type_label(event_type: str, language: str) -> str:
-    return EVENT_TYPE_LABELS[resolve_language(language)].get(event_type, event_type)
+    """Libellé du type d'événement (22 langues, mêmes textes que la liste de l'assistant)."""
+    return _catalog_get(language, "selector", "event_type", "options", event_type) or event_type
 
 
 def notify_title(language: str) -> str:
-    return NOTIFY_TITLES[resolve_language(language)]
+    """Titre des notifications : nom de l'intégration traduit (22 langues)."""
+    return _catalog_get(language, "config", "step", "user", "title") or "Memories and Celebrations"
+
+
+def empty_entry_title(language: str) -> str:
+    """Titre d'une entrée sans événement."""
+    return Texts(language).raw("entry_empty")
 
 
 # ---------------------------------------------------------------------------
@@ -213,6 +230,7 @@ def notify_title(language: str) -> str:
 
 MESSAGES: dict[str, dict[str, str]] = {
     "fr": {
+        "entry_empty": "Compte à rebours d'événements (vide)",
         "year_one": "{n} an", "year_other": "{n} ans",
         "day_birthday": "🎂 Aujourd’hui, {person} a {years} !",
         "day_birthday_noage": "🎂 Aujourd’hui, c’est l’anniversaire {de_person} !",
@@ -252,12 +270,12 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_retired": "{name} (Retraite atteinte)",
         "cal_retirement": "{name} (Retraite dans {years}, Médaille : {medal})",
         "cal_retirement_event": "{name} (Retraite, Médaille : {medal})",
-        "cal_no_medal": "Aucune",
         "cal_memorial": "{name} (Âge si vivant : {age}, Depuis décès : {since})",
         "cal_memorial_nosince": "{name} (Âge si vivant : {age})",
         "cal_death": "{name} (Anniversaire du décès : {since})",
     },
     "en": {
+        "entry_empty": "Event countdown (empty)",
         "year_one": "{n} year", "year_other": "{n} years",
         "day_birthday": "🎂 Today, {person} turns {n}!",
         "day_birthday_noage": "🎂 Today is {person}’s birthday!",
@@ -299,12 +317,12 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_retired": "{name} (Retired)",
         "cal_retirement": "{name} (Retirement in {years}, Medal: {medal})",
         "cal_retirement_event": "{name} (Retirement, Medal: {medal})",
-        "cal_no_medal": "None",
         "cal_memorial": "{name} (Age if alive: {age}, Since death: {since})",
         "cal_memorial_nosince": "{name} (Age if alive: {age})",
         "cal_death": "{name} (Anniversary of passing: {since})",
     },
     "de": {
+        "entry_empty": "Ereignis-Countdown (leer)",
         "year_one": "{n} Jahr", "year_other": "{n} Jahre",
         "day_birthday": "🎂 Heute wird {person} {n}!",
         "day_birthday_noage": "🎂 Heute hat {person} Geburtstag!",
@@ -344,12 +362,12 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_retired": "{name} (Im Ruhestand)",
         "cal_retirement": "{name} (Ruhestand in {years}, Medaille: {medal})",
         "cal_retirement_event": "{name} (Ruhestand, Medaille: {medal})",
-        "cal_no_medal": "Keine",
         "cal_memorial": "{name} (Alter, wenn noch am Leben: {age}, seit dem Tod: {since})",
         "cal_memorial_nosince": "{name} (Alter, wenn noch am Leben: {age})",
         "cal_death": "{name} (Todestag: {since})",
     },
     "es": {
+        "entry_empty": "Cuenta atrás de eventos (vacía)",
         "year_one": "{n} año", "year_other": "{n} años",
         "day_birthday": "🎂 ¡Hoy {person} cumple {years}!",
         "day_birthday_noage": "🎂 ¡Hoy es el cumpleaños de {person}!",
@@ -387,12 +405,12 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_retired": "{name} (Jubilación alcanzada)",
         "cal_retirement": "{name} (Jubilación en {years}, Medalla: {medal})",
         "cal_retirement_event": "{name} (Jubilación, Medalla: {medal})",
-        "cal_no_medal": "Ninguna",
         "cal_memorial": "{name} (Edad si viviera: {age}, Desde el fallecimiento: {since})",
         "cal_memorial_nosince": "{name} (Edad si viviera: {age})",
         "cal_death": "{name} (Aniversario del fallecimiento: {since})",
     },
     "it": {
+        "entry_empty": "Conto alla rovescia degli eventi (vuoto)",
         "year_one": "{n} anno", "year_other": "{n} anni",
         "day_birthday": "🎂 Oggi {person} compie {years}!",
         "day_birthday_noage": "🎂 Oggi è il compleanno di {person}!",
@@ -432,7 +450,6 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_retired": "{name} (Pensione raggiunta)",
         "cal_retirement": "{name} (Pensione tra {years}, Medaglia: {medal})",
         "cal_retirement_event": "{name} (Pensione, Medaglia: {medal})",
-        "cal_no_medal": "Nessuna",
         "cal_memorial": "{name} (Età se in vita: {age}, Dalla scomparsa: {since})",
         "cal_memorial_nosince": "{name} (Età se in vita: {age})",
         "cal_death": "{name} (Anniversario della scomparsa: {since})",

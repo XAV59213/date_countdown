@@ -45,12 +45,12 @@ def test_messages_english_and_german():
 
 
 def test_categories_translated_and_gendered():
-    assert age_category(25, "Super-Héros des To-Do Lists", "fr", "female") == "Super-Héroïne des To-Do Lists"
-    assert age_category(5, "Roi des Toboggans", "fr", "female") == "Reine des Toboggans"
-    assert age_category(5, "Roi des Toboggans", "fr", "male") == "Roi des Toboggans"
-    assert age_category(5, "Roi des Toboggans", "en", "female") == "Queen of the Slides"
-    assert wedding_name(50, "Noces d'Or", "en") == "Gold anniversary"
-    assert wedding_name(50, "Noces d'Or", "fr") == "Noces d'Or"
+    assert age_category(25, "fr", "female") == "Super-Héroïne des To-Do Lists"
+    assert age_category(5, "fr", "female") == "Reine des Toboggans"
+    assert age_category(5, "fr", "male") == "Roi des Toboggans"
+    assert age_category(5, "en", "female") == "Queen of the Slides"
+    assert wedding_name(50, "en") == "Gold anniversary"
+    assert wedding_name(50, "fr") == "Noces d'Or"
 
 
 # --- Genre -----------------------------------------------------------------
