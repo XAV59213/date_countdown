@@ -59,7 +59,7 @@
     "error": {
       "invalid_date_format": "Format de date invalide. Utilisez JJ/MM/AAAA (par exemple, 01/06/1980).",
       "no_events": "Aucun événement configuré. Veuillez d'abord créer un événement via l'ajout initial.",
-      "event_required": "Veuillez sélectionner un événement à modifier dans la liste déroulante.",
+      "event_required": "Veuillez sélectionner un événement à modifier dans la liste.",
       "invalid_action": "Action invalide. Veuillez sélectionner 'Modifier'.",
       "update_failed": "Échec de la mise à jour de l'événement. Vérifiez les logs pour plus de détails.",
       "invalid_memorial_date": "Date de décès invalide pour l'événement mémorial. Utilisez JJ/MM/AAAA avec une date valide (par exemple, 08/01/2018).",
@@ -157,7 +157,7 @@
     "error": {
       "invalid_date_format": "Format de date invalide. Utilisez JJ/MM/AAAA (par exemple, 01/06/1980).",
       "no_events": "Aucun événement configuré. Veuillez d'abord créer un événement via l'ajout initial.",
-      "event_required": "Veuillez sélectionner un événement à modifier dans la liste déroulante.",
+      "event_required": "Veuillez sélectionner un événement à modifier dans la liste.",
       "invalid_action": "Action invalide. Veuillez sélectionner 'Modifier'.",
       "update_failed": "Échec de la mise à jour de l'événement. Vérifiez les logs pour plus de détails.",
       "invalid_memorial_date": "Date de décès invalide pour l'événement mémorial. Utilisez JJ/MM/AAAA avec une date valide (par exemple, 08/01/2018).",
