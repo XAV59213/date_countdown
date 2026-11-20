@@ -1,5 +1,22 @@
 # Changelog
 
+## Non publié
+
+### Ajouté
+- 🔔 **Entités de notification modernes** : nouveau champ « Entités de notification » (`entities`) dans *Configurer les notifications*, envoi via `notify.send_message` avec `entity_id`, combinable avec les services `notify.*` classiques. Une ancienne cible `targets` qui n’est plus un service mais une entité est envoyée automatiquement par `notify.send_message`.
+- 🕯️ **Rappel de l’anniversaire du décès** (mémoriaux, option `death_anniversary`) : notification distincte à la date anniversaire du décès (29 février → 28 février les années non bissextiles), et rappel J-N si réglé ; anti-doublon séparé. Attribut `days_to_death_anniversary`.
+- 🚻 **Genre par événement** (*Non précisé* / *Homme* / *Femme*) dans l’assistant et les Options (anniversaires, mémoriaux, retraites, promotions) : accords des notifications (« Disparue », « Thinking of her »), des catégories d’âge au féminin (« Super-Héroïne », « Reine », « Impératrice »…) et des cartes Lovelace. Attribut `gender`.
+- 🌍 **Textes générés traduits selon la langue de Home Assistant** : noms des capteurs via `translation_key` (22 langues), notifications, types, médailles et résumés du calendrier (fr, en, de, es, it), catégories d’âge et noces (fr, en) ; repli anglais.
+- 🌍 **Cartes Lovelace multilingues** (fr, en, de, es, it selon `hass.locale.language`, repli anglais) ; éditeurs et sélecteur de cartes en fr / en.
+- Listes « Type d’événement », « Type de carrière » et « Genre » de l’assistant traduites (`translation_key` des sélecteurs).
+- Tests : `tests/test_ameliorations.py` (langues, genre, anniversaire du décès, entités notify, migration, calendrier).
+
+### Modifié
+- Migration douce des entrées (version 1.2) : `gender: unspecified` ajouté aux événements existants, textes inchangés.
+- Le nom du calendrier affiche le type traduit (« Océane Dupont - Anniversaire ») au lieu de la clé brute (`birthday`).
+- Les attributs `age_category`, `wedding_type` et `work_medal` suivent la langue de Home Assistant (en français pour une instance en français, comme avant).
+- Aperçu `docs/apercu-cartes.html` : paramètre `?lang=` et genres d’exemple.
+
 ## 1.2.18 — 2026-11-20
 
 ### Ajouté

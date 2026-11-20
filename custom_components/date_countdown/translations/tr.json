@@ -19,7 +19,8 @@
           "death_date": "Ölüm tarihi (isteğe bağlı, anma için)",
           "start_date": "İşe başlama tarihi (emeklilik için)",
           "is_penible": "Ağır iş (madalya için gereken yıl sayısını azaltır)",
-          "career_type": "Kariyer türü"
+          "career_type": "Kariyer türü",
+          "gender": "Cinsiyet (metin uyumu için)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Ölüm tarihi (isteğe bağlı, anma için)",
           "start_date": "İşe başlama tarihi (emeklilik için)",
           "is_penible": "Ağır iş (madalya için gereken yıl sayısını azaltır)",
-          "career_type": "Kariyer türü"
+          "career_type": "Kariyer türü",
+          "gender": "Cinsiyet (metin uyumu için)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Bir etkinliği düzenle",
         "notifications": "Bildirimleri yapılandır 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Belirtilmemiş",
+        "male": "Erkek",
+        "female": "Kadın"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Doğum günü",
+        "anniversary": "Evlilik yıldönümü",
+        "memorial": "Anma",
+        "promotion": "Terfi",
+        "special_event": "Özel etkinlik",
+        "retirement": "Emeklilik"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Normal kariyer (18 yaşından sonra başlangıç)",
+        "longue": "Uzun kariyer (18 yaşından önce başlangıç)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Ölüm tarihi (isteğe bağlı, anma için)",
           "start_date": "İşe başlama tarihi (emeklilik için)",
           "is_penible": "Ağır iş (madalya için gereken yıl sayısını azaltır)",
-          "career_type": "Kariyer türü"
+          "career_type": "Kariyer türü",
+          "gender": "Cinsiyet (metin uyumu için)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Bildirim hedefleri (notify.* servisleri)",
           "time": "Gönderim saati",
           "reminder_days": "N gün önce hatırlatma (0 = devre dışı)",
-          "persistent": "Ayrıca kalıcı bir Home Assistant bildirimi oluştur"
+          "persistent": "Ayrıca kalıcı bir Home Assistant bildirimi oluştur",
+          "entities": "Bildirim varlıkları (notify.send_message)",
+          "death_anniversary": "Ölüm yıldönümü hatırlatması (anmalar)"
         },
         "data_description": {
           "targets": "Bir veya daha fazla notify.* servisi (ör. notify.mobile_app_telefonum). Bir adı elle de yazabilirsiniz.",
           "time": "Varsayılan 09:00. Home Assistant etkinlik günü bu saatten sonra yeniden başlarsa bildirim başlangıçta bir kez gönderilir.",
           "reminder_days": "Örnek: bir hafta önce uyarılmak için 7. 0 hatırlatmayı devre dışı bırakır.",
-          "persistent": "Mesajı Home Assistant bildirimlerinde de gösterir."
+          "persistent": "Mesajı Home Assistant bildirimlerinde de gösterir.",
+          "entities": "Modern notify varlıkları (ör. notify.telefonum), notify.send_message ile gönderilir. Yukarıdaki hizmetlerle birlikte kullanılabilir.",
+          "death_anniversary": "Ölüm tarihinin yıldönümünde ayrı bir bildirim de gönderir (ve ayarlanmışsa N gün önceki hatırlatmayı)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "{entity_id} sensörü Anılar ve Kutlamalar entegrasyonuna ait değil."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Doğum günü"
+      },
+      "anniversary": {
+        "name": "{person} - Evlilik yıldönümü"
+      },
+      "memorial": {
+        "name": "{person} - Anma"
+      },
+      "promotion": {
+        "name": "{person} - Terfi"
+      },
+      "special_event": {
+        "name": "{person} - Özel etkinlik"
+      },
+      "retirement": {
+        "name": "{person} - Emeklilik"
+      }
     }
   }
 }

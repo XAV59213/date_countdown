@@ -19,7 +19,8 @@
           "death_date": "Overlijdensdatum (optioneel, voor herdenking)",
           "start_date": "Begindatum van het werk (voor pensioen)",
           "is_penible": "Zwaar werk (vermindert het aantal jaren dat nodig is voor de medaille)",
-          "career_type": "Loopbaantype"
+          "career_type": "Loopbaantype",
+          "gender": "Geslacht (voor de tekstvorm)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Overlijdensdatum (optioneel, voor herdenking)",
           "start_date": "Begindatum van het werk (voor pensioen)",
           "is_penible": "Zwaar werk (vermindert het aantal jaren dat nodig is voor de medaille)",
-          "career_type": "Loopbaantype"
+          "career_type": "Loopbaantype",
+          "gender": "Geslacht (voor de tekstvorm)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Een gebeurtenis bewerken",
         "notifications": "Meldingen configureren 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Niet opgegeven",
+        "male": "Man",
+        "female": "Vrouw"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Verjaardag",
+        "anniversary": "Trouwdag",
+        "memorial": "Herdenking",
+        "promotion": "Promotie",
+        "special_event": "Speciale gebeurtenis",
+        "retirement": "Pensioen"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Normale loopbaan (start na 18)",
+        "longue": "Lange loopbaan (start voor 18)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Overlijdensdatum (optioneel, voor herdenking)",
           "start_date": "Begindatum van het werk (voor pensioen)",
           "is_penible": "Zwaar werk (vermindert het aantal jaren dat nodig is voor de medaille)",
-          "career_type": "Loopbaantype"
+          "career_type": "Loopbaantype",
+          "gender": "Geslacht (voor de tekstvorm)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Meldingsdoelen (notify.*-services)",
           "time": "Verzendtijd",
           "reminder_days": "Herinnering N dagen vooraf (0 = uitgeschakeld)",
-          "persistent": "Ook een permanente melding in Home Assistant aanmaken"
+          "persistent": "Ook een permanente melding in Home Assistant aanmaken",
+          "entities": "Meldingsentiteiten (notify.send_message)",
+          "death_anniversary": "Herinnering aan de sterfdag (herdenkingen)"
         },
         "data_description": {
           "targets": "Een of meer notify.*-services (bijv. notify.mobile_app_mijn_telefoon). Je kunt ook zelf een naam invoeren.",
           "time": "Standaard 09:00. Als Home Assistant op de dag zelf na dit tijdstip opnieuw opstart, wordt de melding eenmalig bij het opstarten verzonden.",
           "reminder_days": "Voorbeeld: 7 om een week van tevoren gewaarschuwd te worden. 0 schakelt de herinnering uit.",
-          "persistent": "Toont het bericht ook in de meldingen van Home Assistant."
+          "persistent": "Toont het bericht ook in de meldingen van Home Assistant.",
+          "entities": "Moderne notify-entiteiten (bijv. notify.mijn_telefoon), verzonden via notify.send_message. Te combineren met de diensten hierboven.",
+          "death_anniversary": "Stuurt ook een aparte melding op de verjaardag van de overlijdensdatum (en de herinnering N dagen vooraf indien ingesteld)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Sensor {entity_id} hoort niet bij Herinneringen en Vieringen."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Verjaardag"
+      },
+      "anniversary": {
+        "name": "{person} - Trouwdag"
+      },
+      "memorial": {
+        "name": "{person} - Herdenking"
+      },
+      "promotion": {
+        "name": "{person} - Promotie"
+      },
+      "special_event": {
+        "name": "{person} - Speciale gebeurtenis"
+      },
+      "retirement": {
+        "name": "{person} - Pensioen"
+      }
     }
   }
 }

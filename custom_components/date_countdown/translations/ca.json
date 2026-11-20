@@ -19,7 +19,8 @@
           "death_date": "Data de defunció (opcional, per a commemoració)",
           "start_date": "Data d'inici laboral (per a la jubilació)",
           "is_penible": "Treball penós (redueix els anys necessaris per a la medalla)",
-          "career_type": "Tipus de carrera"
+          "career_type": "Tipus de carrera",
+          "gender": "Gènere (concordança dels textos)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Data de defunció (opcional, per a commemoració)",
           "start_date": "Data d'inici laboral (per a la jubilació)",
           "is_penible": "Treball penós (redueix els anys necessaris per a la medalla)",
-          "career_type": "Tipus de carrera"
+          "career_type": "Tipus de carrera",
+          "gender": "Gènere (concordança dels textos)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Edita un esdeveniment",
         "notifications": "Configura les notificacions 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "No especificat",
+        "male": "Home",
+        "female": "Dona"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Aniversari",
+        "anniversary": "Aniversari de casament",
+        "memorial": "Memorial",
+        "promotion": "Promoció",
+        "special_event": "Esdeveniment especial",
+        "retirement": "Jubilació"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Carrera normal (inici després dels 18)",
+        "longue": "Carrera llarga (inici abans dels 18)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Data de defunció (opcional, per a commemoració)",
           "start_date": "Data d'inici laboral (per a la jubilació)",
           "is_penible": "Treball penós (redueix els anys necessaris per a la medalla)",
-          "career_type": "Tipus de carrera"
+          "career_type": "Tipus de carrera",
+          "gender": "Gènere (concordança dels textos)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Destinataris de les notificacions (serveis notify.*)",
           "time": "Hora d'enviament",
           "reminder_days": "Recordatori N dies abans (0 = desactivat)",
-          "persistent": "Crea també una notificació persistent de Home Assistant"
+          "persistent": "Crea també una notificació persistent de Home Assistant",
+          "entities": "Entitats de notificació (notify.send_message)",
+          "death_anniversary": "Recordatori de l'aniversari de la defunció (memorials)"
         },
         "data_description": {
           "targets": "Un o més serveis notify.* (p. ex., notify.mobile_app_el_meu_telefon). També pots escriure un nom.",
           "time": "Per defecte 09:00. Si Home Assistant es reinicia després d'aquesta hora el dia de l'esdeveniment, la notificació s'envia una sola vegada en arrencar.",
           "reminder_days": "Exemple: 7 per rebre l'avís una setmana abans. 0 desactiva el recordatori.",
-          "persistent": "Mostra també el missatge a les notificacions de Home Assistant."
+          "persistent": "Mostra també el missatge a les notificacions de Home Assistant.",
+          "entities": "Entitats notify modernes (p. ex. notify.el_meu_telefon), enviades amb notify.send_message. Combinables amb els serveis anteriors.",
+          "death_anniversary": "També envia una notificació separada en l'aniversari de la data de defunció (i el recordatori de N dies si està configurat)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "El sensor {entity_id} no pertany a Records i Celebracions."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Aniversari"
+      },
+      "anniversary": {
+        "name": "{person} - Aniversari de casament"
+      },
+      "memorial": {
+        "name": "{person} - Memorial"
+      },
+      "promotion": {
+        "name": "{person} - Promoció"
+      },
+      "special_event": {
+        "name": "{person} - Esdeveniment especial"
+      },
+      "retirement": {
+        "name": "{person} - Jubilació"
+      }
     }
   }
 }

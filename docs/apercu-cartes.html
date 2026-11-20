@@ -7,7 +7,7 @@
   Prévisualisation locale des cartes Lovelace avec un faux objet « hass ».
   Ouvrir via un petit serveur HTTP à la racine du dépôt (modules ES) :
     python3 -m http.server 8000  →  http://localhost:8000/docs/apercu-cartes.html
-  Paramètres : ?theme=dark  &  ?jourj=1 (Océane fête son anniversaire aujourd'hui)
+  Paramètres : ?theme=dark  &  ?jourj=1 (Océane fête son anniversaire aujourd'hui)  &  ?lang=en (fr, en, de, es, it)
 -->
 <style>
   body { margin: 0; padding: 24px; font-family: Roboto, "Segoe UI", system-ui, sans-serif; font-size: 14px;
@@ -37,45 +37,46 @@
   const params = new URLSearchParams(location.search);
   if (params.get("theme") === "dark") document.body.classList.add("dark");
   const jourJ = params.get("jourj") === "1";
+  const lang = params.get("lang") || "fr";
 
   const S = (id, days, attrs) => [id, { entity_id: id, state: String(days), attributes: attrs }];
   const states = Object.fromEntries([
     S("sensor.oceane_dupont_anniversaire", jourJ ? 0 : 54, { event_type: "birthday", first_name: "Océane", friendly_name: "Océane Dupont - Anniversaire",
-      event_date: "15/06/2001", years: 25, age_category: "Super-Héros des To-Do Lists", notifications_enabled: true }),
+      event_date: "15/06/2001", years: 25, age_category: lang === "fr" ? "Super-Héroïne des To-Do Lists" : "Superheroine of To-Do Lists", gender: "female", notifications_enabled: true }),
     S("sensor.lucas_martin_anniversaire", 3, { event_type: "birthday", first_name: "Lucas", friendly_name: "Lucas Martin - Anniversaire",
-      event_date: "25/11/2018", years: 8, age_category: "Maître des Legos", notifications_enabled: true }),
+      event_date: "25/11/2018", years: 8, age_category: lang === "fr" ? "Maître des Legos" : "Lego Master", gender: "male", notifications_enabled: true }),
     S("sensor.lea_bernard_anniversaire", 131, { event_type: "birthday", first_name: "Léa", friendly_name: "Léa Bernard - Anniversaire",
-      event_date: "31/03/1987", years: 40, age_category: "Ninja des Parents Débordés", notifications_enabled: false }),
+      event_date: "31/03/1987", years: 40, age_category: lang === "fr" ? "Ninja des Parents Débordés" : "Ninja of Swamped Parents", gender: "female", notifications_enabled: false }),
     S("sensor.paul_et_marie_durand_anniversaire_de_mariage", 12, { event_type: "anniversary", first_name: "Paul et Marie", friendly_name: "Paul et Marie Durand - Anniversaire de mariage",
-      event_date: "02/12/2001", years: 25, wedding_type: "Noces d'Argent", notifications_enabled: true }),
+      event_date: "02/12/2001", years: 25, wedding_type: lang === "fr" ? "Noces d'Argent" : "Silver anniversary", notifications_enabled: true }),
     S("sensor.robert_lefevre_memorial", 27, { event_type: "memorial", first_name: "Robert", friendly_name: "Robert Lefèvre - Mémorial",
-      event_date: "17/12/1934", years: 92, age_if_alive: 91, death_date: "03/05/2018", years_since_death: 8, age_at_death: 83, notifications_enabled: false }),
+      event_date: "17/12/1934", years: 92, age_if_alive: 91, death_date: "03/05/2018", years_since_death: 8, age_at_death: 83, gender: "male", notifications_enabled: false }),
     S("sensor.jeanne_lefevre_memorial", 205, { event_type: "memorial", first_name: "Jeanne", friendly_name: "Jeanne Lefèvre - Mémorial",
-      event_date: "13/06/1939", years: 88, age_if_alive: 87, death_date: "21/09/2023", years_since_death: 3, age_at_death: 84, notifications_enabled: true }),
+      event_date: "13/06/1939", years: 88, age_if_alive: 87, death_date: "21/09/2023", years_since_death: 3, age_at_death: 84, gender: "female", notifications_enabled: true }),
     S("sensor.camille_roux_promotion", 75, { event_type: "promotion", first_name: "Camille", friendly_name: "Camille Roux - Promotion",
       event_date: "03/02/2022", years: 5, notifications_enabled: false }),
     S("sensor.arrivee_maison_evenement_special", 160, { event_type: "special_event", first_name: "", friendly_name: "Arrivée dans la maison - Événement spécial",
       event_date: "29/04/2017", years: 10, notifications_enabled: false }),
     S("sensor.sophie_garnier_retraite", 298, { event_type: "retirement", first_name: "Sophie", friendly_name: "Sophie Garnier - Retraite",
-      start_date: "14/09/1982", retirement_date: "14/09/2027", years_worked: 44, years_remaining: 0, work_medal: "Grand Or", is_penible: false, career_type: "normale", notifications_enabled: false }),
+      start_date: "14/09/1982", retirement_date: "14/09/2027", years_worked: 44, years_remaining: 0, work_medal: lang === "fr" ? "Grand Or" : "Grand Gold", gender: "female", is_penible: false, career_type: "normale", notifications_enabled: false }),
     S("sensor.michel_petit_retraite", 0, { event_type: "retirement", first_name: "Michel", friendly_name: "Michel Petit - Retraite",
-      start_date: "01/03/1978", retirement_date: "01/03/2023", years_worked: 48, years_retired: 3, work_medal: "Grand Or", is_penible: false, career_type: "normale", notifications_enabled: false }),
+      start_date: "01/03/1978", retirement_date: "01/03/2023", years_worked: 48, years_retired: 3, work_medal: lang === "fr" ? "Grand Or" : "Grand Gold", gender: "male", is_penible: false, career_type: "normale", notifications_enabled: false }),
     ["sensor.temperature_salon", { entity_id: "sensor.temperature_salon", state: "21.5", attributes: { unit_of_measurement: "°C" } }],
   ]);
   const entities = Object.fromEntries(Object.keys(states).map((id) => [id, { entity_id: id, platform: id.startsWith("sensor.temperature") ? "demo" : "date_countdown" }]));
-  const hass = { states, entities, language: "fr", locale: { language: "fr" } };
+  const hass = { states, entities, language: lang, locale: { language: lang } };
 
   await import("../custom_components/date_countdown/frontend/date-countdown-card.js");
 
   const cards = [
-    ["liste", "date-countdown-list-card", { title: "Souvenirs et Célébrations", group_by_type: true }, ""],
-    ["liste-compacte", "date-countdown-list-card", { title: "À venir (60 jours)", group_by_type: false, compact: true, horizon_days: 60, hide_past: true }, ""],
+    ["liste", "date-countdown-list-card", { group_by_type: true }, ""],
+    ["liste-compacte", "date-countdown-list-card", { title: lang === "fr" ? "À venir (60 jours)" : "Upcoming (60 days)", group_by_type: false, compact: true, horizon_days: 60, hide_past: true }, ""],
     ["compte-a-rebours", "date-countdown-countdown-card", { entity: "sensor.oceane_dupont_anniversaire" }, ""],
     ["compte-a-rebours-auto", "date-countdown-countdown-card", { types: ["anniversary"] }, ""],
-    ["frise", "date-countdown-timeline-card", { title: "Frise des célébrations", months: 12 }, ""],
-    ["frise-grille", "date-countdown-timeline-card", { title: "Les 6 prochains mois", months: 6, layout: "grid", show_empty_months: false }, "wide"],
-    ["memoriaux", "date-countdown-memorial-card", { title: "En mémoire" }, ""],
-    ["informations", "date-countdown-informations-card", { title: "Informations" }, ""],
+    ["frise", "date-countdown-timeline-card", { months: 12 }, ""],
+    ["frise-grille", "date-countdown-timeline-card", { title: lang === "fr" ? "Les 6 prochains mois" : "Next 6 months", months: 6, layout: "grid", show_empty_months: false }, "wide"],
+    ["memoriaux", "date-countdown-memorial-card", {}, ""],
+    ["informations", "date-countdown-informations-card", {}, ""],
   ];
   const wrap = document.getElementById("wrap");
   for (const [id, tag, config, cls] of cards) {

@@ -19,7 +19,8 @@
           "death_date": "Dátum úmrtia (voliteľné, pre spomienku)",
           "start_date": "Dátum nástupu do práce (pre odchod do dôchodku)",
           "is_penible": "Namáhavá práca (znižuje počet rokov potrebných na medailu)",
-          "career_type": "Typ kariéry"
+          "career_type": "Typ kariéry",
+          "gender": "Pohlavie (pre zhodu textov)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Dátum úmrtia (voliteľné, pre spomienku)",
           "start_date": "Dátum nástupu do práce (pre odchod do dôchodku)",
           "is_penible": "Namáhavá práca (znižuje počet rokov potrebných na medailu)",
-          "career_type": "Typ kariéry"
+          "career_type": "Typ kariéry",
+          "gender": "Pohlavie (pre zhodu textov)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Upraviť udalosť",
         "notifications": "Nastaviť oznámenia 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Neuvedené",
+        "male": "Muž",
+        "female": "Žena"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Narodeniny",
+        "anniversary": "Výročie svadby",
+        "memorial": "Spomienka",
+        "promotion": "Povýšenie",
+        "special_event": "Špeciálna udalosť",
+        "retirement": "Dôchodok"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Bežná kariéra (začiatok po 18 rokoch)",
+        "longue": "Dlhá kariéra (začiatok pred 18 rokmi)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Dátum úmrtia (voliteľné, pre spomienku)",
           "start_date": "Dátum nástupu do práce (pre odchod do dôchodku)",
           "is_penible": "Namáhavá práca (znižuje počet rokov potrebných na medailu)",
-          "career_type": "Typ kariéry"
+          "career_type": "Typ kariéry",
+          "gender": "Pohlavie (pre zhodu textov)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Ciele oznámení (služby notify.*)",
           "time": "Čas odoslania",
           "reminder_days": "Pripomienka N dní vopred (0 = vypnuté)",
-          "persistent": "Vytvoriť aj trvalé oznámenie Home Assistant"
+          "persistent": "Vytvoriť aj trvalé oznámenie Home Assistant",
+          "entities": "Entity oznámení (notify.send_message)",
+          "death_anniversary": "Pripomienka výročia úmrtia (spomienky)"
         },
         "data_description": {
           "targets": "Jedna alebo viac služieb notify.* (napr. notify.mobile_app_moj_telefon). Názov môžete zadať aj ručne.",
           "time": "Predvolene 09:00. Ak sa Home Assistant v deň udalosti reštartuje po tomto čase, oznámenie sa odošle raz pri spustení.",
           "reminder_days": "Príklad: 7 na upozornenie týždeň vopred. 0 pripomienku vypne.",
-          "persistent": "Zobrazí správu aj v oznámeniach Home Assistant."
+          "persistent": "Zobrazí správu aj v oznámeniach Home Assistant.",
+          "entities": "Moderné entity notify (napr. notify.moj_telefon), odosielané cez notify.send_message. Dajú sa kombinovať so službami vyššie.",
+          "death_anniversary": "Odošle aj samostatné oznámenie v deň výročia úmrtia (a pripomienku N dní vopred, ak je nastavená)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Senzor {entity_id} nepatrí k integrácii Spomienky a Oslavy."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Narodeniny"
+      },
+      "anniversary": {
+        "name": "{person} - Výročie svadby"
+      },
+      "memorial": {
+        "name": "{person} - Spomienka"
+      },
+      "promotion": {
+        "name": "{person} - Povýšenie"
+      },
+      "special_event": {
+        "name": "{person} - Špeciálna udalosť"
+      },
+      "retirement": {
+        "name": "{person} - Dôchodok"
+      }
     }
   }
 }

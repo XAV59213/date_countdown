@@ -19,7 +19,8 @@
           "death_date": "Dödsdatum (valfritt, för minnesdag)",
           "start_date": "Startdatum för arbetet (för pension)",
           "is_penible": "Tungt arbete (minskar antalet år som krävs för medaljen)",
-          "career_type": "Karriärtyp"
+          "career_type": "Karriärtyp",
+          "gender": "Kön (för textböjning)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Dödsdatum (valfritt, för minnesdag)",
           "start_date": "Startdatum för arbetet (för pension)",
           "is_penible": "Tungt arbete (minskar antalet år som krävs för medaljen)",
-          "career_type": "Karriärtyp"
+          "career_type": "Karriärtyp",
+          "gender": "Kön (för textböjning)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Redigera en händelse",
         "notifications": "Konfigurera aviseringar 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Ej angivet",
+        "male": "Man",
+        "female": "Kvinna"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Födelsedag",
+        "anniversary": "Bröllopsdag",
+        "memorial": "Minnesdag",
+        "promotion": "Befordran",
+        "special_event": "Särskild händelse",
+        "retirement": "Pension"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Normal karriär (start efter 18)",
+        "longue": "Lång karriär (start före 18)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Dödsdatum (valfritt, för minnesdag)",
           "start_date": "Startdatum för arbetet (för pension)",
           "is_penible": "Tungt arbete (minskar antalet år som krävs för medaljen)",
-          "career_type": "Karriärtyp"
+          "career_type": "Karriärtyp",
+          "gender": "Kön (för textböjning)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Aviseringsmål (notify.*-tjänster)",
           "time": "Sändningstid",
           "reminder_days": "Påminnelse N dagar innan (0 = inaktiverad)",
-          "persistent": "Skapa även en beständig avisering i Home Assistant"
+          "persistent": "Skapa även en beständig avisering i Home Assistant",
+          "entities": "Aviseringsentiteter (notify.send_message)",
+          "death_anniversary": "Påminnelse om dödsdagen (minnesdagar)"
         },
         "data_description": {
           "targets": "En eller flera notify.*-tjänster (t.ex. notify.mobile_app_min_telefon). Du kan också skriva in ett namn.",
           "time": "Standard 09:00. Om Home Assistant startas om efter denna tid på dagen för händelsen skickas aviseringen en gång vid uppstart.",
           "reminder_days": "Exempel: 7 för att bli påmind en vecka innan. 0 inaktiverar påminnelsen.",
-          "persistent": "Visar även meddelandet bland Home Assistants aviseringar."
+          "persistent": "Visar även meddelandet bland Home Assistants aviseringar.",
+          "entities": "Moderna notify-entiteter (t.ex. notify.min_telefon), skickas med notify.send_message. Kan kombineras med tjänsterna ovan.",
+          "death_anniversary": "Skickar även en separat avisering på årsdagen av dödsdatumet (och påminnelsen N dagar innan om den är inställd)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Sensorn {entity_id} tillhör inte Minnen och Högtider."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Födelsedag"
+      },
+      "anniversary": {
+        "name": "{person} - Bröllopsdag"
+      },
+      "memorial": {
+        "name": "{person} - Minnesdag"
+      },
+      "promotion": {
+        "name": "{person} - Befordran"
+      },
+      "special_event": {
+        "name": "{person} - Särskild händelse"
+      },
+      "retirement": {
+        "name": "{person} - Pension"
+      }
     }
   }
 }

@@ -19,7 +19,8 @@
           "death_date": "Data de falecimento (opcional, para homenagem)",
           "start_date": "Data de início de atividade (para reforma)",
           "is_penible": "Trabalho penoso (reduz os anos necessários para a medalha)",
-          "career_type": "Tipo de carreira"
+          "career_type": "Tipo de carreira",
+          "gender": "Género (concordância dos textos)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Data de falecimento (opcional, para homenagem)",
           "start_date": "Data de início de atividade (para reforma)",
           "is_penible": "Trabalho penoso (reduz os anos necessários para a medalha)",
-          "career_type": "Tipo de carreira"
+          "career_type": "Tipo de carreira",
+          "gender": "Género (concordância dos textos)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Editar um evento",
         "notifications": "Configurar notificações 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Não especificado",
+        "male": "Homem",
+        "female": "Mulher"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Aniversário",
+        "anniversary": "Aniversário de casamento",
+        "memorial": "Memorial",
+        "promotion": "Promoção",
+        "special_event": "Evento especial",
+        "retirement": "Reforma"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Carreira normal (início após os 18)",
+        "longue": "Carreira longa (início antes dos 18)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Data de falecimento (opcional, para homenagem)",
           "start_date": "Data de início de atividade (para reforma)",
           "is_penible": "Trabalho penoso (reduz os anos necessários para a medalha)",
-          "career_type": "Tipo de carreira"
+          "career_type": "Tipo de carreira",
+          "gender": "Género (concordância dos textos)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Destinos de notificação (serviços notify.*)",
           "time": "Hora de envio",
           "reminder_days": "Lembrete N dias antes (0 = desativado)",
-          "persistent": "Criar também uma notificação persistente do Home Assistant"
+          "persistent": "Criar também uma notificação persistente do Home Assistant",
+          "entities": "Entidades de notificação (notify.send_message)",
+          "death_anniversary": "Lembrete do aniversário do falecimento (memoriais)"
         },
         "data_description": {
           "targets": "Um ou mais serviços notify.* (p. ex., notify.mobile_app_o_meu_telemovel). Também pode escrever um nome.",
           "time": "Predefinição 09:00. Se o Home Assistant reiniciar depois desta hora no dia do evento, a notificação é enviada uma única vez no arranque.",
           "reminder_days": "Exemplo: 7 para ser avisado uma semana antes. 0 desativa o lembrete.",
-          "persistent": "Mostra também a mensagem nas notificações do Home Assistant."
+          "persistent": "Mostra também a mensagem nas notificações do Home Assistant.",
+          "entities": "Entidades notify modernas (ex.: notify.o_meu_telefone), enviadas com notify.send_message. Combináveis com os serviços acima.",
+          "death_anniversary": "Envia também uma notificação separada no aniversário da data de falecimento (e o lembrete de N dias, se definido)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "O sensor {entity_id} não pertence a Memórias e Celebrações."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Aniversário"
+      },
+      "anniversary": {
+        "name": "{person} - Aniversário de casamento"
+      },
+      "memorial": {
+        "name": "{person} - Memorial"
+      },
+      "promotion": {
+        "name": "{person} - Promoção"
+      },
+      "special_event": {
+        "name": "{person} - Evento especial"
+      },
+      "retirement": {
+        "name": "{person} - Reforma"
+      }
     }
   }
 }

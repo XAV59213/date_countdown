@@ -11,6 +11,7 @@ from homeassistant.helpers import entity_registry as er
 
 from .const import DOMAIN, PLATFORMS, SERVICE_SEND_TEST_NOTIFICATION
 from .frontend import JSModuleRegistration
+from .i18n import GENDER_UNSPECIFIED
 from .notifications import DATA_NOTIFIERS, NotificationManager, async_get_store
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
@@ -68,6 +69,21 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
         _async_send_test_notification,
         schema=SEND_TEST_SCHEMA,
     )
+    return True
+
+
+async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Migration douce : 1.1 → 1.2 ajoute « gender: unspecified » aux événements existants."""
+    if entry.version > 1:
+        return False  # version future inconnue
+    if entry.minor_version < 2:
+        events = [
+            {**event, "gender": event.get("gender", GENDER_UNSPECIFIED)} if isinstance(event, dict) else event
+            for event in entry.options.get("events", []) or []
+        ]
+        hass.config_entries.async_update_entry(
+            entry, options={**entry.options, "events": events}, minor_version=2
+        )
     return True
 
 

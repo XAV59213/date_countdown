@@ -19,7 +19,8 @@
           "death_date": "Halálozás dátuma (opcionális, megemlékezéshez)",
           "start_date": "Munkakezdés dátuma (nyugdíjazáshoz)",
           "is_penible": "Nehéz fizikai munka (csökkenti az érmhez szükséges évek számát)",
-          "career_type": "Pályafutás típusa"
+          "career_type": "Pályafutás típusa",
+          "gender": "Nem (a szövegek egyeztetéséhez)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Halálozás dátuma (opcionális, megemlékezéshez)",
           "start_date": "Munkakezdés dátuma (nyugdíjazáshoz)",
           "is_penible": "Nehéz fizikai munka (csökkenti az érmhez szükséges évek számát)",
-          "career_type": "Pályafutás típusa"
+          "career_type": "Pályafutás típusa",
+          "gender": "Nem (a szövegek egyeztetéséhez)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Esemény szerkesztése",
         "notifications": "Értesítések beállítása 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Nincs megadva",
+        "male": "Férfi",
+        "female": "Nő"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Születésnap",
+        "anniversary": "Házassági évforduló",
+        "memorial": "Megemlékezés",
+        "promotion": "Előléptetés",
+        "special_event": "Különleges esemény",
+        "retirement": "Nyugdíj"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Normál pálya (18 év után kezdve)",
+        "longue": "Hosszú pálya (18 év előtt kezdve)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Halálozás dátuma (opcionális, megemlékezéshez)",
           "start_date": "Munkakezdés dátuma (nyugdíjazáshoz)",
           "is_penible": "Nehéz fizikai munka (csökkenti az érmhez szükséges évek számát)",
-          "career_type": "Pályafutás típusa"
+          "career_type": "Pályafutás típusa",
+          "gender": "Nem (a szövegek egyeztetéséhez)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Értesítési célok (notify.* szolgáltatások)",
           "time": "Küldés időpontja",
           "reminder_days": "Emlékeztető N nappal előtte (0 = kikapcsolva)",
-          "persistent": "Állandó Home Assistant értesítés létrehozása is"
+          "persistent": "Állandó Home Assistant értesítés létrehozása is",
+          "entities": "Értesítési entitások (notify.send_message)",
+          "death_anniversary": "Emlékeztető a halál évfordulójára (megemlékezések)"
         },
         "data_description": {
           "targets": "Egy vagy több notify.* szolgáltatás (pl. notify.mobile_app_telefonom). Nevet kézzel is megadhatsz.",
           "time": "Alapértelmezés: 09:00. Ha a Home Assistant az esemény napján ezen időpont után indul újra, az értesítés indításkor egyszer kerül elküldésre.",
           "reminder_days": "Példa: 7, ha egy héttel előtte szeretnél emlékeztetőt. A 0 kikapcsolja az emlékeztetőt.",
-          "persistent": "Az üzenetet a Home Assistant értesítései között is megjeleníti."
+          "persistent": "Az üzenetet a Home Assistant értesítései között is megjeleníti.",
+          "entities": "Modern notify entitások (pl. notify.telefonom), küldés a notify.send_message szolgáltatással. A fenti szolgáltatásokkal kombinálható.",
+          "death_anniversary": "Külön értesítést is küld a halál dátumának évfordulóján (és az N nappal korábbi emlékeztetőt, ha be van állítva)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "A(z) {entity_id} érzékelő nem tartozik az Emlékek és Ünnepek integrációhoz."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Születésnap"
+      },
+      "anniversary": {
+        "name": "{person} - Házassági évforduló"
+      },
+      "memorial": {
+        "name": "{person} - Megemlékezés"
+      },
+      "promotion": {
+        "name": "{person} - Előléptetés"
+      },
+      "special_event": {
+        "name": "{person} - Különleges esemény"
+      },
+      "retirement": {
+        "name": "{person} - Nyugdíj"
+      }
     }
   }
 }

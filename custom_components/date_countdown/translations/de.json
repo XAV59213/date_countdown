@@ -19,7 +19,8 @@
           "death_date": "Sterbedatum (optional, für Gedenken)",
           "start_date": "Arbeitsbeginn (für den Ruhestand)",
           "is_penible": "Schwere Arbeit (verringert die für die Medaille erforderlichen Jahre)",
-          "career_type": "Laufbahntyp"
+          "career_type": "Laufbahntyp",
+          "gender": "Geschlecht (für die Textanpassung)"
         }
       },
       "init": {
@@ -50,7 +51,8 @@
           "death_date": "Sterbedatum (optional, für Gedenken)",
           "start_date": "Arbeitsbeginn (für den Ruhestand)",
           "is_penible": "Schwere Arbeit (verringert die für die Medaille erforderlichen Jahre)",
-          "career_type": "Laufbahntyp"
+          "career_type": "Laufbahntyp",
+          "gender": "Geschlecht (für die Textanpassung)"
         }
       }
     },
@@ -70,6 +72,29 @@
       "options": {
         "edit": "Ereignis bearbeiten",
         "notifications": "Benachrichtigungen konfigurieren 🔔"
+      }
+    },
+    "gender": {
+      "options": {
+        "unspecified": "Nicht angegeben",
+        "male": "Mann",
+        "female": "Frau"
+      }
+    },
+    "event_type": {
+      "options": {
+        "birthday": "Geburtstag",
+        "anniversary": "Hochzeitstag",
+        "memorial": "Gedenktag",
+        "promotion": "Beförderung",
+        "special_event": "Besonderes Ereignis",
+        "retirement": "Ruhestand"
+      }
+    },
+    "career_type": {
+      "options": {
+        "normale": "Normale Laufbahn (Beginn nach 18)",
+        "longue": "Lange Laufbahn (Beginn vor 18)"
       }
     }
   },
@@ -103,7 +128,8 @@
           "death_date": "Sterbedatum (optional, für Gedenken)",
           "start_date": "Arbeitsbeginn (für den Ruhestand)",
           "is_penible": "Schwere Arbeit (verringert die für die Medaille erforderlichen Jahre)",
-          "career_type": "Laufbahntyp"
+          "career_type": "Laufbahntyp",
+          "gender": "Geschlecht (für die Textanpassung)"
         }
       },
       "notifications": {
@@ -114,13 +140,17 @@
           "targets": "Benachrichtigungsziele (notify.*-Dienste)",
           "time": "Sendezeit",
           "reminder_days": "Erinnerung N Tage vorher (0 = deaktiviert)",
-          "persistent": "Zusätzlich eine dauerhafte Benachrichtigung in Home Assistant erstellen"
+          "persistent": "Zusätzlich eine dauerhafte Benachrichtigung in Home Assistant erstellen",
+          "entities": "Benachrichtigungsentitäten (notify.send_message)",
+          "death_anniversary": "Erinnerung an den Todestag (Gedenken)"
         },
         "data_description": {
           "targets": "Ein oder mehrere notify.*-Dienste (z. B. notify.mobile_app_mein_telefon). Du kannst auch einen Namen eingeben.",
           "time": "Standard 09:00. Startet Home Assistant am Tag des Ereignisses nach dieser Uhrzeit neu, wird die Benachrichtigung einmalig beim Start gesendet.",
           "reminder_days": "Beispiel: 7, um eine Woche vorher erinnert zu werden. 0 deaktiviert die Erinnerung.",
-          "persistent": "Zeigt die Nachricht zusätzlich in den Benachrichtigungen von Home Assistant an."
+          "persistent": "Zeigt die Nachricht zusätzlich in den Benachrichtigungen von Home Assistant an.",
+          "entities": "Moderne notify-Entitäten (z. B. notify.mein_telefon), gesendet über notify.send_message. Mit den obigen Diensten kombinierbar.",
+          "death_anniversary": "Sendet zusätzlich eine eigene Benachrichtigung am Jahrestag des Todes (und die N-Tage-Erinnerung, falls eingestellt)."
         }
       }
     },
@@ -158,6 +188,28 @@
     },
     "unknown_entity": {
       "message": "Der Sensor {entity_id} gehört nicht zu Erinnerungen und Feiern."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "birthday": {
+        "name": "{person} - Geburtstag"
+      },
+      "anniversary": {
+        "name": "{person} - Hochzeitstag"
+      },
+      "memorial": {
+        "name": "{person} - Gedenktag"
+      },
+      "promotion": {
+        "name": "{person} - Beförderung"
+      },
+      "special_event": {
+        "name": "{person} - Besonderes Ereignis"
+      },
+      "retirement": {
+        "name": "{person} - Ruhestand"
+      }
     }
   }
 }

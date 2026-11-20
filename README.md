@@ -95,6 +95,12 @@ Les événements datés du 29 février sont observés le **28 février** les ann
 
 ---
 
+### 🚻 Genre
+
+Pour les anniversaires, mémoriaux, retraites et promotions, un champ **Genre** (*Non précisé* par défaut, *Homme*, *Femme*) accorde les textes : « Disparue depuis 5 ans », « retraitée », « et sera une Super-Héroïne des To-Do Lists ». Les entrées existantes sont migrées automatiquement en *Non précisé* (textes neutres « Disparu(e) », comme avant). L’attribut `gender` est exposé sur chaque capteur.
+
+---
+
 ## 🐞 Capteurs générés
 
 Format :
@@ -116,7 +122,12 @@ sensor.memorial_jean_01011950:
     death_date: "15/06/2000"
     age_if_alive: 75
     years_since_death: 25
+    days_to_death_anniversary: 211   # jours avant la date anniversaire du décès
+    gender: "male"                   # unspecified / male / female
+    notifications_enabled: false
 ```
+
+> Le nom des capteurs est traduit par Home Assistant (`entity.sensor.<type>.name`). Les capteurs **existants** gardent leur `entity_id` ; un capteur **créé** après la mise à jour reçoit un `entity_id` basé sur le nom anglais (ex. `sensor.oceane_dupont_birthday`).
 
 ---
 
@@ -170,6 +181,14 @@ En plus de la carte **Informations**, l'intégration livre **4 cartes natives** 
 ![Aperçu de toutes les cartes, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/apercu-global-sombre.png)
 
 </details>
+
+<details><summary>In English (Home Assistant en anglais)</summary>
+
+![All cards, English](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/apercu-global-en.png)
+
+</details>
+
+Les cartes s’affichent dans la langue du profil Home Assistant (fr, en, de, es, it ; anglais sinon) et accordent les textes selon le genre de l’événement.
 
 Badges : **Aujourd'hui !** (rose), **Demain / J-1 à J-6** (orange), **J-7 à J-29** (bleu), au-delà gris. 🔔 = notifications natives actives pour l'événement.
 
@@ -313,9 +332,11 @@ Chaque événement peut envoyer **une notification native le jour J**, sans auto
 | Option | Clé | Défaut | Description |
 |---|---|---|---|
 | Activer les notifications | `enabled` | désactivé | Active l’envoi pour cette entrée |
-| Cibles de notification | `targets` | — | Un ou plusieurs services `notify.*` (ex. `notify.mobile_app_mon_telephone`) ; la liste est construite à partir des services notify disponibles, saisie manuelle possible |
+| Cibles de notification | `targets` | — | Un ou plusieurs services `notify.*` classiques (ex. `notify.mobile_app_mon_telephone`) ; la liste est construite à partir des services notify disponibles, saisie manuelle possible |
+| Entités de notification | `entities` | — | Entités `notify.*` modernes (ex. `notify.mon_telephone`), envoyées via `notify.send_message` ; combinables avec les services ci-dessus |
 | Heure d’envoi | `time` | `09:00` | Heure locale de Home Assistant |
 | Rappel J-N | `reminder_days` | `0` | Rappel N jours avant (ex. `7`) ; `0` = désactivé |
+| Rappel de l’anniversaire du décès | `death_anniversary` | désactivé | Mémoriaux : notification distincte à la date anniversaire du décès (et rappel J-N si réglé) |
 | Notification persistante | `persistent` | désactivé | Affiche aussi le message dans les notifications de Home Assistant |
 
 Les options sont enregistrées dans les options de l’entrée, sous la clé `notifications`.
@@ -333,6 +354,10 @@ Les options sont enregistrées dans les options de l’entrée, sous la clé `no
 
 Rappel J-N : « ⏳ Dans 7 jours : anniversaire d’Océane (25 ans) » (« Demain : … » pour J-1).
 
+Anniversaire du décès (option `death_anniversary`) : « 🕯️ Il y a 6 ans aujourd’hui, Jeanne nous quittait. Une pensée en sa mémoire. » et, avec un rappel J-N, « ⏳ Dans 7 jours : anniversaire du décès de Jeanne (6 ans) ». Anti-doublon séparé de celui du jour J.
+
+Les messages suivent la **langue de Home Assistant** (français, anglais, allemand, espagnol, italien ; anglais pour les autres langues) et le **genre** choisi pour l’événement (« Disparu » / « Disparue » / « Disparu(e) »).
+
 **Fonctionnement :**
 - le jour J est celui où le capteur vaut `0` (même calcul que le capteur) ; pour la retraite, uniquement le jour du départ ;
 - **anti-doublon** : chaque envoi est mémorisé (`.storage/date_countdown.notifications`), rien n’est renvoyé après un redémarrage ;
@@ -349,7 +374,7 @@ data:
 
 Le test envoie immédiatement un message (préfixé « 🧪 Test – ») aux cibles configurées, même si les notifications sont désactivées ; sans cible, il crée une notification persistante.
 
-> Les services `notify.*` classiques (`notify.mobile_app_…`, `notify.notify`, `notify.persistent_notification`…) sont pris en charge. Les entités de notification (`notify.send_message` avec `entity_id`) ne le sont pas encore.
+> Les services `notify.*` classiques (`notify.mobile_app_…`, `notify.notify`, `notify.persistent_notification`…) **et** les entités de notification modernes (`notify.send_message` avec `entity_id`) sont pris en charge. Une ancienne cible saisie dans `targets` qui n’existe plus comme service mais comme entité `notify.*` est envoyée automatiquement via `notify.send_message`.
 
 ---
 
@@ -401,7 +426,16 @@ L’interface de configuration (assistant d’ajout, Options, notifications, ser
 
 Home Assistant choisit automatiquement la langue de votre profil.
 
-> ⚠️ **Restent en français pour l’instant**, quelle que soit la langue : les textes générés par le code Python, c’est-à-dire les messages des notifications, les catégories d’âge humoristiques, les intitulés des noces, les noms et attributs des capteurs et du calendrier, les listes de choix « Type d’événement » et « Type de carrière » de l’assistant, ainsi que la carte Lovelace « Informations ».
+Les **textes générés** suivent aussi la langue de Home Assistant (`hass.config.language`) :
+
+| Élément | Langues |
+|---|---|
+| Noms des capteurs (`Océane Dupont - Birthday`…), listes « Type d’événement », « Type de carrière », « Genre » | les 22 langues |
+| Messages des notifications, libellés des types, médailles, résumés du calendrier | fr, en, de, es, it (anglais sinon) |
+| Catégories d’âge humoristiques, noces | fr, en (anglais sinon) |
+| Cartes Lovelace (textes) | fr, en, de, es, it selon la langue du profil (anglais sinon) ; éditeurs fr / en |
+
+> Les attributs `age_category`, `wedding_type` et `work_medal` sont donc traduits : une automatisation qui compare leur valeur en français doit en tenir compte.
 
 Pour vérifier les fichiers de traduction (JSON valide, mêmes clés et mêmes placeholders `{...}` que `en.json`) :
 
