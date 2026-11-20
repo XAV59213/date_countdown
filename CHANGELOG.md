@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 1.2.17 — 2026-11-20
 
 ### Ajouté
 - 🔔 **Notifications natives le jour J** : dans les Options de chaque événement (*Configurer les notifications*), choix d’une ou plusieurs cibles `notify.*`, de l’heure d’envoi (09:00 par défaut, heure locale HA), d’un rappel J-N (0 = désactivé) et d’une notification persistante HA.
@@ -14,8 +14,12 @@
 - Options : le menu ne s’ouvrait plus sur les versions récentes de Home Assistant (`_config_entry_id` réservé par HA).
 - Options : la modification d’un événement échouait (`KeyError` après le choix du type, erreur à l’enregistrement) ; les autres options de l’entrée sont désormais conservées.
 - Traductions des étapes des Options (section `options`).
-- README : 6 types d’événements (ajout de la retraite et des médailles du travail) ; l’Options flow ne permet que de modifier un événement. L’ajout se fait via « Ajouter une entrée » (une entrée par événement), la suppression en supprimant l’entrée.
+- README : 6 types d’événements (ajout de la retraite et des médailles du travail) ; l’Options flow permet de modifier un événement (et ses notifications), sans ajout ni suppression. L’ajout se fait via « Ajouter une entrée » (une entrée par événement), la suppression en supprimant l’entrée.
 - Les occurrences d’une date au 29 février tombent le 28 février les années non bissextiles (usage courant en France), pour le prochain événement, le calendrier (50 ans) et la date de retraite estimée.
+
+### Modifié
+- CI : `actions/checkout` v4 → v7 dans le workflow du zip de release (Dependabot, #9).
+- `manifest.json` et `const.py` (`VERSION`, cache de la carte) : version 1.2.17.
 
 ## 1.2.16 — 2026-10-31
 
