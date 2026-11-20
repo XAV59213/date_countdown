@@ -59,7 +59,7 @@
     "error": {
       "invalid_date_format": "Invalid date format. Use DD/MM/YYYY (for example, 01/06/1980).",
       "no_events": "No event configured. Please create an event first through the initial setup.",
-      "event_required": "Please select an event to edit from the drop-down list.",
+      "event_required": "Please select an event to edit from the list.",
       "invalid_action": "Invalid action. Please select 'Edit'.",
       "update_failed": "Failed to update the event. Check the logs for more details.",
       "invalid_memorial_date": "Invalid date of death for the memorial event. Use DD/MM/YYYY with a valid date (for example, 08/01/2018).",
@@ -157,7 +157,7 @@
     "error": {
       "invalid_date_format": "Invalid date format. Use DD/MM/YYYY (for example, 01/06/1980).",
       "no_events": "No event configured. Please create an event first through the initial setup.",
-      "event_required": "Please select an event to edit from the drop-down list.",
+      "event_required": "Please select an event to edit from the list.",
       "invalid_action": "Invalid action. Please select 'Edit'.",
       "update_failed": "Failed to update the event. Check the logs for more details.",
       "invalid_memorial_date": "Invalid date of death for the memorial event. Use DD/MM/YYYY with a valid date (for example, 08/01/2018).",
