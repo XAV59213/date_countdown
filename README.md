@@ -470,13 +470,24 @@ Les **textes générés** suivent aussi la langue de Home Assistant (`hass.confi
 | Élément | Langues |
 |---|---|
 | Noms des capteurs (`Océane Dupont - Birthday`…), listes « Type d’événement », « Type de carrière », « Genre » | les 22 langues |
-| Messages des notifications, libellés des types, médailles, résumés du calendrier | fr, en, de, es, it (anglais sinon) |
+| Libellés des types d’événements, médailles du travail (attribut `work_medal`, calendrier), titre des notifications | les 22 langues (mêmes textes que l’interface) |
+| Messages des notifications, résumés du calendrier | fr, en, de, es, it (anglais sinon) |
 | Catégories d’âge humoristiques (accordées au genre), noces | fr, en, de, es, it (anglais sinon) |
 | Cartes Lovelace (textes et éditeurs) | fr, en, de, es, it selon la langue du profil (anglais sinon) |
 
 > Les noms des noces suivent la liste française de l’intégration (Coton, Cuir, Froment…) traduite matière par matière : « Silberhochzeit », « Bodas de Plata », « Nozze d’Oro »… Ils peuvent différer des traditions locales.
 
-> Les attributs `age_category`, `wedding_type` et `work_medal` sont donc traduits : une automatisation qui compare leur valeur en français doit en tenir compte.
+> Les attributs `age_category`, `wedding_type` et `work_medal` sont donc traduits : une automatisation qui compare leur valeur en français doit en tenir compte. Pour une automatisation indépendante de la langue, utilisez plutôt les **clés stables** :
+>
+> | Attribut traduit | Clé stable à comparer |
+> |---|---|
+> | `age_category` | `years` (l’âge : une catégorie par âge, 0 à 120 ans) |
+> | `wedding_type` | `wedding_key` (`cotton`, `leather`… `silver` à 25 ans, `gold` à 50 ans, `diamond` à 60 ans) |
+> | `work_medal` | `work_medal_key` (`silver`, `vermeil`, `gold`, `grand_gold`), ou l’état du capteur `…_work_medal` |
+>
+> Exemple (remplacez l’entity_id par celui de votre capteur) : `{{ state_attr('sensor.paul_et_marie_anniversaire_de_mariage', 'wedding_key') == 'silver' }}`.
+
+Côté code, `const.py` ne contient plus que ces clés stables ; les libellés sont dans `translations/*.json` (types, médailles, titre) et `i18n_data.py` (catégories d’âge et noces fr/en/de/es/it).
 
 Pour vérifier les fichiers de traduction (JSON valide, mêmes clés et mêmes placeholders `{...}` que `en.json`) :
 

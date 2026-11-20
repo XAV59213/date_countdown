@@ -40,7 +40,7 @@ from .const import (
     EVENT_TYPES,
     MAX_NOTIFY_REMINDER_DAYS,
 )
-from .i18n import GENDERS, GENDER_UNSPECIFIED, event_type_label, normalize_gender
+from .i18n import GENDERS, GENDER_UNSPECIFIED, empty_entry_title, event_type_label, normalize_gender
 from .notifications import available_notify_targets, get_notification_options, normalize_time
 
 # Types d'événements concernant une personne : genre proposé (accords des textes)
@@ -82,7 +82,7 @@ _LOGGER = logging.getLogger(__name__)
 def _generate_entry_title(events: list, language: str = "fr") -> str:
     """Generate a title for the config entry based on the list of events."""
     if not events:
-        return "Compte à rebours d'événements (vide)"
+        return empty_entry_title(language)
     event_names = []
     for event in events[:2]:
         prefix = f"{event.get('first_name', '')} {event['name']}".strip()
@@ -196,21 +196,20 @@ class DateCountdownConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         # Schéma pour la retraite
         if self._event_type == "retirement":
             schema = {
-                vol.Required("name", description="Nom de l'événement ou de la personne"): str,
-                vol.Optional("first_name", description="Prénom (optionnel)"): str,
-                vol.Required("start_date", description=f"Date de début du travail (format: {DATE_FORMAT})"): str,
-                vol.Optional("is_penible", description="Travaux pénibles (réduit les années pour la médaille)"): bool,
+                vol.Required("name"): str,
+                vol.Optional("first_name"): str,
+                vol.Required("start_date"): str,
+                vol.Optional("is_penible"): bool,
                 vol.Required("career_type", default="normale"): _select(CAREER_TYPES, "career_type")
             }
         else:
-            date_label = "Date de naissance" if self._event_type == "memorial" else "Date"
             schema = {
-                vol.Required("name", description="Nom de l'événement ou de la personne"): str,
-                vol.Optional("first_name", description="Prénom (optionnel)"): str,
-                vol.Required("date", description=f"{date_label} (format: {DATE_FORMAT})"): str,
+                vol.Required("name"): str,
+                vol.Optional("first_name"): str,
+                vol.Required("date"): str,
             }
             if self._event_type == "memorial":
-                schema[vol.Optional("death_date", description=f"Date de décès (format: {DATE_FORMAT})")] = str
+                schema[vol.Optional("death_date")] = str
 
         _gender_field(schema, self._event_type)
         _LOGGER.info("Showing form for step 'event_details' with event_type: %s", self._event_type)
@@ -510,21 +509,20 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
 
         if self._event_type == "retirement":
             schema = {
-                vol.Required("name", description="Nom de l'événement ou de la personne", default=event.get("name", "")): str,
-                vol.Optional("first_name", description="Prénom (optionnel)", default=event.get("first_name", "")): str,
-                vol.Required("start_date", description=f"Date de début du travail (format: {DATE_FORMAT})", default=event.get("start_date", "")): str,
-                vol.Optional("is_penible", description="Travaux pénibles (réduit les années pour la médaille)", default=event.get("is_penible", False)): bool,
+                vol.Required("name", default=event.get("name", "")): str,
+                vol.Optional("first_name", default=event.get("first_name", "")): str,
+                vol.Required("start_date", default=event.get("start_date", "")): str,
+                vol.Optional("is_penible", default=event.get("is_penible", False)): bool,
                 vol.Required("career_type", default=event.get("career_type", "normale")): _select(CAREER_TYPES, "career_type")
             }
         else:
-            date_label = "Date de naissance" if self._event_type == "memorial" else "Date"
             schema = {
-                vol.Required("name", description="Nom de l'événement ou de la personne", default=event.get("name", "")): str,
-                vol.Optional("first_name", description="Prénom (optionnel)", default=event.get("first_name", "")): str,
-                vol.Required("date", description=f"{date_label} (format: {DATE_FORMAT})", default=event.get("date", "")): str,
+                vol.Required("name", default=event.get("name", "")): str,
+                vol.Optional("first_name", default=event.get("first_name", "")): str,
+                vol.Required("date", default=event.get("date", "")): str,
             }
             if self._event_type == "memorial":
-                schema[vol.Optional("death_date", description=f"Date de décès (format: {DATE_FORMAT})", default=event.get("death_date", ""))] = str
+                schema[vol.Optional("death_date", default=event.get("death_date", ""))] = str
 
         _gender_field(schema, self._event_type, event.get("gender", GENDER_UNSPECIFIED))
         _LOGGER.info("Showing form for step 'edit_event' with event_type: %s", self._event_type)

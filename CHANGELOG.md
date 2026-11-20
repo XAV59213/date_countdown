@@ -1,5 +1,16 @@
 # Changelog
 
+## Non publié
+
+### Modifié
+- 🌍 **Plus de français en dur dans les constantes** : `const.py` ne contient plus que des clés stables. Catégories d’âge : la clé est l’âge, et les icônes sont indexées par âge. Noces : `cotton` … `silver` (25 ans) … `gold` (50 ans) … `diamond` (60 ans). Médailles : `silver`, `vermeil`, `gold`, `grand_gold`. Les libellés sont traduits à l’affichage : `i18n_data.py` pour les catégories d’âge et les noces (fr, en, de, es, it), `translations/*.json` pour le reste.
+- 🌍 **22 langues** pour les libellés des types d’événements (titre des entrées, résumés), les médailles du travail (attribut `work_medal`, calendrier, notifications) et le titre des notifications. Ils reprennent les textes de `translations/*.json`, au lieu de 5 langues avec repli anglais. Aucun changement en fr, en, de, es et it.
+- Titre d’une entrée vide traduit (fr, en, de, es, it). Suppression des descriptions françaises inutilisées des champs de l’assistant (le frontend affiche les traductions) et de la constante `NOTIFY_TITLE`, inutilisée.
+
+### Ajouté
+- Attributs stables pour les automatisations, indépendants de la langue : `wedding_key` (anniversaires de mariage) et `work_medal_key` (retraites). Les attributs traduits `wedding_type`, `work_medal` et `age_category` sont inchangés.
+- Tests : `tests/test_constantes.py`.
+
 ## 1.2.21 — 2026-11-20
 
 ### Ajouté

@@ -12,7 +12,17 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.event import async_track_time_change
 from homeassistant.util import dt as dt_util
 
-from .const import CONF_NOTIFICATIONS, CONF_NOTIFY_ENABLED, DOMAIN, EVENT_TYPES, WEDDING_ANNIVERSARIES, AGE_CATEGORIES, AGE_CATEGORY_ICONS, WORK_MEDAL_LEVELS, WORK_MEDAL_PENIBLE_LEVELS
+from .const import (
+    AGE_CATEGORY_ICONS,
+    AGE_CATEGORY_MAX,
+    CONF_NOTIFICATIONS,
+    CONF_NOTIFY_ENABLED,
+    DOMAIN,
+    EVENT_TYPES,
+    WEDDING_ANNIVERSARIES,
+    WORK_MEDAL_LEVELS,
+    WORK_MEDAL_PENIBLE_LEVELS,
+)
 from .date_utils import anniversary_in_year, years_elapsed
 from .entity import async_event_models, event_device_info
 from .i18n import GENDER_UNSPECIFIED, age_category as tr_age_category, medal_name, normalize_gender, wedding_name
@@ -191,14 +201,16 @@ class DateCountdownSensor(SensorEntity):
                 attributes["years_retired"] = self._years_retired
             if self._work_medal:
                 attributes["work_medal"] = medal_name(self._work_medal, self.language)
+                attributes["work_medal_key"] = self._work_medal
         else:
             attributes["event_date"] = self._event_date
             if self._years is not None:
                 attributes["years"] = self._years
-            if self._event_type == "birthday" and self._age_category:
-                attributes["age_category"] = tr_age_category(self._years, self._age_category, self.language, self._gender)
+            if self._event_type == "birthday" and self._age_category is not None:
+                attributes["age_category"] = tr_age_category(self._age_category, self.language, self._gender)
             if self._event_type == "anniversary" and self._wedding_type:
-                attributes["wedding_type"] = wedding_name(self._years, self._wedding_type, self.language)
+                attributes["wedding_type"] = wedding_name(self._years, self.language)
+                attributes["wedding_key"] = self._wedding_type
             if self._event_type == "memorial":
                 if self._death_date:
                     attributes["death_date"] = self._death_date
@@ -335,11 +347,10 @@ class DateCountdownSensor(SensorEntity):
 
             if self._event_type == "birthday":
                 self._age_category = None
-                for (min_age, max_age), category in AGE_CATEGORIES.items():
-                    if min_age <= self._years <= max_age:
-                        self._age_category = category
-                        self._attr_icon = AGE_CATEGORY_ICONS.get(category, "mdi:cake")
-                        break
+                # Clé stable de la catégorie = l'âge (libellé traduit à l'affichage)
+                if self._years is not None and 0 <= self._years <= AGE_CATEGORY_MAX:
+                    self._age_category = self._years
+                    self._attr_icon = AGE_CATEGORY_ICONS[self._years]
                 _LOGGER.debug("Sensor %s: Age category=%s", self._attr_unique_id, self._age_category)
 
 
@@ -406,7 +417,6 @@ class DateCountdownEventEntity(Entity):
             return None
 
 
-_MEDAL_KEYS = {"Argent": "silver", "Vermeil": "vermeil", "Or": "gold", "Grand Or": "grand_gold"}
 MEDAL_OPTIONS = ["none", "silver", "vermeil", "gold", "grand_gold"]
 
 
@@ -441,9 +451,9 @@ class DateCountdownExtraSensor(DateCountdownEventEntity, SensorEntity):
             start = self._event_date()
             return years_elapsed(start, today) if start else None
         if key == "age_category":
-            return tr_age_category(c._years, c._age_category, c.language, c._gender) if c._age_category else None
+            return tr_age_category(c._age_category, c.language, c._gender) if c._age_category is not None else None
         if key == "wedding":
-            return wedding_name(c._years, c._wedding_type, c.language) if c._wedding_type else None
+            return wedding_name(c._years, c.language) if c._wedding_type else None
         if key == "age_if_alive":
             return c._age_if_alive
         if key == "years_since_death":
@@ -455,13 +465,13 @@ class DateCountdownExtraSensor(DateCountdownEventEntity, SensorEntity):
         if key == "years_worked":
             return c._years
         if key == "work_medal":
-            return _MEDAL_KEYS.get(c._work_medal, "none")
+            return c._work_medal or "none"
         return None
 
     @property
     def icon(self) -> str | None:
-        if self._key == "age_category" and self._calc._age_category:
-            return AGE_CATEGORY_ICONS.get(self._calc._age_category, "mdi:cake")
+        if self._key == "age_category" and self._calc._age_category is not None:
+            return AGE_CATEGORY_ICONS[self._calc._age_category]
         return self._attr_icon
 
 

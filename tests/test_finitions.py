@@ -15,14 +15,13 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 from homeassistant.util import dt as dt_util
 
-from custom_components.date_countdown.const import AGE_CATEGORIES, DOMAIN, WEDDING_ANNIVERSARIES
+from custom_components.date_countdown.const import DOMAIN
 from custom_components.date_countdown.i18n import SUPPORTED, age_category, wedding_name
 from custom_components.date_countdown.i18n_data import (
     AGE_CATEGORIES_DE, AGE_CATEGORIES_ES, AGE_CATEGORIES_IT, WEDDINGS_DE, WEDDINGS_ES, WEDDINGS_IT,
 )
 from custom_components.date_countdown.notifications import compute_due_messages
 
-FR_CATEGORIES = {low: cat for (low, _high), cat in AGE_CATEGORIES.items()}
 MEMORIAL = {"name": "Martin", "first_name": "Jeanne", "type": "memorial", "date": "01/03/1946",
             "death_date": "10/10/2020", "gender": "female"}
 
@@ -47,9 +46,9 @@ def test_tables_complete():
 def test_all_categories_feminine(lang):
     """Chaque catégorie a une forme féminine correcte (identique si le titre est épicène)."""
     for age in range(121):
-        fem = age_category(age, FR_CATEGORIES[age], lang, "female")
+        fem = age_category(age, lang, "female")
         assert fem and not re.search(MASCULINE[lang], fem), (lang, age, fem)
-        assert age_category(age, FR_CATEGORIES[age], lang, "male") == age_category(age, FR_CATEGORIES[age], lang)
+        assert age_category(age, lang, "male") == age_category(age, lang)
 
 
 @pytest.mark.parametrize(
@@ -68,18 +67,18 @@ def test_all_categories_feminine(lang):
     ],
 )
 def test_category_examples(lang, age, male, female):
-    assert age_category(age, FR_CATEGORIES[age], lang, "male") == male
-    assert age_category(age, FR_CATEGORIES[age], lang, "female") == female
+    assert age_category(age, lang, "male") == male
+    assert age_category(age, lang, "female") == female
 
 
 def test_weddings_translated():
-    assert wedding_name(25, WEDDING_ANNIVERSARIES[25], "de") == "Silberhochzeit"
-    assert wedding_name(50, WEDDING_ANNIVERSARIES[50], "de") == "Goldene Hochzeit"
-    assert wedding_name(60, WEDDING_ANNIVERSARIES[60], "de-AT") == "Diamantene Hochzeit"
-    assert wedding_name(25, WEDDING_ANNIVERSARIES[25], "es") == "Bodas de Plata"
-    assert wedding_name(50, WEDDING_ANNIVERSARIES[50], "it") == "Nozze d'Oro"
-    assert wedding_name(1, WEDDING_ANNIVERSARIES[1], "it") == "Nozze di Cotone"
-    assert wedding_name(25, WEDDING_ANNIVERSARIES[25], "pt") == "Silver anniversary"  # repli anglais
+    assert wedding_name(25, "de") == "Silberhochzeit"
+    assert wedding_name(50, "de") == "Goldene Hochzeit"
+    assert wedding_name(60, "de-AT") == "Diamantene Hochzeit"
+    assert wedding_name(25, "es") == "Bodas de Plata"
+    assert wedding_name(50, "it") == "Nozze d'Oro"
+    assert wedding_name(1, "it") == "Nozze di Cotone"
+    assert wedding_name(25, "pt") == "Silver anniversary"  # repli anglais
 
 
 def test_notifications_use_translated_tables():
