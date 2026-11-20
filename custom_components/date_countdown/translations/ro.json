@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Adaugă eveniment"
+    },
     "step": {
       "user": {
         "title": "Amintiri și Sărbători",

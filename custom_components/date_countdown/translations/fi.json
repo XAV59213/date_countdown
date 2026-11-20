@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Lisää tapahtuma"
+    },
     "step": {
       "user": {
         "title": "Muistot ja Juhlat",
