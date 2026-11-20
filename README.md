@@ -161,6 +161,55 @@ content: |
 
 ---
 
+## 🔔 Notifications
+
+Chaque événement peut envoyer **une notification native le jour J**, sans automatisation à écrire.
+
+**Réglage :** *Paramètres → Appareils et services → Souvenirs et Célébrations → (votre événement) → Configurer → Configurer les notifications 🔔*
+
+| Option | Clé | Défaut | Description |
+|---|---|---|---|
+| Activer les notifications | `enabled` | désactivé | Active l’envoi pour cette entrée |
+| Cibles de notification | `targets` | — | Un ou plusieurs services `notify.*` (ex. `notify.mobile_app_mon_telephone`) ; la liste est construite à partir des services notify disponibles, saisie manuelle possible |
+| Heure d’envoi | `time` | `09:00` | Heure locale de Home Assistant |
+| Rappel J-N | `reminder_days` | `0` | Rappel N jours avant (ex. `7`) ; `0` = désactivé |
+| Notification persistante | `persistent` | désactivé | Affiche aussi le message dans les notifications de Home Assistant |
+
+Les options sont enregistrées dans les options de l’entrée, sous la clé `notifications`.
+
+**Exemples de messages :**
+
+| Type | Jour J |
+|---|---|
+| 🎂 Anniversaire | « 🎂 Aujourd’hui, Océane a 25 ans ! Super-Héros des To-Do Lists » |
+| 💍 Mariage | « 💍 Aujourd’hui, Paul et Marie fête 25 ans de mariage : Noces d'Argent ! » |
+| 🕯️ Mémorial | « 🕯️ Aujourd’hui, Jean aurait eu 80 ans. Disparu(e) depuis 5 ans. Une pensée en sa mémoire. » |
+| 🏆 Promotion | « 🏆 Aujourd’hui, Luc Dupont fête 5 ans de promotion ! » |
+| ⭐ Événement spécial | « ⭐ Aujourd’hui : Rencontre (10 ans) ! » |
+| 🏖️ Retraite | « 🏖️ Aujourd’hui, Alain part à la retraite après 45 ans de travail ! Médaille du travail : … » |
+
+Rappel J-N : « ⏳ Dans 7 jours : anniversaire d’Océane (25 ans) » (« Demain : … » pour J-1).
+
+**Fonctionnement :**
+- le jour J est celui où le capteur vaut `0` (même calcul que le capteur) ; pour la retraite, uniquement le jour du départ ;
+- **anti-doublon** : chaque envoi est mémorisé (`.storage/date_countdown.notifications`), rien n’est renvoyé après un redémarrage ;
+- **rattrapage** : si Home Assistant redémarre après l’heure prévue le jour J, la notification est envoyée une fois au démarrage ;
+- si une cible échoue, les autres reçoivent quand même le message (avertissement dans les logs) ; si tout échoue, un nouvel essai a lieu 10 minutes plus tard.
+
+**Tester :** *Outils de développement → Actions →* `date_countdown.send_test_notification`
+
+```yaml
+action: date_countdown.send_test_notification
+data:
+  entity_id: sensor.oceane_dupont_anniversaire   # ou entry_id: <id de l’entrée>
+```
+
+Le test envoie immédiatement un message (préfixé « 🧪 Test – ») aux cibles configurées, même si les notifications sont désactivées ; sans cible, il crée une notification persistante.
+
+> Les services `notify.*` classiques (`notify.mobile_app_…`, `notify.notify`, `notify.persistent_notification`…) sont pris en charge. Les entités de notification (`notify.send_message` avec `entity_id`) ne le sont pas encore.
+
+---
+
 ## 🔔 Exemple d’automatisation
 
 ```yaml

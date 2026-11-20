@@ -65,8 +65,96 @@
   "selector": {
     "action": {
       "options": {
-        "edit": "Modifier un événement"
+        "edit": "Modifier un événement",
+        "notifications": "Configurer les notifications 🔔"
       }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Choisissez une action : modifier un événement ou régler les notifications.",
+        "data": {
+          "action": "Action"
+        }
+      },
+      "select_event": {
+        "description": "Sélectionnez un événement à modifier dans la liste ci-dessous.",
+        "data": {
+          "event": "Événement"
+        }
+      },
+      "edit_event_type": {
+        "description": "Sélectionnez le type d'événement à modifier.",
+        "data": {
+          "type": "Type d'événement"
+        }
+      },
+      "edit_event": {
+        "description": "Modifiez les détails de l'événement (dates au format JJ/MM/AAAA).",
+        "data": {
+          "name": "Nom de l'événement ou de la personne",
+          "first_name": "Prénom (optionnel)",
+          "date": "Date de naissance (pour mémorial) ou Date (autres types)",
+          "type": "Type d'événement",
+          "death_date": "Date de décès (optionnel, pour mémorial)",
+          "start_date": "Date de début du travail (pour retraite)",
+          "is_penible": "Travaux pénibles (réduit les années pour la médaille)",
+          "career_type": "Type de carrière"
+        }
+      },
+      "notifications": {
+        "title": "Notifications 🔔",
+        "description": "Recevez une notification le jour J (et, si vous le souhaitez, un rappel quelques jours avant) à l'heure choisie (heure locale de Home Assistant).",
+        "data": {
+          "enabled": "Activer les notifications",
+          "targets": "Cibles de notification (services notify.*)",
+          "time": "Heure d'envoi",
+          "reminder_days": "Rappel J-N (jours avant, 0 = désactivé)",
+          "persistent": "Créer aussi une notification persistante Home Assistant"
+        },
+        "data_description": {
+          "targets": "Un ou plusieurs services notify.* (ex. notify.mobile_app_mon_telephone). Vous pouvez aussi saisir un nom à la main.",
+          "time": "Par défaut 09:00. Si Home Assistant redémarre après cette heure le jour J, la notification est envoyée une seule fois au démarrage.",
+          "reminder_days": "Exemple : 7 pour être prévenu une semaine avant. 0 désactive le rappel.",
+          "persistent": "Affiche aussi le message dans les notifications de Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Format de date invalide. Utilisez JJ/MM/AAAA (par exemple, 01/06/1980).",
+      "no_events": "Aucun événement configuré. Veuillez d'abord créer un événement via l'ajout initial.",
+      "event_required": "Veuillez sélectionner un événement à modifier dans la liste déroulante.",
+      "invalid_action": "Action invalide. Veuillez sélectionner 'Modifier'.",
+      "update_failed": "Échec de la mise à jour de l'événement. Vérifiez les logs pour plus de détails.",
+      "invalid_memorial_date": "Date de décès invalide pour l'événement mémorial. Utilisez JJ/MM/AAAA avec une date valide (par exemple, 08/01/2018).",
+      "config_entry_not_found": "Entrée de configuration introuvable. Veuillez réinstaller l'intégration.",
+      "no_notify_target": "Choisissez au moins une cible notify.* ou activez la notification persistante.",
+      "invalid_notify_target": "Les cibles doivent être des services notify.* (ex. notify.mobile_app_mon_telephone)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Envoyer une notification de test",
+      "description": "Envoie immédiatement une notification de test aux cibles configurées pour un événement (notification persistante si aucune cible n'est configurée). Ignore l'anti-doublon.",
+      "fields": {
+        "entry_id": {
+          "name": "Entrée",
+          "description": "Entrée Souvenirs et Célébrations à tester."
+        },
+        "entity_id": {
+          "name": "Capteur",
+          "description": "Capteur(s) d'événement à tester (alternative à l'entrée)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Entrée Souvenirs et Célébrations introuvable ou non chargée : {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Le capteur {entity_id} n'appartient pas à Souvenirs et Célébrations."
     }
   }
 }
