@@ -27,5 +27,70 @@
       "invalid_memorial_date": "Date de décès invalide. Utilisez JJ/MM/AAAA.",
       "creation_failed": "Impossible de créer l'entrée."
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "action": "Action"
+        },
+        "description": "Choisissez une action : modifier un événement ou régler les notifications."
+      },
+      "notifications": {
+        "title": "Notifications 🔔",
+        "description": "Recevez une notification le jour J (et, si vous le souhaitez, un rappel quelques jours avant) à l'heure choisie (heure locale de Home Assistant).",
+        "data": {
+          "enabled": "Activer les notifications",
+          "targets": "Cibles de notification (services notify.*)",
+          "time": "Heure d'envoi",
+          "reminder_days": "Rappel J-N (jours avant, 0 = désactivé)",
+          "persistent": "Créer aussi une notification persistante Home Assistant"
+        },
+        "data_description": {
+          "targets": "Un ou plusieurs services notify.* (ex. notify.mobile_app_mon_telephone). Vous pouvez aussi saisir un nom à la main.",
+          "time": "Par défaut 09:00. Si Home Assistant redémarre après cette heure le jour J, la notification est envoyée une seule fois au démarrage.",
+          "reminder_days": "Exemple : 7 pour être prévenu une semaine avant. 0 désactive le rappel.",
+          "persistent": "Affiche aussi le message dans les notifications de Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Format de date invalide. Utilisez JJ/MM/AAAA.",
+      "invalid_memorial_date": "Date de décès invalide. Utilisez JJ/MM/AAAA.",
+      "no_notify_target": "Choisissez au moins une cible notify.* ou activez la notification persistante.",
+      "invalid_notify_target": "Les cibles doivent être des services notify.* (ex. notify.mobile_app_mon_telephone)."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Modifier un événement",
+        "notifications": "Configurer les notifications 🔔"
+      }
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Envoyer une notification de test",
+      "description": "Envoie immédiatement une notification de test aux cibles configurées pour un événement (notification persistante si aucune cible n'est configurée). Ignore l'anti-doublon.",
+      "fields": {
+        "entry_id": {
+          "name": "Entrée",
+          "description": "Entrée Souvenirs et Célébrations à tester."
+        },
+        "entity_id": {
+          "name": "Capteur",
+          "description": "Capteur(s) d'événement à tester (alternative à l'entrée)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Entrée Souvenirs et Célébrations introuvable ou non chargée : {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Le capteur {entity_id} n'appartient pas à Souvenirs et Célébrations."
+    }
   }
 }

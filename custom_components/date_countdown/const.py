@@ -344,3 +344,21 @@ WEDDING_ANNIVERSARIES = {
     59: "Noces de Vison",
     60: "Noces de Diamant"
 }
+
+# Notifications natives (options de chaque entrée, clé "notifications")
+CONF_NOTIFICATIONS = "notifications"
+CONF_NOTIFY_ENABLED = "enabled"
+CONF_NOTIFY_TARGETS = "targets"
+CONF_NOTIFY_TIME = "time"
+CONF_NOTIFY_REMINDER_DAYS = "reminder_days"
+CONF_NOTIFY_PERSISTENT = "persistent"
+
+DEFAULT_NOTIFY_TIME = "09:00:00"
+DEFAULT_NOTIFY_REMINDER_DAYS = 0
+MAX_NOTIFY_REMINDER_DAYS = 60
+
+NOTIFY_STORAGE_KEY = f"{DOMAIN}.notifications"
+NOTIFY_STORAGE_VERSION = 1
+NOTIFY_TITLE = "Souvenirs et Célébrations"
+
+SERVICE_SEND_TEST_NOTIFICATION = "send_test_notification"

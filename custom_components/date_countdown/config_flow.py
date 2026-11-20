@@ -13,8 +13,45 @@ from datetime import date
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers.selector import (
+    BooleanSelector,
+    NumberSelector,
+    NumberSelectorConfig,
+    NumberSelectorMode,
+    SelectSelector,
+    SelectSelectorConfig,
+    SelectSelectorMode,
+    TimeSelector,
+)
 
-from .const import DOMAIN, EVENT_TYPES, DATE_FORMAT
+from .const import (
+    CONF_NOTIFICATIONS,
+    CONF_NOTIFY_ENABLED,
+    CONF_NOTIFY_PERSISTENT,
+    CONF_NOTIFY_REMINDER_DAYS,
+    CONF_NOTIFY_TARGETS,
+    CONF_NOTIFY_TIME,
+    DATE_FORMAT,
+    DOMAIN,
+    EVENT_TYPES,
+    MAX_NOTIFY_REMINDER_DAYS,
+)
+from .notifications import available_notify_targets, get_notification_options, normalize_time
+
+OPTIONS_ACTIONS = ["edit", "notifications"]
+
+
+def _action_schema(default: str = "edit") -> vol.Schema:
+    """Menu des Options : modifier un événement ou régler les notifications."""
+    return vol.Schema({
+        vol.Required("action", default=default): SelectSelector(
+            SelectSelectorConfig(
+                options=OPTIONS_ACTIONS,
+                translation_key="action",
+                mode=SelectSelectorMode.LIST,
+            )
+        )
+    })
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -192,34 +229,35 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
     def __init__(self, config_entry: config_entries.ConfigEntry):
         """Initialize options flow."""
         _LOGGER.debug("Initializing DateCountdownOptionsFlow with config_entry: %s", config_entry.entry_id)
-        self._config_entry_id = config_entry.entry_id
+        self._entry_id = config_entry.entry_id
         self.events = None
         self._event_type = None
+        self._event_index = 0
 
     async def async_step_init(self, user_input: Optional[Dict[str, Any]] = None) -> FlowResult:
         """Manage the options, limited to editing."""
         _LOGGER.debug("async_step_init called with user_input: %s", user_input)
         if self.events is None:
-            config_entry = self.hass.config_entries.async_get_entry(self._config_entry_id)
+            config_entry = self.hass.config_entries.async_get_entry(self._entry_id)
             if not config_entry:
-                _LOGGER.error("Config entry %s not found", self._config_entry_id)
+                _LOGGER.error("Config entry %s not found", self._entry_id)
                 return self.async_show_form(
                     step_id="init",
-                    data_schema=vol.Schema({
-                        vol.Required("action"): vol.In(["edit"])
-                    }),
+                    data_schema=_action_schema(),
                     errors={"base": "config_entry_not_found"}
                 )
-            self.events = config_entry.options.get("events", [])
+            # Copie : ne pas modifier les options de l'entrée en place
+            self.events = [dict(event) for event in config_entry.options.get("events", [])]
             _LOGGER.debug("Initialized events: %s", self.events)
+
+        if user_input is not None and user_input.get("action") == "notifications":
+            return await self.async_step_notifications()
 
         if not self.events:
             _LOGGER.warning("No events available for editing")
             return self.async_show_form(
                 step_id="init",
-                data_schema=vol.Schema({
-                    vol.Required("action"): vol.In(["edit"])
-                }),
+                data_schema=_action_schema(),
                 errors={"base": "no_events"}
             )
 
@@ -230,9 +268,7 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                 _LOGGER.warning("Invalid action received: %s", action)
                 return self.async_show_form(
                     step_id="init",
-                    data_schema=vol.Schema({
-                        vol.Required("action"): vol.In(["edit"])
-                    }),
+                    data_schema=_action_schema(),
                     errors={"action": "invalid_action"}
                 )
             _LOGGER.info("Selected action: edit")
@@ -241,10 +277,62 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
         _LOGGER.info("Showing form for step 'init' with action: edit")
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema({
-                vol.Required("action", default="edit"): vol.In(["edit"])
-            })
+            data_schema=_action_schema()
         )
+
+    async def async_step_notifications(self, user_input: Optional[Dict[str, Any]] = None) -> FlowResult:
+        """Régler les notifications natives (jour J, rappel J-N, notification persistante)."""
+        config_entry = self.hass.config_entries.async_get_entry(self._entry_id)
+        current = get_notification_options(config_entry)
+        errors: Dict[str, str] = {}
+
+        if user_input is not None:
+            enabled = bool(user_input.get(CONF_NOTIFY_ENABLED, False))
+            targets = [str(t).strip() for t in user_input.get(CONF_NOTIFY_TARGETS, []) if str(t).strip()]
+            persistent = bool(user_input.get(CONF_NOTIFY_PERSISTENT, False))
+            for target in targets:
+                if not target.startswith("notify.") or target == "notify.":
+                    errors[CONF_NOTIFY_TARGETS] = "invalid_notify_target"
+            if enabled and not targets and not persistent:
+                errors["base"] = "no_notify_target"
+            if not errors:
+                notifications = {
+                    CONF_NOTIFY_ENABLED: enabled,
+                    CONF_NOTIFY_TARGETS: targets,
+                    CONF_NOTIFY_TIME: normalize_time(user_input.get(CONF_NOTIFY_TIME)),
+                    CONF_NOTIFY_REMINDER_DAYS: int(user_input.get(CONF_NOTIFY_REMINDER_DAYS, 0) or 0),
+                    CONF_NOTIFY_PERSISTENT: persistent,
+                }
+                _LOGGER.info("Notifications mises à jour pour %s : %s", self._entry_id, notifications)
+                return self.async_create_entry(
+                    title="",
+                    data={**config_entry.options, CONF_NOTIFICATIONS: notifications},
+                )
+            current = {**current, **user_input}
+
+        target_options = sorted(set(available_notify_targets(self.hass)) | set(current[CONF_NOTIFY_TARGETS]))
+        schema = vol.Schema({
+            vol.Required(CONF_NOTIFY_ENABLED, default=current[CONF_NOTIFY_ENABLED]): BooleanSelector(),
+            vol.Optional(CONF_NOTIFY_TARGETS, default=current[CONF_NOTIFY_TARGETS]): SelectSelector(
+                SelectSelectorConfig(
+                    options=target_options,
+                    multiple=True,
+                    custom_value=True,
+                    mode=SelectSelectorMode.DROPDOWN,
+                )
+            ),
+            vol.Required(CONF_NOTIFY_TIME, default=current[CONF_NOTIFY_TIME]): TimeSelector(),
+            vol.Required(CONF_NOTIFY_REMINDER_DAYS, default=current[CONF_NOTIFY_REMINDER_DAYS]): NumberSelector(
+                NumberSelectorConfig(
+                    min=0,
+                    max=MAX_NOTIFY_REMINDER_DAYS,
+                    step=1,
+                    mode=NumberSelectorMode.BOX,
+                )
+            ),
+            vol.Required(CONF_NOTIFY_PERSISTENT, default=current[CONF_NOTIFY_PERSISTENT]): BooleanSelector(),
+        })
+        return self.async_show_form(step_id="notifications", data_schema=schema, errors=errors)
 
     async def async_step_select_event(self, user_input: Optional[Dict[str, Any]] = None) -> FlowResult:
         """Handle selecting an event to edit."""
@@ -253,9 +341,7 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
             _LOGGER.warning("No events available for selection")
             return self.async_show_form(
                 step_id="init",
-                data_schema=vol.Schema({
-                    vol.Required("action"): vol.In(["edit"])
-                }),
+                data_schema=_action_schema(),
                 errors={"base": "no_events"}
             )
 
@@ -271,9 +357,7 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
             _LOGGER.error("No valid events found for selection")
             return self.async_show_form(
                 step_id="init",
-                data_schema=vol.Schema({
-                    vol.Required("action"): vol.In(["edit"])
-                }),
+                data_schema=_action_schema(),
                 errors={"base": "no_events"}
             )
 
@@ -291,7 +375,8 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
             event_index = int(user_input["event"])
             _LOGGER.info("Selected event index: %s for editing", event_index)
             self._event_type = self.events[event_index]["type"]
-            return await self.async_step_edit_event_type({"event_index": event_index})
+            self._event_index = event_index
+            return await self.async_step_edit_event_type()
 
         _LOGGER.info("Showing form for step 'select_event' with %d options", len(event_options))
         return self.async_show_form(
@@ -304,12 +389,12 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
     async def async_step_edit_event_type(self, user_input: Optional[Dict[str, Any]] = None) -> FlowResult:
         """Handle selecting the event type for editing an event."""
         _LOGGER.debug("async_step_edit_event_type called with user_input: %s", user_input)
-        event_index = user_input.get("event_index", 0)
+        event_index = self._event_index
         if user_input is not None and "type" in user_input:
             self._event_type = user_input["type"]
             _LOGGER.info("Selected event type for edit: %s", self._event_type)
-            user_input["event_index"] = event_index
-            return await self.async_step_edit_event(user_input)
+            # Affiche le formulaire de détails (pas de soumission implicite)
+            return await self.async_step_edit_event()
 
         event = self.events[event_index]
         event_type_options = {
@@ -333,7 +418,7 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
         """Handle editing an event."""
         _LOGGER.debug("async_step_edit_event called with user_input: %s", user_input)
         errors = {}
-        event_index = user_input.get("event_index", 0)
+        event_index = self._event_index
         event = self.events[event_index]
         _LOGGER.debug("Editing event at index %s: %s", event_index, event)
 
@@ -392,17 +477,16 @@ class DateCountdownOptionsFlow(config_entries.OptionsFlow):
                 self.events[event_index] = event_data
                 _LOGGER.info("Updated events list: %s", self.events)
                 try:
+                    config_entry = self.hass.config_entries.async_get_entry(self._entry_id)
                     self.hass.config_entries.async_update_entry(
-                        self.hass.config_entries.async_get_entry(self._config_entry_id),
-                        title=_generate_entry_title(self.events),
-                        options={"events": self.events}
+                        config_entry,
+                        title=_generate_entry_title(self.events)
                     )
-                    await self.hass.config_entries.async_reload(self._config_entry_id)
-                    _LOGGER.info("Reloaded config entry %s after editing event", self._config_entry_id)
+                    _LOGGER.info("Saving edited event for config entry %s", self._entry_id)
+                    # Conserve les autres options (notifications) ; le listener recharge l'entrée
                     return self.async_create_entry(
-                        title=_generate_entry_title(self.events),
-                        data={},
-                        options={"events": self.events}
+                        title="",
+                        data={**config_entry.options, "events": self.events}
                     )
                 except Exception as e:
                     _LOGGER.error("Failed to update entry after editing event: %s", e)

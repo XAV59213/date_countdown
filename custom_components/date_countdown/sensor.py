@@ -188,7 +188,10 @@ class DateCountdownSensor(SensorEntity):
 
     async def async_update(self) -> None:
         """Update the sensor."""
-        today = dt_util.now().date()
+        self.update_for_date(dt_util.now().date())
+
+    def update_for_date(self, today: date) -> None:
+        """Calcule l'état et les attributs pour une date donnée (réutilisé par les notifications)."""
 
         if self._event_type == "retirement":
             try:

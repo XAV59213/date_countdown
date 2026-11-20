@@ -1,0 +1,14 @@
+send_test_notification:
+  fields:
+    entry_id:
+      required: false
+      selector:
+        config_entry:
+          integration: date_countdown
+    entity_id:
+      required: false
+      selector:
+        entity:
+          integration: date_countdown
+          domain: sensor
+          multiple: true
