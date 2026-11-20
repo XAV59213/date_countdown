@@ -17,6 +17,7 @@ from .const import (
     WORK_MEDAL_LEVELS,
     WORK_MEDAL_PENIBLE_LEVELS,
 )
+from .date_utils import anniversary_in_year, years_elapsed
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -119,11 +120,9 @@ class DateCountdownCalendar(CalendarEntity):
                 years_to_retirement = 64 - 19  # Retraite à 64 ans, début à 19 ans
 
             retirement_year = self._event_date.year + years_to_retirement
-            try:
-                retirement_date = date(retirement_year, self._event_date.month, self._event_date.day)
-            except ValueError as e:
-                _LOGGER.error("Invalid retirement date for %s: %s", self._attr_name, e)
-                return None
+            retirement_date = anniversary_in_year(
+                self._event_date.month, self._event_date.day, retirement_year
+            )
 
             if retirement_date < today:
                 # Retraite passée : indiquer comme événement terminé
@@ -141,9 +140,11 @@ class DateCountdownCalendar(CalendarEntity):
             return CalendarEvent(start=start, end=end, summary=summary)
 
         # Pour les autres types, retourner l'événement annuel le plus proche
-        next_date = date(today.year, self._event_date.month, self._event_date.day)
+        next_date = anniversary_in_year(self._event_date.month, self._event_date.day, today.year)
         if next_date < today:
-            next_date = date(today.year + 1, self._event_date.month, self._event_date.day)
+            next_date = anniversary_in_year(
+                self._event_date.month, self._event_date.day, today.year + 1
+            )
 
         start = datetime.combine(next_date, time(0, 0), tzinfo=tzinfo)
         end = datetime.combine(next_date, time(23, 59), tzinfo=tzinfo)
@@ -183,9 +184,7 @@ class DateCountdownCalendar(CalendarEntity):
             age_if_alive = years
             years_since_death = None
             if self._death_date:
-                years_since_death = date.today().year - self._death_date.year
-                if (date.today().month, date.today().day) < (self._death_date.month, self._death_date.day):
-                    years_since_death -= 1
+                years_since_death = years_elapsed(self._death_date, date.today())
             if years_since_death is not None:
                 summary += f" (Âge si vivant: {age_if_alive} ans, Depuis décès: {years_since_death} ans)"
             else:
@@ -214,11 +213,9 @@ class DateCountdownCalendar(CalendarEntity):
                 years_to_retirement = 64 - 19
 
             retirement_year = self._event_date.year + years_to_retirement
-            try:
-                retirement_date = date(retirement_year, self._event_date.month, self._event_date.day)
-            except ValueError as e:
-                _LOGGER.error("Invalid retirement date for %s: %s", self._attr_name, e)
-                return []
+            retirement_date = anniversary_in_year(
+                self._event_date.month, self._event_date.day, retirement_year
+            )
 
             if start_date.date() <= retirement_date <= end_date.date():
                 start = datetime.combine(retirement_date, time(0, 0), tzinfo=tzinfo)
@@ -231,11 +228,7 @@ class DateCountdownCalendar(CalendarEntity):
 
         # Pour les autres types d'événements, générer des occurrences annuelles
         for year in range(start_date.year, end_year + 1):
-            try:
-                event_date = date(year, self._event_date.month, self._event_date.day)
-            except ValueError as e:
-                _LOGGER.warning("Invalid date for year %s for %s: %s", year, self._attr_name, e)
-                continue
+            event_date = anniversary_in_year(self._event_date.month, self._event_date.day, year)
 
             if start_date.date() <= event_date <= end_date.date():
                 start = datetime.combine(event_date, time(0, 0), tzinfo=tzinfo)
