@@ -41,7 +41,8 @@ SEND_TEST_SCHEMA = vol.All(
 _SECONDARY_SUFFIXES = (
     "days_remaining", "next_date", "age", "next_age", "age_category", "years_elapsed", "wedding",
     "age_if_alive", "years_since_death", "death_anniversary_days", "retirement_date", "years_worked",
-    "work_medal", "today",
+    "work_medal", "today", "birth_date", "wedding_date", "promotion_date", "event_date", "start_date",
+    "death_date",
 )
 
 

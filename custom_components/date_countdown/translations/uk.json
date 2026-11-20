@@ -220,12 +220,10 @@
         "name": "Наступна дата"
       },
       "age": {
-        "name": "Вік",
-        "unit_of_measurement": "років"
+        "name": "Вік"
       },
       "next_age": {
-        "name": "Вік на наступний день народження",
-        "unit_of_measurement": "років"
+        "name": "Вік на наступний день народження"
       },
       "age_category": {
         "name": "Вікова категорія"
@@ -234,16 +232,13 @@
         "name": "Назва річниці весілля"
       },
       "years_elapsed": {
-        "name": "Минуло років",
-        "unit_of_measurement": "років"
+        "name": "Минуло років"
       },
       "age_if_alive": {
-        "name": "Вік, якби був(ла) живий(а)",
-        "unit_of_measurement": "років"
+        "name": "Вік, якби був(ла) живий(а)"
       },
       "years_since_death": {
-        "name": "Років від смерті",
-        "unit_of_measurement": "років"
+        "name": "Років від смерті"
       },
       "death_anniversary_days": {
         "name": "Днів до річниці смерті"
@@ -252,8 +247,7 @@
         "name": "Дата виходу на пенсію"
       },
       "years_worked": {
-        "name": "Відпрацьовано років",
-        "unit_of_measurement": "років"
+        "name": "Відпрацьовано років"
       },
       "work_medal": {
         "name": "Трудова медаль",
@@ -264,6 +258,24 @@
           "gold": "Золото",
           "grand_gold": "Велике золото"
         }
+      },
+      "birth_date": {
+        "name": "Дата народження"
+      },
+      "wedding_date": {
+        "name": "Дата весілля"
+      },
+      "promotion_date": {
+        "name": "Дата підвищення"
+      },
+      "event_date": {
+        "name": "Дата події"
+      },
+      "start_date": {
+        "name": "Дата початку кар'єри"
+      },
+      "death_date": {
+        "name": "Дата смерті"
       }
     },
     "binary_sensor": {

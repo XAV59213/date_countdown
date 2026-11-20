@@ -220,12 +220,10 @@
         "name": "Próxima data"
       },
       "age": {
-        "name": "Idade",
-        "unit_of_measurement": "anos"
+        "name": "Idade"
       },
       "next_age": {
-        "name": "Idade no próximo aniversário",
-        "unit_of_measurement": "anos"
+        "name": "Idade no próximo aniversário"
       },
       "age_category": {
         "name": "Categoria de idade"
@@ -234,16 +232,13 @@
         "name": "Bodas"
       },
       "years_elapsed": {
-        "name": "Anos decorridos",
-        "unit_of_measurement": "anos"
+        "name": "Anos decorridos"
       },
       "age_if_alive": {
-        "name": "Idade se fosse vivo(a)",
-        "unit_of_measurement": "anos"
+        "name": "Idade se fosse vivo(a)"
       },
       "years_since_death": {
-        "name": "Anos desde o falecimento",
-        "unit_of_measurement": "anos"
+        "name": "Anos desde o falecimento"
       },
       "death_anniversary_days": {
         "name": "Dias até ao aniversário do falecimento"
@@ -252,8 +247,7 @@
         "name": "Data da reforma"
       },
       "years_worked": {
-        "name": "Anos trabalhados",
-        "unit_of_measurement": "anos"
+        "name": "Anos trabalhados"
       },
       "work_medal": {
         "name": "Medalha do trabalho",
@@ -264,6 +258,24 @@
           "gold": "Ouro",
           "grand_gold": "Grande Ouro"
         }
+      },
+      "birth_date": {
+        "name": "Data de nascimento"
+      },
+      "wedding_date": {
+        "name": "Data do casamento"
+      },
+      "promotion_date": {
+        "name": "Data da promoção"
+      },
+      "event_date": {
+        "name": "Data do evento"
+      },
+      "start_date": {
+        "name": "Data de início da carreira"
+      },
+      "death_date": {
+        "name": "Data de falecimento"
       }
     },
     "binary_sensor": {

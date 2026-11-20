@@ -220,12 +220,10 @@
         "name": "Seuraava päivämäärä"
       },
       "age": {
-        "name": "Ikä",
-        "unit_of_measurement": "vuotta"
+        "name": "Ikä"
       },
       "next_age": {
-        "name": "Ikä seuraavana syntymäpäivänä",
-        "unit_of_measurement": "vuotta"
+        "name": "Ikä seuraavana syntymäpäivänä"
       },
       "age_category": {
         "name": "Ikäluokka"
@@ -234,16 +232,13 @@
         "name": "Hääpäivän nimi"
       },
       "years_elapsed": {
-        "name": "Kuluneet vuodet",
-        "unit_of_measurement": "vuotta"
+        "name": "Kuluneet vuodet"
       },
       "age_if_alive": {
-        "name": "Ikä, jos elossa",
-        "unit_of_measurement": "vuotta"
+        "name": "Ikä, jos elossa"
       },
       "years_since_death": {
-        "name": "Vuosia kuolemasta",
-        "unit_of_measurement": "vuotta"
+        "name": "Vuosia kuolemasta"
       },
       "death_anniversary_days": {
         "name": "Päiviä kuoleman vuosipäivään"
@@ -252,8 +247,7 @@
         "name": "Eläkkeelle jäämisen päivä"
       },
       "years_worked": {
-        "name": "Työvuodet",
-        "unit_of_measurement": "vuotta"
+        "name": "Työvuodet"
       },
       "work_medal": {
         "name": "Työmitali",
@@ -264,6 +258,24 @@
           "gold": "Kulta",
           "grand_gold": "Suuri kulta"
         }
+      },
+      "birth_date": {
+        "name": "Syntymäpäivä"
+      },
+      "wedding_date": {
+        "name": "Hääpäivä"
+      },
+      "promotion_date": {
+        "name": "Ylennyksen päivämäärä"
+      },
+      "event_date": {
+        "name": "Tapahtuman päivämäärä"
+      },
+      "start_date": {
+        "name": "Uran alkamispäivä"
+      },
+      "death_date": {
+        "name": "Kuolinpäivä"
       }
     },
     "binary_sensor": {

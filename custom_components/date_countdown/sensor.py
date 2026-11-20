@@ -1,6 +1,8 @@
 """Sensor platform for Date Countdown."""
 import logging
 from datetime import date, datetime, timedelta
+from functools import partial
+import inspect
 from typing import Any, Dict, Optional
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorStateClass
@@ -25,6 +27,7 @@ from .const import (
 )
 from .date_utils import anniversary_in_year, years_elapsed
 from .entity import async_event_models, event_device_info
+from .i18n import year_unit
 from .i18n import GENDER_UNSPECIFIED, age_category as tr_age_category, medal_name, normalize_gender, wedding_name
 
 _LOGGER = logging.getLogger(__name__)
@@ -429,6 +432,7 @@ class DateCountdownExtraSensor(DateCountdownEventEntity, SensorEntity):
         self._attr_device_class = spec.get("device_class")
         self._attr_state_class = spec.get("state_class")
         self._attr_native_unit_of_measurement = spec.get("unit")
+        self._years_unit = bool(spec.get("years"))
         if spec.get("device_class") == SensorDeviceClass.ENUM:
             self._attr_options = MEDAL_OPTIONS
         super().__init__(event, device_info, key, language)
@@ -440,6 +444,8 @@ class DateCountdownExtraSensor(DateCountdownEventEntity, SensorEntity):
         key = self._key
         if key == "days_remaining":
             return c.state
+        if key in ORIGIN_DATE_FIELDS:
+            return _parse_date(self._event.get(ORIGIN_DATE_FIELDS[key]))
         if key == "next_date":
             return today + timedelta(days=c.state) if c.state is not None else None
         if key == "age":
@@ -469,13 +475,26 @@ class DateCountdownExtraSensor(DateCountdownEventEntity, SensorEntity):
         return None
 
     @property
+    def native_unit_of_measurement(self) -> str | None:
+        if self._years_unit:
+            hass = getattr(self, "hass", None)
+            return year_unit(hass.config.language if hass is not None else self._calc._language)
+        return self._attr_native_unit_of_measurement
+
+    async def async_added_to_hass(self) -> None:
+        await super().async_added_to_hass()
+        if self._years_unit and self.native_unit_of_measurement:
+            await async_relabel_statistics_unit(self.hass, self.entity_id, self.native_unit_of_measurement)
+
+    @property
     def icon(self) -> str | None:
         if self._key == "age_category" and self._calc._age_category is not None:
             return AGE_CATEGORY_ICONS[self._calc._age_category]
         return self._attr_icon
 
 
-_YEARS = {"state_class": SensorStateClass.MEASUREMENT}
+# Capteurs en années : unité localisée (« ans », « years », « Jahre »…), voir year_unit()
+_YEARS = {"state_class": SensorStateClass.MEASUREMENT, "years": True}
 EXTRA_SENSORS: dict[str, dict[str, Any]] = {
     "days_remaining": {"icon": "mdi:timer-sand", "device_class": SensorDeviceClass.DURATION,
                        "unit": UnitOfTime.DAYS, "state_class": SensorStateClass.MEASUREMENT},
@@ -492,18 +511,30 @@ EXTRA_SENSORS: dict[str, dict[str, Any]] = {
     "retirement_date": {"icon": "mdi:beach", "device_class": SensorDeviceClass.DATE},
     "years_worked": {"icon": "mdi:briefcase-clock", **_YEARS},
     "work_medal": {"icon": "mdi:medal", "device_class": SensorDeviceClass.ENUM},
+    "birth_date": {"icon": "mdi:baby-carriage", "device_class": SensorDeviceClass.DATE},
+    "wedding_date": {"icon": "mdi:ring", "device_class": SensorDeviceClass.DATE},
+    "promotion_date": {"icon": "mdi:school", "device_class": SensorDeviceClass.DATE},
+    "event_date": {"icon": "mdi:calendar-star", "device_class": SensorDeviceClass.DATE},
+    "start_date": {"icon": "mdi:briefcase-account", "device_class": SensorDeviceClass.DATE},
+    "death_date": {"icon": "mdi:candle", "device_class": SensorDeviceClass.DATE},
 }
 
 # Capteurs secondaires créés selon le type d'événement
 SENSORS_BY_TYPE: dict[str, tuple[str, ...]] = {
-    "birthday": ("days_remaining", "next_date", "age", "next_age", "age_category"),
-    "anniversary": ("days_remaining", "next_date", "years_elapsed", "wedding"),
-    "memorial": ("days_remaining", "next_date", "age_if_alive", "years_since_death", "death_anniversary_days"),
-    "promotion": ("days_remaining", "next_date", "years_elapsed"),
-    "special_event": ("days_remaining", "next_date", "years_elapsed"),
-    "retirement": ("days_remaining", "retirement_date", "years_worked", "work_medal"),
+    "birthday": ("days_remaining", "next_date", "age", "next_age", "age_category", "birth_date"),
+    "anniversary": ("days_remaining", "next_date", "years_elapsed", "wedding", "wedding_date"),
+    "memorial": ("days_remaining", "next_date", "age_if_alive", "years_since_death", "death_anniversary_days",
+                 "birth_date", "death_date"),
+    "promotion": ("days_remaining", "next_date", "years_elapsed", "promotion_date"),
+    "special_event": ("days_remaining", "next_date", "years_elapsed", "event_date"),
+    "retirement": ("days_remaining", "retirement_date", "years_worked", "work_medal", "start_date"),
 }
-_NEEDS_DEATH_DATE = ("years_since_death", "death_anniversary_days")
+_NEEDS_DEATH_DATE = ("years_since_death", "death_anniversary_days", "death_date")
+# Date d'origine de l'événement (champ de l'événement lu par chaque capteur « date »)
+ORIGIN_DATE_FIELDS = {
+    "birth_date": "date", "wedding_date": "date", "promotion_date": "date", "event_date": "date",
+    "start_date": "start_date", "death_date": "death_date",
+}
 
 
 def extra_sensor_keys(event: dict[str, Any]) -> list[str]:
@@ -513,3 +544,41 @@ def extra_sensor_keys(event: dict[str, Any]) -> list[str]:
 
 def build_extra_sensors(event: dict[str, Any], device_info: DeviceInfo, language: str) -> list[SensorEntity]:
     return [DateCountdownExtraSensor(event, device_info, key, language) for key in extra_sensor_keys(event)]
+
+
+def _parse_date(value: Any) -> date | None:
+    try:
+        day, month, year = map(int, str(value).split("/"))
+        return date(year, month, day)
+    except (ValueError, TypeError):
+        return None
+
+
+async def async_relabel_statistics_unit(hass: HomeAssistant, entity_id: str, unit: str) -> None:
+    """Évite la réparation « unité modifiée » des statistiques quand l'unité des années change de libellé.
+
+    Les valeurs sont identiques (des années) : seul le libellé change (« years » en 1.2.21-1.2.22,
+    « ans » en français ensuite, ou après un changement de langue). On met donc à jour l'unité
+    des métadonnées existantes, sans toucher aux données.
+    """
+    if "recorder" not in hass.config.components:
+        return
+    try:
+        from homeassistant.components.recorder import get_instance, statistics
+    except ImportError:  # pragma: no cover
+        return
+    try:
+        metadata = await get_instance(hass).async_add_executor_job(
+            partial(statistics.get_metadata, hass, statistic_ids={entity_id})
+        )
+    except Exception:  # noqa: BLE001 - jamais bloquant
+        _LOGGER.debug("Statistiques indisponibles pour %s", entity_id, exc_info=True)
+        return
+    meta = metadata.get(entity_id)
+    if not meta or meta[1].get("unit_of_measurement") in (None, unit):
+        return
+    kwargs: dict[str, Any] = {"new_unit_of_measurement": unit}
+    if "new_unit_class" in inspect.signature(statistics.async_update_statistics_metadata).parameters:
+        kwargs["new_unit_class"] = None  # unité libre (pas de convertisseur)
+    _LOGGER.info("Statistiques de %s : unité « %s » → « %s »", entity_id, meta[1].get("unit_of_measurement"), unit)
+    statistics.async_update_statistics_metadata(hass, entity_id, **kwargs)

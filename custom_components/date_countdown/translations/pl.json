@@ -220,12 +220,10 @@
         "name": "Następna data"
       },
       "age": {
-        "name": "Wiek",
-        "unit_of_measurement": "lat"
+        "name": "Wiek"
       },
       "next_age": {
-        "name": "Wiek w następne urodziny",
-        "unit_of_measurement": "lat"
+        "name": "Wiek w następne urodziny"
       },
       "age_category": {
         "name": "Kategoria wiekowa"
@@ -234,16 +232,13 @@
         "name": "Nazwa rocznicy ślubu"
       },
       "years_elapsed": {
-        "name": "Minione lata",
-        "unit_of_measurement": "lat"
+        "name": "Minione lata"
       },
       "age_if_alive": {
-        "name": "Wiek, gdyby żył(a)",
-        "unit_of_measurement": "lat"
+        "name": "Wiek, gdyby żył(a)"
       },
       "years_since_death": {
-        "name": "Lata od śmierci",
-        "unit_of_measurement": "lat"
+        "name": "Lata od śmierci"
       },
       "death_anniversary_days": {
         "name": "Dni do rocznicy śmierci"
@@ -252,8 +247,7 @@
         "name": "Data przejścia na emeryturę"
       },
       "years_worked": {
-        "name": "Przepracowane lata",
-        "unit_of_measurement": "lat"
+        "name": "Przepracowane lata"
       },
       "work_medal": {
         "name": "Medal za pracę",
@@ -264,6 +258,24 @@
           "gold": "Złoty",
           "grand_gold": "Wielki Złoty"
         }
+      },
+      "birth_date": {
+        "name": "Data urodzenia"
+      },
+      "wedding_date": {
+        "name": "Data ślubu"
+      },
+      "promotion_date": {
+        "name": "Data awansu"
+      },
+      "event_date": {
+        "name": "Data wydarzenia"
+      },
+      "start_date": {
+        "name": "Data rozpoczęcia kariery"
+      },
+      "death_date": {
+        "name": "Data śmierci"
       }
     },
     "binary_sensor": {

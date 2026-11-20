@@ -220,12 +220,10 @@
         "name": "Volgende datum"
       },
       "age": {
-        "name": "Leeftijd",
-        "unit_of_measurement": "jaar"
+        "name": "Leeftijd"
       },
       "next_age": {
-        "name": "Leeftijd op volgende verjaardag",
-        "unit_of_measurement": "jaar"
+        "name": "Leeftijd op volgende verjaardag"
       },
       "age_category": {
         "name": "Leeftijdscategorie"
@@ -234,16 +232,13 @@
         "name": "Huwelijksjubileum"
       },
       "years_elapsed": {
-        "name": "Verstreken jaren",
-        "unit_of_measurement": "jaar"
+        "name": "Verstreken jaren"
       },
       "age_if_alive": {
-        "name": "Leeftijd indien in leven",
-        "unit_of_measurement": "jaar"
+        "name": "Leeftijd indien in leven"
       },
       "years_since_death": {
-        "name": "Jaren sinds overlijden",
-        "unit_of_measurement": "jaar"
+        "name": "Jaren sinds overlijden"
       },
       "death_anniversary_days": {
         "name": "Dagen tot sterfdag"
@@ -252,8 +247,7 @@
         "name": "Pensioendatum"
       },
       "years_worked": {
-        "name": "Gewerkte jaren",
-        "unit_of_measurement": "jaar"
+        "name": "Gewerkte jaren"
       },
       "work_medal": {
         "name": "Arbeidsmedaille",
@@ -264,6 +258,24 @@
           "gold": "Goud",
           "grand_gold": "Groot Goud"
         }
+      },
+      "birth_date": {
+        "name": "Geboortedatum"
+      },
+      "wedding_date": {
+        "name": "Trouwdatum"
+      },
+      "promotion_date": {
+        "name": "Promotiedatum"
+      },
+      "event_date": {
+        "name": "Datum van de gebeurtenis"
+      },
+      "start_date": {
+        "name": "Startdatum loopbaan"
+      },
+      "death_date": {
+        "name": "Overlijdensdatum"
       }
     },
     "binary_sensor": {

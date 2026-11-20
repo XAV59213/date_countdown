@@ -220,12 +220,10 @@
         "name": "Nästa datum"
       },
       "age": {
-        "name": "Ålder",
-        "unit_of_measurement": "år"
+        "name": "Ålder"
       },
       "next_age": {
-        "name": "Ålder vid nästa födelsedag",
-        "unit_of_measurement": "år"
+        "name": "Ålder vid nästa födelsedag"
       },
       "age_category": {
         "name": "Ålderskategori"
@@ -234,16 +232,13 @@
         "name": "Bröllopsdagens namn"
       },
       "years_elapsed": {
-        "name": "Förflutna år",
-        "unit_of_measurement": "år"
+        "name": "Förflutna år"
       },
       "age_if_alive": {
-        "name": "Ålder om vid liv",
-        "unit_of_measurement": "år"
+        "name": "Ålder om vid liv"
       },
       "years_since_death": {
-        "name": "År sedan bortgången",
-        "unit_of_measurement": "år"
+        "name": "År sedan bortgången"
       },
       "death_anniversary_days": {
         "name": "Dagar till dödsdagen"
@@ -252,8 +247,7 @@
         "name": "Pensionsdatum"
       },
       "years_worked": {
-        "name": "Arbetade år",
-        "unit_of_measurement": "år"
+        "name": "Arbetade år"
       },
       "work_medal": {
         "name": "Arbetsmedalj",
@@ -264,6 +258,24 @@
           "gold": "Guld",
           "grand_gold": "Storguld"
         }
+      },
+      "birth_date": {
+        "name": "Födelsedatum"
+      },
+      "wedding_date": {
+        "name": "Bröllopsdatum"
+      },
+      "promotion_date": {
+        "name": "Befordringsdatum"
+      },
+      "event_date": {
+        "name": "Datum för händelsen"
+      },
+      "start_date": {
+        "name": "Karriärens startdatum"
+      },
+      "death_date": {
+        "name": "Dödsdatum"
       }
     },
     "binary_sensor": {

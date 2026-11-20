@@ -147,24 +147,31 @@ En plus du capteur principal (inchangé : état = jours restants, mêmes attribu
 |---|:-:|:-:|:-:|:-:|:-:|---|
 | Jours restants (`days_remaining`) | ✅ | ✅ | ✅ | ✅ | ✅ | durée en jours (`d`), `measurement` |
 | Prochaine date (`next_date`) | ✅ | ✅ | ✅ | ✅ | | `device_class: date` |
-| Âge (`age`) | ✅ | | | | | âge actuel, `years` |
-| Âge au prochain anniversaire (`next_age`) | ✅ | | | | | `years` |
+| Âge (`age`) | ✅ | | | | | âge actuel, en années ⁴ |
+| Âge au prochain anniversaire (`next_age`) | ✅ | | | | | années ⁴ |
 | Catégorie d’âge (`age_category`) | ✅ | | | | | texte traduit, accordé au genre |
-| Années écoulées (`years_elapsed`) | | ✅ | | ✅ | | `years` |
+| Années écoulées (`years_elapsed`) | | ✅ | | ✅ | | années ⁴ |
 | Noces (`wedding`) | | ✅ | | | | noces du prochain anniversaire |
-| Âge si vivant (`age_if_alive`) | | | ✅ | | | `years` |
-| Années depuis le décès (`years_since_death`) | | | ✅¹ | | | `years` |
+| Âge si vivant (`age_if_alive`) | | | ✅ | | | années ⁴ |
+| Années depuis le décès (`years_since_death`) | | | ✅¹ | | | années ⁴ |
 | Jours avant l’anniversaire du décès (`death_anniversary_days`) | | | ✅¹ | | | durée en jours |
 | Date de retraite (`retirement_date`) | | | | | ✅ | `device_class: date` |
-| Années travaillées (`years_worked`) | | | | | ✅ | `years` |
+| Années travaillées (`years_worked`) | | | | | ✅ | années ⁴ |
 | Médaille du travail (`work_medal`) | | | | | ✅ | `enum` : `none`, `silver`, `vermeil`, `gold`, `grand_gold` (traduits) |
+| Date de naissance (`birth_date`) | ✅ | | ✅ | | | `device_class: date` |
+| Date du mariage (`wedding_date`) | | ✅ | | | | `device_class: date` |
+| Date de la promotion (`promotion_date`) / Date de l’événement (`event_date`) | | | | ✅ | | `device_class: date` (selon le type) |
+| Date de début de carrière (`start_date`) | | | | | ✅ | `device_class: date` |
+| Date de décès (`death_date`) | | | ✅¹ | | | `device_class: date` |
 | Aujourd’hui (jour J) (`today`, *binary_sensor*) | ✅ | ✅ | ✅² | ✅ | ✅³ | attribut `occasion` |
 
-¹ seulement si une date de décès est renseignée · ² aussi le jour anniversaire du décès (`occasion: death_anniversary`) · ³ le jour du départ à la retraite
+¹ seulement si une date de décès est renseignée · ² aussi le jour anniversaire du décès (`occasion: death_anniversary`) · ³ le jour du départ à la retraite · ⁴ unité dans la langue de Home Assistant (« ans », « years », « Jahre »… 22 langues)
+
+> **Unité des années.** Home Assistant applique toujours la traduction **anglaise** des unités déclarées dans les fichiers de traduction (`unit_of_measurement` : volontaire, pour que les statistiques ne dépendent pas de la langue) — d’où « years » en 1.2.21–1.2.22. L’intégration fixe donc elle-même l’unité selon la langue de HA. Les statistiques déjà enregistrées en « years » sont **renommées** au démarrage (les valeurs sont identiques, seul le libellé change) : pas de réparation « unité modifiée », pas de perte d’historique. Si vous changez la langue de HA, l’unité suit au redémarrage suivant, de la même façon.
 
 `unique_id` stables : `<unique_id du capteur principal>_<clé>` (ex. `birthday_descamps_15062001_days_remaining`). Exemple d’`entity_id` en français : `sensor.anais_descamps_anniversaire_jours_restants`, `binary_sensor.anais_descamps_anniversaire_aujourd_hui_jour_j`.
 
-> Les cartes Lovelace ne détectent que les capteurs principaux (attribut `event_type`) : les nouvelles entités ne s’y ajoutent pas.
+> Cartes Lovelace : la détection automatique ne prend que les capteurs principaux (attribut `event_type`). Si vous indiquez une entité secondaire (`sensor.…_jours_restants`, `binary_sensor.…_aujourd_hui_jour_j`, une date…), la carte utilise le capteur principal du **même appareil** ; plusieurs entités d’un même événement ne l’affichent qu’une fois. Les éditeurs ne proposent que les capteurs principaux (du bon type pour les cartes Informations et Mémoriaux).
 
 ---
 
@@ -446,6 +453,12 @@ automation:
 - `death_date` : format `JJ/MM/AAAA`
 - Vérifiez les attributs dans **Développeur > États**
 
+### Télécharger les diagnostics
+
+Paramètres → Appareils et services → Souvenirs et Célébrations → ⋮ → **Télécharger les diagnostics** (pour l’entrée, ou depuis la page d’un appareil pour un seul événement). Le fichier contient la version, la langue, les options, les événements (types, dates, genre), les appareils, les états et attributs des entités et l’anti-doublon des notifications.
+
+Masqué : les **noms et prénoms** (remplacés par `event_1`, `event_2`… partout : options, `entity_id`, `unique_id`, noms d’appareils, `friendly_name`), le titre de l’entrée, les noms personnalisés et les **cibles de notification** (`targets`, `entities`). Les **dates** restent visibles (indispensables pour vérifier un calcul de jours ou d’âge) : relisez le fichier avant de le publier.
+
 ### Activer les logs de debug
 
 ```yaml
@@ -507,6 +520,7 @@ python3 scripts/check_translations.py
 | `calendar.py`                          | Calendrier des occurrences (50 ans)             |
 | `binary_sensor.py`                     | Entité « Aujourd’hui (jour J) »                  |
 | `entity.py`                            | Appareil par événement                           |
+| `diagnostics.py`                       | Diagnostics (données personnelles masquées)      |
 | `date_utils.py`                        | Dates d’anniversaire, y compris le 29 février   |
 | `const.py`                             | Types, formats, intitulés, noces                |
 | `i18n.py`, `i18n_data.py`              | Textes générés multilingues (fr, en, de, es, it) |

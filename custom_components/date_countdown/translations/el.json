@@ -220,12 +220,10 @@
         "name": "Επόμενη ημερομηνία"
       },
       "age": {
-        "name": "Ηλικία",
-        "unit_of_measurement": "έτη"
+        "name": "Ηλικία"
       },
       "next_age": {
-        "name": "Ηλικία στα επόμενα γενέθλια",
-        "unit_of_measurement": "έτη"
+        "name": "Ηλικία στα επόμενα γενέθλια"
       },
       "age_category": {
         "name": "Κατηγορία ηλικίας"
@@ -234,16 +232,13 @@
         "name": "Όνομα επετείου γάμου"
       },
       "years_elapsed": {
-        "name": "Χρόνια που πέρασαν",
-        "unit_of_measurement": "έτη"
+        "name": "Χρόνια που πέρασαν"
       },
       "age_if_alive": {
-        "name": "Ηλικία αν ζούσε",
-        "unit_of_measurement": "έτη"
+        "name": "Ηλικία αν ζούσε"
       },
       "years_since_death": {
-        "name": "Χρόνια από τον θάνατο",
-        "unit_of_measurement": "έτη"
+        "name": "Χρόνια από τον θάνατο"
       },
       "death_anniversary_days": {
         "name": "Ημέρες έως την επέτειο θανάτου"
@@ -252,8 +247,7 @@
         "name": "Ημερομηνία συνταξιοδότησης"
       },
       "years_worked": {
-        "name": "Χρόνια εργασίας",
-        "unit_of_measurement": "έτη"
+        "name": "Χρόνια εργασίας"
       },
       "work_medal": {
         "name": "Μετάλλιο εργασίας",
@@ -264,6 +258,24 @@
           "gold": "Χρυσό",
           "grand_gold": "Μεγάλο χρυσό"
         }
+      },
+      "birth_date": {
+        "name": "Ημερομηνία γέννησης"
+      },
+      "wedding_date": {
+        "name": "Ημερομηνία γάμου"
+      },
+      "promotion_date": {
+        "name": "Ημερομηνία προαγωγής"
+      },
+      "event_date": {
+        "name": "Ημερομηνία εκδήλωσης"
+      },
+      "start_date": {
+        "name": "Ημερομηνία έναρξης καριέρας"
+      },
+      "death_date": {
+        "name": "Ημερομηνία θανάτου"
       }
     },
     "binary_sensor": {
