@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Wspomnienia i Uroczystości",
+        "description": "Wybierz typ wydarzenia do skonfigurowania.",
+        "data": {
+          "type": "Typ wydarzenia"
+        }
+      },
+      "event_details": {
+        "title": "Szczegóły wydarzenia",
+        "description": "Wprowadź szczegóły wydarzenia (daty w formacie DD/MM/RRRR).",
+        "data": {
+          "name": "Nazwa wydarzenia lub imię i nazwisko osoby",
+          "first_name": "Imię (opcjonalnie)",
+          "date": "Data urodzenia (dla upamiętnienia) lub data (inne typy)",
+          "type": "Typ wydarzenia",
+          "death_date": "Data śmierci (opcjonalnie, dla upamiętnienia)",
+          "start_date": "Data rozpoczęcia pracy (dla emerytury)",
+          "is_penible": "Praca w szczególnych warunkach (zmniejsza liczbę lat wymaganych do medalu)",
+          "career_type": "Typ kariery"
+        }
+      },
+      "init": {
+        "description": "Wybierz działanie, aby edytować wydarzenie",
+        "data": {
+          "action": "Działanie"
+        }
+      },
+      "select_event": {
+        "description": "Wybierz wydarzenie do edycji z poniższej listy.",
+        "data": {
+          "event": "Wydarzenie"
+        }
+      },
+      "edit_event_type": {
+        "description": "Wybierz typ edytowanego wydarzenia.",
+        "data": {
+          "type": "Typ wydarzenia"
+        }
+      },
+      "edit_event": {
+        "description": "Edytuj szczegóły wydarzenia (daty w formacie DD/MM/RRRR).",
+        "data": {
+          "name": "Nazwa wydarzenia lub imię i nazwisko osoby",
+          "first_name": "Imię (opcjonalnie)",
+          "date": "Data urodzenia (dla upamiętnienia) lub data (inne typy)",
+          "type": "Typ wydarzenia",
+          "death_date": "Data śmierci (opcjonalnie, dla upamiętnienia)",
+          "start_date": "Data rozpoczęcia pracy (dla emerytury)",
+          "is_penible": "Praca w szczególnych warunkach (zmniejsza liczbę lat wymaganych do medalu)",
+          "career_type": "Typ kariery"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Nieprawidłowy format daty. Użyj DD/MM/RRRR (na przykład 01/06/1980).",
+      "no_events": "Brak skonfigurowanych wydarzeń. Najpierw utwórz wydarzenie podczas początkowej konfiguracji.",
+      "event_required": "Wybierz wydarzenie do edycji z listy rozwijanej.",
+      "invalid_action": "Nieprawidłowe działanie. Wybierz „Edytuj wydarzenie”.",
+      "update_failed": "Nie udało się zaktualizować wydarzenia. Sprawdź logi, aby uzyskać więcej szczegółów.",
+      "invalid_memorial_date": "Nieprawidłowa data śmierci dla wydarzenia upamiętniającego. Użyj DD/MM/RRRR z prawidłową datą (na przykład 08/01/2018).",
+      "config_entry_not_found": "Nie znaleziono wpisu konfiguracji. Zainstaluj integrację ponownie.",
+      "creation_failed": "Nie można utworzyć wpisu."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Edytuj wydarzenie",
+        "notifications": "Skonfiguruj powiadomienia 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Wybierz działanie: edytuj wydarzenie lub skonfiguruj powiadomienia.",
+        "data": {
+          "action": "Działanie"
+        }
+      },
+      "select_event": {
+        "description": "Wybierz wydarzenie do edycji z poniższej listy.",
+        "data": {
+          "event": "Wydarzenie"
+        }
+      },
+      "edit_event_type": {
+        "description": "Wybierz typ edytowanego wydarzenia.",
+        "data": {
+          "type": "Typ wydarzenia"
+        }
+      },
+      "edit_event": {
+        "description": "Edytuj szczegóły wydarzenia (daty w formacie DD/MM/RRRR).",
+        "data": {
+          "name": "Nazwa wydarzenia lub imię i nazwisko osoby",
+          "first_name": "Imię (opcjonalnie)",
+          "date": "Data urodzenia (dla upamiętnienia) lub data (inne typy)",
+          "type": "Typ wydarzenia",
+          "death_date": "Data śmierci (opcjonalnie, dla upamiętnienia)",
+          "start_date": "Data rozpoczęcia pracy (dla emerytury)",
+          "is_penible": "Praca w szczególnych warunkach (zmniejsza liczbę lat wymaganych do medalu)",
+          "career_type": "Typ kariery"
+        }
+      },
+      "notifications": {
+        "title": "Powiadomienia 🔔",
+        "description": "Otrzymuj powiadomienie w dniu wydarzenia (i opcjonalnie przypomnienie kilka dni wcześniej) o wybranej godzinie (czas lokalny Home Assistant).",
+        "data": {
+          "enabled": "Włącz powiadomienia",
+          "targets": "Odbiorcy powiadomień (usługi notify.*)",
+          "time": "Godzina wysyłki",
+          "reminder_days": "Przypomnienie N dni wcześniej (0 = wyłączone)",
+          "persistent": "Utwórz również trwałe powiadomienie w Home Assistant"
+        },
+        "data_description": {
+          "targets": "Jedna lub więcej usług notify.* (np. notify.mobile_app_moj_telefon). Możesz też wpisać nazwę ręcznie.",
+          "time": "Domyślnie 09:00. Jeśli Home Assistant uruchomi się ponownie po tej godzinie w dniu wydarzenia, powiadomienie zostanie wysłane jednorazowo przy starcie.",
+          "reminder_days": "Przykład: 7, aby otrzymać przypomnienie tydzień wcześniej. 0 wyłącza przypomnienie.",
+          "persistent": "Wyświetla również wiadomość w powiadomieniach Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Nieprawidłowy format daty. Użyj DD/MM/RRRR (na przykład 01/06/1980).",
+      "no_events": "Brak skonfigurowanych wydarzeń. Najpierw utwórz wydarzenie podczas początkowej konfiguracji.",
+      "event_required": "Wybierz wydarzenie do edycji z listy rozwijanej.",
+      "invalid_action": "Nieprawidłowe działanie. Wybierz „Edytuj wydarzenie”.",
+      "update_failed": "Nie udało się zaktualizować wydarzenia. Sprawdź logi, aby uzyskać więcej szczegółów.",
+      "invalid_memorial_date": "Nieprawidłowa data śmierci dla wydarzenia upamiętniającego. Użyj DD/MM/RRRR z prawidłową datą (na przykład 08/01/2018).",
+      "config_entry_not_found": "Nie znaleziono wpisu konfiguracji. Zainstaluj integrację ponownie.",
+      "no_notify_target": "Wybierz co najmniej jednego odbiorcę notify.* lub włącz trwałe powiadomienie.",
+      "invalid_notify_target": "Odbiorcy muszą być usługami notify.* (np. notify.mobile_app_moj_telefon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Wyślij powiadomienie testowe",
+      "description": "Natychmiast wysyła powiadomienie testowe do odbiorców skonfigurowanych dla wydarzenia (trwałe powiadomienie, jeśli nie skonfigurowano odbiorcy). Pomija ochronę przed duplikatami.",
+      "fields": {
+        "entry_id": {
+          "name": "Wpis",
+          "description": "Wpis Wspomnienia i Uroczystości do przetestowania."
+        },
+        "entity_id": {
+          "name": "Czujnik",
+          "description": "Czujnik(i) wydarzenia do przetestowania (alternatywa dla wpisu)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Nie znaleziono wpisu Wspomnienia i Uroczystości lub nie został załadowany: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Czujnik {entity_id} nie należy do integracji Wspomnienia i Uroczystości."
+    }
+  }
+}

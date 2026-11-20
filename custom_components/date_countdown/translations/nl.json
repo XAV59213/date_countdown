@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Herinneringen en Vieringen",
+        "description": "Selecteer het type gebeurtenis dat je wilt configureren.",
+        "data": {
+          "type": "Type gebeurtenis"
+        }
+      },
+      "event_details": {
+        "title": "Details van de gebeurtenis",
+        "description": "Voer de details van de gebeurtenis in (datums in de notatie DD/MM/JJJJ).",
+        "data": {
+          "name": "Naam van de gebeurtenis of persoon",
+          "first_name": "Voornaam (optioneel)",
+          "date": "Geboortedatum (voor herdenking) of datum (andere typen)",
+          "type": "Type gebeurtenis",
+          "death_date": "Overlijdensdatum (optioneel, voor herdenking)",
+          "start_date": "Begindatum van het werk (voor pensioen)",
+          "is_penible": "Zwaar werk (vermindert het aantal jaren dat nodig is voor de medaille)",
+          "career_type": "Loopbaantype"
+        }
+      },
+      "init": {
+        "description": "Selecteer de actie om een gebeurtenis te bewerken",
+        "data": {
+          "action": "Actie"
+        }
+      },
+      "select_event": {
+        "description": "Selecteer een gebeurtenis om te bewerken uit de onderstaande lijst.",
+        "data": {
+          "event": "Gebeurtenis"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selecteer het type gebeurtenis dat je wilt bewerken.",
+        "data": {
+          "type": "Type gebeurtenis"
+        }
+      },
+      "edit_event": {
+        "description": "Bewerk de details van de gebeurtenis (datums in de notatie DD/MM/JJJJ).",
+        "data": {
+          "name": "Naam van de gebeurtenis of persoon",
+          "first_name": "Voornaam (optioneel)",
+          "date": "Geboortedatum (voor herdenking) of datum (andere typen)",
+          "type": "Type gebeurtenis",
+          "death_date": "Overlijdensdatum (optioneel, voor herdenking)",
+          "start_date": "Begindatum van het werk (voor pensioen)",
+          "is_penible": "Zwaar werk (vermindert het aantal jaren dat nodig is voor de medaille)",
+          "career_type": "Loopbaantype"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ongeldige datumnotatie. Gebruik DD/MM/JJJJ (bijvoorbeeld 01/06/1980).",
+      "no_events": "Geen gebeurtenis geconfigureerd. Maak eerst een gebeurtenis aan via de eerste configuratie.",
+      "event_required": "Selecteer een gebeurtenis om te bewerken in de keuzelijst.",
+      "invalid_action": "Ongeldige actie. Selecteer 'Een gebeurtenis bewerken'.",
+      "update_failed": "Bijwerken van de gebeurtenis mislukt. Bekijk de logboeken voor meer details.",
+      "invalid_memorial_date": "Ongeldige overlijdensdatum voor de herdenking. Gebruik DD/MM/JJJJ met een geldige datum (bijvoorbeeld 08/01/2018).",
+      "config_entry_not_found": "Configuratie-item niet gevonden. Installeer de integratie opnieuw.",
+      "creation_failed": "Kan het item niet aanmaken."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Een gebeurtenis bewerken",
+        "notifications": "Meldingen configureren 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Kies een actie: een gebeurtenis bewerken of meldingen configureren.",
+        "data": {
+          "action": "Actie"
+        }
+      },
+      "select_event": {
+        "description": "Selecteer een gebeurtenis om te bewerken uit de onderstaande lijst.",
+        "data": {
+          "event": "Gebeurtenis"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selecteer het type gebeurtenis dat je wilt bewerken.",
+        "data": {
+          "type": "Type gebeurtenis"
+        }
+      },
+      "edit_event": {
+        "description": "Bewerk de details van de gebeurtenis (datums in de notatie DD/MM/JJJJ).",
+        "data": {
+          "name": "Naam van de gebeurtenis of persoon",
+          "first_name": "Voornaam (optioneel)",
+          "date": "Geboortedatum (voor herdenking) of datum (andere typen)",
+          "type": "Type gebeurtenis",
+          "death_date": "Overlijdensdatum (optioneel, voor herdenking)",
+          "start_date": "Begindatum van het werk (voor pensioen)",
+          "is_penible": "Zwaar werk (vermindert het aantal jaren dat nodig is voor de medaille)",
+          "career_type": "Loopbaantype"
+        }
+      },
+      "notifications": {
+        "title": "Meldingen 🔔",
+        "description": "Ontvang een melding op de dag van de gebeurtenis (en eventueel een herinnering een paar dagen ervoor) op het gekozen tijdstip (lokale tijd van Home Assistant).",
+        "data": {
+          "enabled": "Meldingen inschakelen",
+          "targets": "Meldingsdoelen (notify.*-services)",
+          "time": "Verzendtijd",
+          "reminder_days": "Herinnering N dagen vooraf (0 = uitgeschakeld)",
+          "persistent": "Ook een permanente melding in Home Assistant aanmaken"
+        },
+        "data_description": {
+          "targets": "Een of meer notify.*-services (bijv. notify.mobile_app_mijn_telefoon). Je kunt ook zelf een naam invoeren.",
+          "time": "Standaard 09:00. Als Home Assistant op de dag zelf na dit tijdstip opnieuw opstart, wordt de melding eenmalig bij het opstarten verzonden.",
+          "reminder_days": "Voorbeeld: 7 om een week van tevoren gewaarschuwd te worden. 0 schakelt de herinnering uit.",
+          "persistent": "Toont het bericht ook in de meldingen van Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ongeldige datumnotatie. Gebruik DD/MM/JJJJ (bijvoorbeeld 01/06/1980).",
+      "no_events": "Geen gebeurtenis geconfigureerd. Maak eerst een gebeurtenis aan via de eerste configuratie.",
+      "event_required": "Selecteer een gebeurtenis om te bewerken in de keuzelijst.",
+      "invalid_action": "Ongeldige actie. Selecteer 'Een gebeurtenis bewerken'.",
+      "update_failed": "Bijwerken van de gebeurtenis mislukt. Bekijk de logboeken voor meer details.",
+      "invalid_memorial_date": "Ongeldige overlijdensdatum voor de herdenking. Gebruik DD/MM/JJJJ met een geldige datum (bijvoorbeeld 08/01/2018).",
+      "config_entry_not_found": "Configuratie-item niet gevonden. Installeer de integratie opnieuw.",
+      "no_notify_target": "Kies minstens één notify.*-doel of schakel de permanente melding in.",
+      "invalid_notify_target": "Doelen moeten notify.*-services zijn (bijv. notify.mobile_app_mijn_telefoon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Testmelding verzenden",
+      "description": "Verzendt direct een testmelding naar de geconfigureerde doelen van een gebeurtenis (permanente melding als er geen doel is geconfigureerd). Negeert de bescherming tegen dubbele meldingen.",
+      "fields": {
+        "entry_id": {
+          "name": "Item",
+          "description": "Item van Herinneringen en Vieringen om te testen."
+        },
+        "entity_id": {
+          "name": "Sensor",
+          "description": "Gebeurtenissensor(en) om te testen (alternatief voor het item)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Item van Herinneringen en Vieringen niet gevonden of niet geladen: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Sensor {entity_id} hoort niet bij Herinneringen en Vieringen."
+    }
+  }
+}

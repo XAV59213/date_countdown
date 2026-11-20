@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Minnen och Högtider",
+        "description": "Välj vilken typ av händelse du vill konfigurera.",
+        "data": {
+          "type": "Händelsetyp"
+        }
+      },
+      "event_details": {
+        "title": "Händelsedetaljer",
+        "description": "Ange händelsens detaljer (datum i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Namn på händelsen eller personen",
+          "first_name": "Förnamn (valfritt)",
+          "date": "Födelsedatum (för minnesdag) eller datum (övriga typer)",
+          "type": "Händelsetyp",
+          "death_date": "Dödsdatum (valfritt, för minnesdag)",
+          "start_date": "Startdatum för arbetet (för pension)",
+          "is_penible": "Tungt arbete (minskar antalet år som krävs för medaljen)",
+          "career_type": "Karriärtyp"
+        }
+      },
+      "init": {
+        "description": "Välj åtgärd för att redigera en händelse",
+        "data": {
+          "action": "Åtgärd"
+        }
+      },
+      "select_event": {
+        "description": "Välj en händelse att redigera i listan nedan.",
+        "data": {
+          "event": "Händelse"
+        }
+      },
+      "edit_event_type": {
+        "description": "Välj typ av händelse att redigera.",
+        "data": {
+          "type": "Händelsetyp"
+        }
+      },
+      "edit_event": {
+        "description": "Redigera händelsens detaljer (datum i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Namn på händelsen eller personen",
+          "first_name": "Förnamn (valfritt)",
+          "date": "Födelsedatum (för minnesdag) eller datum (övriga typer)",
+          "type": "Händelsetyp",
+          "death_date": "Dödsdatum (valfritt, för minnesdag)",
+          "start_date": "Startdatum för arbetet (för pension)",
+          "is_penible": "Tungt arbete (minskar antalet år som krävs för medaljen)",
+          "career_type": "Karriärtyp"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ogiltigt datumformat. Använd DD/MM/ÅÅÅÅ (till exempel 01/06/1980).",
+      "no_events": "Ingen händelse konfigurerad. Skapa först en händelse via den första konfigurationen.",
+      "event_required": "Välj en händelse att redigera i rullgardinslistan.",
+      "invalid_action": "Ogiltig åtgärd. Välj ”Redigera en händelse”.",
+      "update_failed": "Det gick inte att uppdatera händelsen. Se loggarna för mer information.",
+      "invalid_memorial_date": "Ogiltigt dödsdatum för minneshändelsen. Använd DD/MM/ÅÅÅÅ med ett giltigt datum (till exempel 08/01/2018).",
+      "config_entry_not_found": "Konfigurationsposten hittades inte. Installera om integrationen.",
+      "creation_failed": "Det gick inte att skapa posten."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Redigera en händelse",
+        "notifications": "Konfigurera aviseringar 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Välj en åtgärd: redigera en händelse eller konfigurera aviseringar.",
+        "data": {
+          "action": "Åtgärd"
+        }
+      },
+      "select_event": {
+        "description": "Välj en händelse att redigera i listan nedan.",
+        "data": {
+          "event": "Händelse"
+        }
+      },
+      "edit_event_type": {
+        "description": "Välj typ av händelse att redigera.",
+        "data": {
+          "type": "Händelsetyp"
+        }
+      },
+      "edit_event": {
+        "description": "Redigera händelsens detaljer (datum i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Namn på händelsen eller personen",
+          "first_name": "Förnamn (valfritt)",
+          "date": "Födelsedatum (för minnesdag) eller datum (övriga typer)",
+          "type": "Händelsetyp",
+          "death_date": "Dödsdatum (valfritt, för minnesdag)",
+          "start_date": "Startdatum för arbetet (för pension)",
+          "is_penible": "Tungt arbete (minskar antalet år som krävs för medaljen)",
+          "career_type": "Karriärtyp"
+        }
+      },
+      "notifications": {
+        "title": "Aviseringar 🔔",
+        "description": "Få en avisering på dagen för händelsen (och om du vill en påminnelse några dagar innan) vid vald tid (Home Assistants lokala tid).",
+        "data": {
+          "enabled": "Aktivera aviseringar",
+          "targets": "Aviseringsmål (notify.*-tjänster)",
+          "time": "Sändningstid",
+          "reminder_days": "Påminnelse N dagar innan (0 = inaktiverad)",
+          "persistent": "Skapa även en beständig avisering i Home Assistant"
+        },
+        "data_description": {
+          "targets": "En eller flera notify.*-tjänster (t.ex. notify.mobile_app_min_telefon). Du kan också skriva in ett namn.",
+          "time": "Standard 09:00. Om Home Assistant startas om efter denna tid på dagen för händelsen skickas aviseringen en gång vid uppstart.",
+          "reminder_days": "Exempel: 7 för att bli påmind en vecka innan. 0 inaktiverar påminnelsen.",
+          "persistent": "Visar även meddelandet bland Home Assistants aviseringar."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ogiltigt datumformat. Använd DD/MM/ÅÅÅÅ (till exempel 01/06/1980).",
+      "no_events": "Ingen händelse konfigurerad. Skapa först en händelse via den första konfigurationen.",
+      "event_required": "Välj en händelse att redigera i rullgardinslistan.",
+      "invalid_action": "Ogiltig åtgärd. Välj ”Redigera en händelse”.",
+      "update_failed": "Det gick inte att uppdatera händelsen. Se loggarna för mer information.",
+      "invalid_memorial_date": "Ogiltigt dödsdatum för minneshändelsen. Använd DD/MM/ÅÅÅÅ med ett giltigt datum (till exempel 08/01/2018).",
+      "config_entry_not_found": "Konfigurationsposten hittades inte. Installera om integrationen.",
+      "no_notify_target": "Välj minst ett notify.*-mål eller aktivera den beständiga aviseringen.",
+      "invalid_notify_target": "Målen måste vara notify.*-tjänster (t.ex. notify.mobile_app_min_telefon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Skicka en testavisering",
+      "description": "Skickar omedelbart en testavisering till en händelses konfigurerade mål (beständig avisering om inget mål är konfigurerat). Ignorerar dubblettskyddet.",
+      "fields": {
+        "entry_id": {
+          "name": "Post",
+          "description": "Post i Minnen och Högtider att testa."
+        },
+        "entity_id": {
+          "name": "Sensor",
+          "description": "Händelsesensor(er) att testa (alternativ till posten)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Post i Minnen och Högtider hittades inte eller är inte inläst: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Sensorn {entity_id} tillhör inte Minnen och Högtider."
+    }
+  }
+}

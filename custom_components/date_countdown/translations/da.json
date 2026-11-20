@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Minder og Fejringer",
+        "description": "Vælg den type begivenhed, du vil konfigurere.",
+        "data": {
+          "type": "Begivenhedstype"
+        }
+      },
+      "event_details": {
+        "title": "Begivenhedsdetaljer",
+        "description": "Angiv detaljerne for begivenheden (datoer i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Navn på begivenheden eller personen",
+          "first_name": "Fornavn (valgfrit)",
+          "date": "Fødselsdato (for mindedag) eller dato (andre typer)",
+          "type": "Begivenhedstype",
+          "death_date": "Dødsdato (valgfrit, for mindedag)",
+          "start_date": "Startdato for arbejde (for pension)",
+          "is_penible": "Hårdt arbejde (reducerer antallet af år, der kræves til medaljen)",
+          "career_type": "Karrieretype"
+        }
+      },
+      "init": {
+        "description": "Vælg handlingen for at redigere en begivenhed",
+        "data": {
+          "action": "Handling"
+        }
+      },
+      "select_event": {
+        "description": "Vælg en begivenhed, der skal redigeres, på listen nedenfor.",
+        "data": {
+          "event": "Begivenhed"
+        }
+      },
+      "edit_event_type": {
+        "description": "Vælg typen af den begivenhed, der skal redigeres.",
+        "data": {
+          "type": "Begivenhedstype"
+        }
+      },
+      "edit_event": {
+        "description": "Rediger detaljerne for begivenheden (datoer i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Navn på begivenheden eller personen",
+          "first_name": "Fornavn (valgfrit)",
+          "date": "Fødselsdato (for mindedag) eller dato (andre typer)",
+          "type": "Begivenhedstype",
+          "death_date": "Dødsdato (valgfrit, for mindedag)",
+          "start_date": "Startdato for arbejde (for pension)",
+          "is_penible": "Hårdt arbejde (reducerer antallet af år, der kræves til medaljen)",
+          "career_type": "Karrieretype"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ugyldigt datoformat. Brug DD/MM/ÅÅÅÅ (for eksempel 01/06/1980).",
+      "no_events": "Ingen begivenhed konfigureret. Opret først en begivenhed via den indledende opsætning.",
+      "event_required": "Vælg en begivenhed, der skal redigeres, på rullelisten.",
+      "invalid_action": "Ugyldig handling. Vælg »Rediger en begivenhed«.",
+      "update_failed": "Begivenheden kunne ikke opdateres. Se logfilerne for flere detaljer.",
+      "invalid_memorial_date": "Ugyldig dødsdato for mindebegivenheden. Brug DD/MM/ÅÅÅÅ med en gyldig dato (for eksempel 08/01/2018).",
+      "config_entry_not_found": "Konfigurationsposten blev ikke fundet. Geninstaller integrationen.",
+      "creation_failed": "Posten kunne ikke oprettes."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Rediger en begivenhed",
+        "notifications": "Konfigurer notifikationer 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Vælg en handling: rediger en begivenhed eller konfigurer notifikationer.",
+        "data": {
+          "action": "Handling"
+        }
+      },
+      "select_event": {
+        "description": "Vælg en begivenhed, der skal redigeres, på listen nedenfor.",
+        "data": {
+          "event": "Begivenhed"
+        }
+      },
+      "edit_event_type": {
+        "description": "Vælg typen af den begivenhed, der skal redigeres.",
+        "data": {
+          "type": "Begivenhedstype"
+        }
+      },
+      "edit_event": {
+        "description": "Rediger detaljerne for begivenheden (datoer i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Navn på begivenheden eller personen",
+          "first_name": "Fornavn (valgfrit)",
+          "date": "Fødselsdato (for mindedag) eller dato (andre typer)",
+          "type": "Begivenhedstype",
+          "death_date": "Dødsdato (valgfrit, for mindedag)",
+          "start_date": "Startdato for arbejde (for pension)",
+          "is_penible": "Hårdt arbejde (reducerer antallet af år, der kræves til medaljen)",
+          "career_type": "Karrieretype"
+        }
+      },
+      "notifications": {
+        "title": "Notifikationer 🔔",
+        "description": "Få en notifikation på dagen for begivenheden (og eventuelt en påmindelse et par dage før) på det valgte tidspunkt (Home Assistants lokale tid).",
+        "data": {
+          "enabled": "Aktivér notifikationer",
+          "targets": "Notifikationsmål (notify.*-tjenester)",
+          "time": "Afsendelsestidspunkt",
+          "reminder_days": "Påmindelse N dage før (0 = deaktiveret)",
+          "persistent": "Opret også en vedvarende notifikation i Home Assistant"
+        },
+        "data_description": {
+          "targets": "En eller flere notify.*-tjenester (f.eks. notify.mobile_app_min_telefon). Du kan også indtaste et navn.",
+          "time": "Standard 09:00. Hvis Home Assistant genstartes efter dette tidspunkt på dagen for begivenheden, sendes notifikationen én gang ved opstart.",
+          "reminder_days": "Eksempel: 7 for at blive påmindet en uge før. 0 deaktiverer påmindelsen.",
+          "persistent": "Viser også beskeden i Home Assistants notifikationer."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ugyldigt datoformat. Brug DD/MM/ÅÅÅÅ (for eksempel 01/06/1980).",
+      "no_events": "Ingen begivenhed konfigureret. Opret først en begivenhed via den indledende opsætning.",
+      "event_required": "Vælg en begivenhed, der skal redigeres, på rullelisten.",
+      "invalid_action": "Ugyldig handling. Vælg »Rediger en begivenhed«.",
+      "update_failed": "Begivenheden kunne ikke opdateres. Se logfilerne for flere detaljer.",
+      "invalid_memorial_date": "Ugyldig dødsdato for mindebegivenheden. Brug DD/MM/ÅÅÅÅ med en gyldig dato (for eksempel 08/01/2018).",
+      "config_entry_not_found": "Konfigurationsposten blev ikke fundet. Geninstaller integrationen.",
+      "no_notify_target": "Vælg mindst ét notify.*-mål, eller aktivér den vedvarende notifikation.",
+      "invalid_notify_target": "Målene skal være notify.*-tjenester (f.eks. notify.mobile_app_min_telefon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Send en testnotifikation",
+      "description": "Sender straks en testnotifikation til de konfigurerede mål for en begivenhed (vedvarende notifikation, hvis der ikke er konfigureret noget mål). Ignorerer dubletbeskyttelsen.",
+      "fields": {
+        "entry_id": {
+          "name": "Post",
+          "description": "Post i Minder og Fejringer, der skal testes."
+        },
+        "entity_id": {
+          "name": "Sensor",
+          "description": "Begivenhedssensor(er), der skal testes (alternativ til posten)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Post i Minder og Fejringer blev ikke fundet eller er ikke indlæst: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Sensoren {entity_id} tilhører ikke Minder og Fejringer."
+    }
+  }
+}

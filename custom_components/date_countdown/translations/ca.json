@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Records i Celebracions",
+        "description": "Selecciona el tipus d'esdeveniment que vols configurar.",
+        "data": {
+          "type": "Tipus d'esdeveniment"
+        }
+      },
+      "event_details": {
+        "title": "Detalls de l'esdeveniment",
+        "description": "Introdueix els detalls de l'esdeveniment (dates en format DD/MM/AAAA).",
+        "data": {
+          "name": "Nom de l'esdeveniment o de la persona",
+          "first_name": "Nom de pila (opcional)",
+          "date": "Data de naixement (per a commemoració) o data (altres tipus)",
+          "type": "Tipus d'esdeveniment",
+          "death_date": "Data de defunció (opcional, per a commemoració)",
+          "start_date": "Data d'inici laboral (per a la jubilació)",
+          "is_penible": "Treball penós (redueix els anys necessaris per a la medalla)",
+          "career_type": "Tipus de carrera"
+        }
+      },
+      "init": {
+        "description": "Selecciona l'acció per editar un esdeveniment",
+        "data": {
+          "action": "Acció"
+        }
+      },
+      "select_event": {
+        "description": "Selecciona un esdeveniment per editar de la llista següent.",
+        "data": {
+          "event": "Esdeveniment"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selecciona el tipus d'esdeveniment que vols editar.",
+        "data": {
+          "type": "Tipus d'esdeveniment"
+        }
+      },
+      "edit_event": {
+        "description": "Edita els detalls de l'esdeveniment (dates en format DD/MM/AAAA).",
+        "data": {
+          "name": "Nom de l'esdeveniment o de la persona",
+          "first_name": "Nom de pila (opcional)",
+          "date": "Data de naixement (per a commemoració) o data (altres tipus)",
+          "type": "Tipus d'esdeveniment",
+          "death_date": "Data de defunció (opcional, per a commemoració)",
+          "start_date": "Data d'inici laboral (per a la jubilació)",
+          "is_penible": "Treball penós (redueix els anys necessaris per a la medalla)",
+          "career_type": "Tipus de carrera"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Format de data no vàlid. Fes servir DD/MM/AAAA (per exemple, 01/06/1980).",
+      "no_events": "No hi ha cap esdeveniment configurat. Crea primer un esdeveniment mitjançant la configuració inicial.",
+      "event_required": "Selecciona un esdeveniment per editar a la llista desplegable.",
+      "invalid_action": "Acció no vàlida. Selecciona «Edita un esdeveniment».",
+      "update_failed": "No s'ha pogut actualitzar l'esdeveniment. Consulta els registres per a més detalls.",
+      "invalid_memorial_date": "Data de defunció no vàlida per a l'esdeveniment commemoratiu. Fes servir DD/MM/AAAA amb una data vàlida (per exemple, 08/01/2018).",
+      "config_entry_not_found": "No s'ha trobat l'entrada de configuració. Reinstal·la la integració.",
+      "creation_failed": "No s'ha pogut crear l'entrada."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Edita un esdeveniment",
+        "notifications": "Configura les notificacions 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Tria una acció: editar un esdeveniment o configurar les notificacions.",
+        "data": {
+          "action": "Acció"
+        }
+      },
+      "select_event": {
+        "description": "Selecciona un esdeveniment per editar de la llista següent.",
+        "data": {
+          "event": "Esdeveniment"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selecciona el tipus d'esdeveniment que vols editar.",
+        "data": {
+          "type": "Tipus d'esdeveniment"
+        }
+      },
+      "edit_event": {
+        "description": "Edita els detalls de l'esdeveniment (dates en format DD/MM/AAAA).",
+        "data": {
+          "name": "Nom de l'esdeveniment o de la persona",
+          "first_name": "Nom de pila (opcional)",
+          "date": "Data de naixement (per a commemoració) o data (altres tipus)",
+          "type": "Tipus d'esdeveniment",
+          "death_date": "Data de defunció (opcional, per a commemoració)",
+          "start_date": "Data d'inici laboral (per a la jubilació)",
+          "is_penible": "Treball penós (redueix els anys necessaris per a la medalla)",
+          "career_type": "Tipus de carrera"
+        }
+      },
+      "notifications": {
+        "title": "Notificacions 🔔",
+        "description": "Rep una notificació el dia de l'esdeveniment (i, si vols, un recordatori uns dies abans) a l'hora escollida (hora local de Home Assistant).",
+        "data": {
+          "enabled": "Activa les notificacions",
+          "targets": "Destinataris de les notificacions (serveis notify.*)",
+          "time": "Hora d'enviament",
+          "reminder_days": "Recordatori N dies abans (0 = desactivat)",
+          "persistent": "Crea també una notificació persistent de Home Assistant"
+        },
+        "data_description": {
+          "targets": "Un o més serveis notify.* (p. ex., notify.mobile_app_el_meu_telefon). També pots escriure un nom.",
+          "time": "Per defecte 09:00. Si Home Assistant es reinicia després d'aquesta hora el dia de l'esdeveniment, la notificació s'envia una sola vegada en arrencar.",
+          "reminder_days": "Exemple: 7 per rebre l'avís una setmana abans. 0 desactiva el recordatori.",
+          "persistent": "Mostra també el missatge a les notificacions de Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Format de data no vàlid. Fes servir DD/MM/AAAA (per exemple, 01/06/1980).",
+      "no_events": "No hi ha cap esdeveniment configurat. Crea primer un esdeveniment mitjançant la configuració inicial.",
+      "event_required": "Selecciona un esdeveniment per editar a la llista desplegable.",
+      "invalid_action": "Acció no vàlida. Selecciona «Edita un esdeveniment».",
+      "update_failed": "No s'ha pogut actualitzar l'esdeveniment. Consulta els registres per a més detalls.",
+      "invalid_memorial_date": "Data de defunció no vàlida per a l'esdeveniment commemoratiu. Fes servir DD/MM/AAAA amb una data vàlida (per exemple, 08/01/2018).",
+      "config_entry_not_found": "No s'ha trobat l'entrada de configuració. Reinstal·la la integració.",
+      "no_notify_target": "Tria almenys un destinatari notify.* o activa la notificació persistent.",
+      "invalid_notify_target": "Els destinataris han de ser serveis notify.* (p. ex., notify.mobile_app_el_meu_telefon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Envia una notificació de prova",
+      "description": "Envia immediatament una notificació de prova als destinataris configurats d'un esdeveniment (notificació persistent si no n'hi ha cap de configurat). Ignora la protecció contra duplicats.",
+      "fields": {
+        "entry_id": {
+          "name": "Entrada",
+          "description": "Entrada de Records i Celebracions que es vol provar."
+        },
+        "entity_id": {
+          "name": "Sensor",
+          "description": "Sensor(s) d'esdeveniment que es volen provar (alternativa a l'entrada)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "No s'ha trobat l'entrada de Records i Celebracions o no està carregada: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "El sensor {entity_id} no pertany a Records i Celebracions."
+    }
+  }
+}

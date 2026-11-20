@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Erinnerungen und Feiern",
+        "description": "Wähle die Art des Ereignisses, das du konfigurieren möchtest.",
+        "data": {
+          "type": "Ereignistyp"
+        }
+      },
+      "event_details": {
+        "title": "Ereignisdetails",
+        "description": "Gib die Details des Ereignisses ein (Datumsangaben im Format TT/MM/JJJJ).",
+        "data": {
+          "name": "Name des Ereignisses oder der Person",
+          "first_name": "Vorname (optional)",
+          "date": "Geburtsdatum (für Gedenken) oder Datum (andere Typen)",
+          "type": "Ereignistyp",
+          "death_date": "Sterbedatum (optional, für Gedenken)",
+          "start_date": "Arbeitsbeginn (für den Ruhestand)",
+          "is_penible": "Schwere Arbeit (verringert die für die Medaille erforderlichen Jahre)",
+          "career_type": "Laufbahntyp"
+        }
+      },
+      "init": {
+        "description": "Wähle die Aktion, um ein Ereignis zu bearbeiten",
+        "data": {
+          "action": "Aktion"
+        }
+      },
+      "select_event": {
+        "description": "Wähle ein Ereignis aus der folgenden Liste zum Bearbeiten aus.",
+        "data": {
+          "event": "Ereignis"
+        }
+      },
+      "edit_event_type": {
+        "description": "Wähle den Typ des zu bearbeitenden Ereignisses.",
+        "data": {
+          "type": "Ereignistyp"
+        }
+      },
+      "edit_event": {
+        "description": "Bearbeite die Details des Ereignisses (Datumsangaben im Format TT/MM/JJJJ).",
+        "data": {
+          "name": "Name des Ereignisses oder der Person",
+          "first_name": "Vorname (optional)",
+          "date": "Geburtsdatum (für Gedenken) oder Datum (andere Typen)",
+          "type": "Ereignistyp",
+          "death_date": "Sterbedatum (optional, für Gedenken)",
+          "start_date": "Arbeitsbeginn (für den Ruhestand)",
+          "is_penible": "Schwere Arbeit (verringert die für die Medaille erforderlichen Jahre)",
+          "career_type": "Laufbahntyp"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ungültiges Datumsformat. Verwende TT/MM/JJJJ (zum Beispiel 01/06/1980).",
+      "no_events": "Kein Ereignis konfiguriert. Bitte erstelle zuerst ein Ereignis über die Ersteinrichtung.",
+      "event_required": "Bitte wähle ein zu bearbeitendes Ereignis aus der Dropdown-Liste aus.",
+      "invalid_action": "Ungültige Aktion. Bitte wähle „Ereignis bearbeiten“.",
+      "update_failed": "Das Ereignis konnte nicht aktualisiert werden. Weitere Details findest du in den Protokollen.",
+      "invalid_memorial_date": "Ungültiges Sterbedatum für das Gedenkereignis. Verwende TT/MM/JJJJ mit einem gültigen Datum (zum Beispiel 08/01/2018).",
+      "config_entry_not_found": "Konfigurationseintrag nicht gefunden. Bitte installiere die Integration neu.",
+      "creation_failed": "Der Eintrag konnte nicht erstellt werden."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Ereignis bearbeiten",
+        "notifications": "Benachrichtigungen konfigurieren 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Wähle eine Aktion: ein Ereignis bearbeiten oder Benachrichtigungen konfigurieren.",
+        "data": {
+          "action": "Aktion"
+        }
+      },
+      "select_event": {
+        "description": "Wähle ein Ereignis aus der folgenden Liste zum Bearbeiten aus.",
+        "data": {
+          "event": "Ereignis"
+        }
+      },
+      "edit_event_type": {
+        "description": "Wähle den Typ des zu bearbeitenden Ereignisses.",
+        "data": {
+          "type": "Ereignistyp"
+        }
+      },
+      "edit_event": {
+        "description": "Bearbeite die Details des Ereignisses (Datumsangaben im Format TT/MM/JJJJ).",
+        "data": {
+          "name": "Name des Ereignisses oder der Person",
+          "first_name": "Vorname (optional)",
+          "date": "Geburtsdatum (für Gedenken) oder Datum (andere Typen)",
+          "type": "Ereignistyp",
+          "death_date": "Sterbedatum (optional, für Gedenken)",
+          "start_date": "Arbeitsbeginn (für den Ruhestand)",
+          "is_penible": "Schwere Arbeit (verringert die für die Medaille erforderlichen Jahre)",
+          "career_type": "Laufbahntyp"
+        }
+      },
+      "notifications": {
+        "title": "Benachrichtigungen 🔔",
+        "description": "Erhalte am Tag des Ereignisses (und optional einige Tage vorher eine Erinnerung) eine Benachrichtigung zur gewählten Uhrzeit (Ortszeit von Home Assistant).",
+        "data": {
+          "enabled": "Benachrichtigungen aktivieren",
+          "targets": "Benachrichtigungsziele (notify.*-Dienste)",
+          "time": "Sendezeit",
+          "reminder_days": "Erinnerung N Tage vorher (0 = deaktiviert)",
+          "persistent": "Zusätzlich eine dauerhafte Benachrichtigung in Home Assistant erstellen"
+        },
+        "data_description": {
+          "targets": "Ein oder mehrere notify.*-Dienste (z. B. notify.mobile_app_mein_telefon). Du kannst auch einen Namen eingeben.",
+          "time": "Standard 09:00. Startet Home Assistant am Tag des Ereignisses nach dieser Uhrzeit neu, wird die Benachrichtigung einmalig beim Start gesendet.",
+          "reminder_days": "Beispiel: 7, um eine Woche vorher erinnert zu werden. 0 deaktiviert die Erinnerung.",
+          "persistent": "Zeigt die Nachricht zusätzlich in den Benachrichtigungen von Home Assistant an."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ungültiges Datumsformat. Verwende TT/MM/JJJJ (zum Beispiel 01/06/1980).",
+      "no_events": "Kein Ereignis konfiguriert. Bitte erstelle zuerst ein Ereignis über die Ersteinrichtung.",
+      "event_required": "Bitte wähle ein zu bearbeitendes Ereignis aus der Dropdown-Liste aus.",
+      "invalid_action": "Ungültige Aktion. Bitte wähle „Ereignis bearbeiten“.",
+      "update_failed": "Das Ereignis konnte nicht aktualisiert werden. Weitere Details findest du in den Protokollen.",
+      "invalid_memorial_date": "Ungültiges Sterbedatum für das Gedenkereignis. Verwende TT/MM/JJJJ mit einem gültigen Datum (zum Beispiel 08/01/2018).",
+      "config_entry_not_found": "Konfigurationseintrag nicht gefunden. Bitte installiere die Integration neu.",
+      "no_notify_target": "Wähle mindestens ein notify.*-Ziel oder aktiviere die dauerhafte Benachrichtigung.",
+      "invalid_notify_target": "Ziele müssen notify.*-Dienste sein (z. B. notify.mobile_app_mein_telefon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Testbenachrichtigung senden",
+      "description": "Sendet sofort eine Testbenachrichtigung an die konfigurierten Ziele eines Ereignisses (dauerhafte Benachrichtigung, wenn kein Ziel konfiguriert ist). Ignoriert den Duplikatschutz.",
+      "fields": {
+        "entry_id": {
+          "name": "Eintrag",
+          "description": "Zu testender Eintrag von Erinnerungen und Feiern."
+        },
+        "entity_id": {
+          "name": "Sensor",
+          "description": "Zu testende(r) Ereignissensor(en) (Alternative zum Eintrag)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Eintrag von Erinnerungen und Feiern nicht gefunden oder nicht geladen: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Der Sensor {entity_id} gehört nicht zu Erinnerungen und Feiern."
+    }
+  }
+}
