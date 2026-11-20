@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 1.2.18 — 2026-11-20
 
 ### Ajouté
 - 🌍 **Traductions de l’interface en 22 langues** : allemand (`de`), espagnol (`es`), italien (`it`), portugais (`pt`), portugais du Brésil (`pt-BR`), néerlandais (`nl`), polonais (`pl`), russe (`ru`), suédois (`sv`), norvégien bokmål (`nb`), danois (`da`), finnois (`fi`), tchèque (`cs`), slovaque (`sk`), hongrois (`hu`), turc (`tr`), grec (`el`), roumain (`ro`), ukrainien (`uk`) et catalan (`ca`), en plus du français et de l’anglais. Couvre l’assistant d’ajout, les Options, les notifications, le service de test et les messages d’erreur.

@@ -3,7 +3,7 @@
  * Servie et enregistrée automatiquement par l'intégration.
  */
 const CARD_TAG = "date-countdown-informations-card";
-const CARD_VERSION = "1.2.17";
+const CARD_VERSION = "1.2.18";
 
 const _asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
 const _esc = (s) =>
