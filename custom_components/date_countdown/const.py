@@ -12,7 +12,7 @@ DATE_FORMAT = "DD/MM/YYYY"
 URL_BASE = "/date_countdown"
 CARD_FILENAME = "date-countdown-card.js"
 STATIC_CARD_PATH = f"{URL_BASE}/{CARD_FILENAME}"
-VERSION = "1.2.19"  # aligné sur manifest.json (cache ?v=)
+VERSION = "1.2.20"  # aligné sur manifest.json (cache ?v=)
 
 EVENT_TYPES = ["birthday", "anniversary", "memorial", "promotion", "special_event", "retirement"]
 

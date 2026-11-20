@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 1.2.20 — 2026-11-20
 
 ### Ajouté
 - 📅 **Calendrier des mémoriaux** : l’anniversaire du décès apparaît chaque année (à partir de l’année suivant le décès, 29 février → 28 février) avec un texte sobre « Jeanne Martin - Mémorial (Anniversaire du décès : 6 ans) », traduit en fr, en, de, es, it. Toujours affiché, indépendamment de l’option de notification `death_anniversary`. L’état du calendrier (prochain événement) prend la date la plus proche entre anniversaire de naissance et anniversaire du décès.
