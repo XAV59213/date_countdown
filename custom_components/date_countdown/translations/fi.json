@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Muistot ja Juhlat",
+        "description": "Valitse määritettävän tapahtuman tyyppi.",
+        "data": {
+          "type": "Tapahtuman tyyppi"
+        }
+      },
+      "event_details": {
+        "title": "Tapahtuman tiedot",
+        "description": "Anna tapahtuman tiedot (päivämäärät muodossa PP/KK/VVVV).",
+        "data": {
+          "name": "Tapahtuman tai henkilön nimi",
+          "first_name": "Etunimi (valinnainen)",
+          "date": "Syntymäpäivä (muistopäivää varten) tai päivämäärä (muut tyypit)",
+          "type": "Tapahtuman tyyppi",
+          "death_date": "Kuolinpäivä (valinnainen, muistopäivää varten)",
+          "start_date": "Työuran alkamispäivä (eläkkeelle siirtymistä varten)",
+          "is_penible": "Raskas työ (vähentää mitaliin vaadittavia vuosia)",
+          "career_type": "Uratyyppi"
+        }
+      },
+      "init": {
+        "description": "Valitse toiminto tapahtuman muokkaamiseksi",
+        "data": {
+          "action": "Toiminto"
+        }
+      },
+      "select_event": {
+        "description": "Valitse muokattava tapahtuma alla olevasta luettelosta.",
+        "data": {
+          "event": "Tapahtuma"
+        }
+      },
+      "edit_event_type": {
+        "description": "Valitse muokattavan tapahtuman tyyppi.",
+        "data": {
+          "type": "Tapahtuman tyyppi"
+        }
+      },
+      "edit_event": {
+        "description": "Muokkaa tapahtuman tietoja (päivämäärät muodossa PP/KK/VVVV).",
+        "data": {
+          "name": "Tapahtuman tai henkilön nimi",
+          "first_name": "Etunimi (valinnainen)",
+          "date": "Syntymäpäivä (muistopäivää varten) tai päivämäärä (muut tyypit)",
+          "type": "Tapahtuman tyyppi",
+          "death_date": "Kuolinpäivä (valinnainen, muistopäivää varten)",
+          "start_date": "Työuran alkamispäivä (eläkkeelle siirtymistä varten)",
+          "is_penible": "Raskas työ (vähentää mitaliin vaadittavia vuosia)",
+          "career_type": "Uratyyppi"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Virheellinen päivämäärämuoto. Käytä muotoa PP/KK/VVVV (esimerkiksi 01/06/1980).",
+      "no_events": "Yhtään tapahtumaa ei ole määritetty. Luo ensin tapahtuma alkuasetusten kautta.",
+      "event_required": "Valitse muokattava tapahtuma pudotusvalikosta.",
+      "invalid_action": "Virheellinen toiminto. Valitse ”Muokkaa tapahtumaa”.",
+      "update_failed": "Tapahtuman päivittäminen epäonnistui. Katso lisätietoja lokeista.",
+      "invalid_memorial_date": "Virheellinen kuolinpäivä muistotapahtumalle. Käytä muotoa PP/KK/VVVV ja kelvollista päivämäärää (esimerkiksi 08/01/2018).",
+      "config_entry_not_found": "Määritysmerkintää ei löytynyt. Asenna integraatio uudelleen.",
+      "creation_failed": "Merkinnän luominen epäonnistui."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Muokkaa tapahtumaa",
+        "notifications": "Määritä ilmoitukset 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Valitse toiminto: muokkaa tapahtumaa tai määritä ilmoitukset.",
+        "data": {
+          "action": "Toiminto"
+        }
+      },
+      "select_event": {
+        "description": "Valitse muokattava tapahtuma alla olevasta luettelosta.",
+        "data": {
+          "event": "Tapahtuma"
+        }
+      },
+      "edit_event_type": {
+        "description": "Valitse muokattavan tapahtuman tyyppi.",
+        "data": {
+          "type": "Tapahtuman tyyppi"
+        }
+      },
+      "edit_event": {
+        "description": "Muokkaa tapahtuman tietoja (päivämäärät muodossa PP/KK/VVVV).",
+        "data": {
+          "name": "Tapahtuman tai henkilön nimi",
+          "first_name": "Etunimi (valinnainen)",
+          "date": "Syntymäpäivä (muistopäivää varten) tai päivämäärä (muut tyypit)",
+          "type": "Tapahtuman tyyppi",
+          "death_date": "Kuolinpäivä (valinnainen, muistopäivää varten)",
+          "start_date": "Työuran alkamispäivä (eläkkeelle siirtymistä varten)",
+          "is_penible": "Raskas työ (vähentää mitaliin vaadittavia vuosia)",
+          "career_type": "Uratyyppi"
+        }
+      },
+      "notifications": {
+        "title": "Ilmoitukset 🔔",
+        "description": "Saat ilmoituksen tapahtumapäivänä (ja halutessasi muistutuksen muutamaa päivää aiemmin) valittuun aikaan (Home Assistantin paikallista aikaa).",
+        "data": {
+          "enabled": "Ota ilmoitukset käyttöön",
+          "targets": "Ilmoitusten kohteet (notify.*-palvelut)",
+          "time": "Lähetysaika",
+          "reminder_days": "Muistutus N päivää etukäteen (0 = pois käytöstä)",
+          "persistent": "Luo myös pysyvä Home Assistant -ilmoitus"
+        },
+        "data_description": {
+          "targets": "Yksi tai useampi notify.*-palvelu (esim. notify.mobile_app_oma_puhelin). Voit myös kirjoittaa nimen itse.",
+          "time": "Oletus 09:00. Jos Home Assistant käynnistyy uudelleen tämän ajan jälkeen tapahtumapäivänä, ilmoitus lähetetään kerran käynnistyksen yhteydessä.",
+          "reminder_days": "Esimerkki: 7, jos haluat muistutuksen viikkoa aiemmin. 0 poistaa muistutuksen käytöstä.",
+          "persistent": "Näyttää viestin myös Home Assistantin ilmoituksissa."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Virheellinen päivämäärämuoto. Käytä muotoa PP/KK/VVVV (esimerkiksi 01/06/1980).",
+      "no_events": "Yhtään tapahtumaa ei ole määritetty. Luo ensin tapahtuma alkuasetusten kautta.",
+      "event_required": "Valitse muokattava tapahtuma pudotusvalikosta.",
+      "invalid_action": "Virheellinen toiminto. Valitse ”Muokkaa tapahtumaa”.",
+      "update_failed": "Tapahtuman päivittäminen epäonnistui. Katso lisätietoja lokeista.",
+      "invalid_memorial_date": "Virheellinen kuolinpäivä muistotapahtumalle. Käytä muotoa PP/KK/VVVV ja kelvollista päivämäärää (esimerkiksi 08/01/2018).",
+      "config_entry_not_found": "Määritysmerkintää ei löytynyt. Asenna integraatio uudelleen.",
+      "no_notify_target": "Valitse vähintään yksi notify.*-kohde tai ota pysyvä ilmoitus käyttöön.",
+      "invalid_notify_target": "Kohteiden on oltava notify.*-palveluita (esim. notify.mobile_app_oma_puhelin)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Lähetä testi-ilmoitus",
+      "description": "Lähettää välittömästi testi-ilmoituksen tapahtuman määritetyille kohteille (pysyvä ilmoitus, jos kohdetta ei ole määritetty). Ohittaa kaksoislähetysten eston.",
+      "fields": {
+        "entry_id": {
+          "name": "Merkintä",
+          "description": "Testattava Muistot ja Juhlat -merkintä."
+        },
+        "entity_id": {
+          "name": "Anturi",
+          "description": "Testattavat tapahtuma-anturit (vaihtoehto merkinnälle)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Muistot ja Juhlat -merkintää ei löytynyt tai sitä ei ole ladattu: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Anturi {entity_id} ei kuulu Muistot ja Juhlat -integraatioon."
+    }
+  }
+}

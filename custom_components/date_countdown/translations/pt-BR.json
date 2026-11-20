@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Memórias e Celebrações",
+        "description": "Selecione o tipo de evento que deseja configurar.",
+        "data": {
+          "type": "Tipo de evento"
+        }
+      },
+      "event_details": {
+        "title": "Detalhes do evento",
+        "description": "Insira os detalhes do evento (datas no formato DD/MM/AAAA).",
+        "data": {
+          "name": "Nome do evento ou da pessoa",
+          "first_name": "Primeiro nome (opcional)",
+          "date": "Data de nascimento (para homenagem) ou data (outros tipos)",
+          "type": "Tipo de evento",
+          "death_date": "Data de falecimento (opcional, para homenagem)",
+          "start_date": "Data de início do trabalho (para aposentadoria)",
+          "is_penible": "Trabalho insalubre (reduz os anos necessários para a medalha)",
+          "career_type": "Tipo de carreira"
+        }
+      },
+      "init": {
+        "description": "Selecione a ação para editar um evento",
+        "data": {
+          "action": "Ação"
+        }
+      },
+      "select_event": {
+        "description": "Selecione um evento para editar na lista abaixo.",
+        "data": {
+          "event": "Evento"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selecione o tipo de evento que deseja editar.",
+        "data": {
+          "type": "Tipo de evento"
+        }
+      },
+      "edit_event": {
+        "description": "Edite os detalhes do evento (datas no formato DD/MM/AAAA).",
+        "data": {
+          "name": "Nome do evento ou da pessoa",
+          "first_name": "Primeiro nome (opcional)",
+          "date": "Data de nascimento (para homenagem) ou data (outros tipos)",
+          "type": "Tipo de evento",
+          "death_date": "Data de falecimento (opcional, para homenagem)",
+          "start_date": "Data de início do trabalho (para aposentadoria)",
+          "is_penible": "Trabalho insalubre (reduz os anos necessários para a medalha)",
+          "career_type": "Tipo de carreira"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Formato de data inválido. Use DD/MM/AAAA (por exemplo, 01/06/1980).",
+      "no_events": "Nenhum evento configurado. Crie primeiro um evento pela configuração inicial.",
+      "event_required": "Selecione um evento para editar na lista suspensa.",
+      "invalid_action": "Ação inválida. Selecione “Editar um evento”.",
+      "update_failed": "Falha ao atualizar o evento. Verifique os logs para mais detalhes.",
+      "invalid_memorial_date": "Data de falecimento inválida para o evento de homenagem. Use DD/MM/AAAA com uma data válida (por exemplo, 08/01/2018).",
+      "config_entry_not_found": "Entrada de configuração não encontrada. Reinstale a integração.",
+      "creation_failed": "Não foi possível criar a entrada."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Editar um evento",
+        "notifications": "Configurar notificações 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Escolha uma ação: editar um evento ou configurar as notificações.",
+        "data": {
+          "action": "Ação"
+        }
+      },
+      "select_event": {
+        "description": "Selecione um evento para editar na lista abaixo.",
+        "data": {
+          "event": "Evento"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selecione o tipo de evento que deseja editar.",
+        "data": {
+          "type": "Tipo de evento"
+        }
+      },
+      "edit_event": {
+        "description": "Edite os detalhes do evento (datas no formato DD/MM/AAAA).",
+        "data": {
+          "name": "Nome do evento ou da pessoa",
+          "first_name": "Primeiro nome (opcional)",
+          "date": "Data de nascimento (para homenagem) ou data (outros tipos)",
+          "type": "Tipo de evento",
+          "death_date": "Data de falecimento (opcional, para homenagem)",
+          "start_date": "Data de início do trabalho (para aposentadoria)",
+          "is_penible": "Trabalho insalubre (reduz os anos necessários para a medalha)",
+          "career_type": "Tipo de carreira"
+        }
+      },
+      "notifications": {
+        "title": "Notificações 🔔",
+        "description": "Receba uma notificação no dia do evento (e, se quiser, um lembrete alguns dias antes) no horário escolhido (horário local do Home Assistant).",
+        "data": {
+          "enabled": "Ativar notificações",
+          "targets": "Destinos de notificação (serviços notify.*)",
+          "time": "Horário de envio",
+          "reminder_days": "Lembrete N dias antes (0 = desativado)",
+          "persistent": "Criar também uma notificação persistente do Home Assistant"
+        },
+        "data_description": {
+          "targets": "Um ou mais serviços notify.* (ex.: notify.mobile_app_meu_celular). Você também pode digitar um nome.",
+          "time": "Padrão 09:00. Se o Home Assistant reiniciar depois desse horário no dia do evento, a notificação será enviada uma única vez na inicialização.",
+          "reminder_days": "Exemplo: 7 para ser avisado uma semana antes. 0 desativa o lembrete.",
+          "persistent": "Também exibe a mensagem nas notificações do Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Formato de data inválido. Use DD/MM/AAAA (por exemplo, 01/06/1980).",
+      "no_events": "Nenhum evento configurado. Crie primeiro um evento pela configuração inicial.",
+      "event_required": "Selecione um evento para editar na lista suspensa.",
+      "invalid_action": "Ação inválida. Selecione “Editar um evento”.",
+      "update_failed": "Falha ao atualizar o evento. Verifique os logs para mais detalhes.",
+      "invalid_memorial_date": "Data de falecimento inválida para o evento de homenagem. Use DD/MM/AAAA com uma data válida (por exemplo, 08/01/2018).",
+      "config_entry_not_found": "Entrada de configuração não encontrada. Reinstale a integração.",
+      "no_notify_target": "Escolha pelo menos um destino notify.* ou ative a notificação persistente.",
+      "invalid_notify_target": "Os destinos devem ser serviços notify.* (ex.: notify.mobile_app_meu_celular)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Enviar uma notificação de teste",
+      "description": "Envia imediatamente uma notificação de teste para os destinos configurados de um evento (notificação persistente se nenhum destino estiver configurado). Ignora a proteção contra duplicatas.",
+      "fields": {
+        "entry_id": {
+          "name": "Entrada",
+          "description": "Entrada de Memórias e Celebrações a ser testada."
+        },
+        "entity_id": {
+          "name": "Sensor",
+          "description": "Sensor(es) de evento a serem testados (alternativa à entrada)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Entrada de Memórias e Celebrações não encontrada ou não carregada: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "O sensor {entity_id} não pertence a Memórias e Celebrações."
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Spomienky a Oslavy",
+        "description": "Vyberte typ udalosti, ktorú chcete nastaviť.",
+        "data": {
+          "type": "Typ udalosti"
+        }
+      },
+      "event_details": {
+        "title": "Podrobnosti udalosti",
+        "description": "Zadajte podrobnosti udalosti (dátumy vo formáte DD/MM/RRRR).",
+        "data": {
+          "name": "Názov udalosti alebo meno osoby",
+          "first_name": "Krstné meno (voliteľné)",
+          "date": "Dátum narodenia (pre spomienku) alebo dátum (ostatné typy)",
+          "type": "Typ udalosti",
+          "death_date": "Dátum úmrtia (voliteľné, pre spomienku)",
+          "start_date": "Dátum nástupu do práce (pre odchod do dôchodku)",
+          "is_penible": "Namáhavá práca (znižuje počet rokov potrebných na medailu)",
+          "career_type": "Typ kariéry"
+        }
+      },
+      "init": {
+        "description": "Vyberte akciu na úpravu udalosti",
+        "data": {
+          "action": "Akcia"
+        }
+      },
+      "select_event": {
+        "description": "Vyberte udalosť na úpravu zo zoznamu nižšie.",
+        "data": {
+          "event": "Udalosť"
+        }
+      },
+      "edit_event_type": {
+        "description": "Vyberte typ upravovanej udalosti.",
+        "data": {
+          "type": "Typ udalosti"
+        }
+      },
+      "edit_event": {
+        "description": "Upravte podrobnosti udalosti (dátumy vo formáte DD/MM/RRRR).",
+        "data": {
+          "name": "Názov udalosti alebo meno osoby",
+          "first_name": "Krstné meno (voliteľné)",
+          "date": "Dátum narodenia (pre spomienku) alebo dátum (ostatné typy)",
+          "type": "Typ udalosti",
+          "death_date": "Dátum úmrtia (voliteľné, pre spomienku)",
+          "start_date": "Dátum nástupu do práce (pre odchod do dôchodku)",
+          "is_penible": "Namáhavá práca (znižuje počet rokov potrebných na medailu)",
+          "career_type": "Typ kariéry"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Neplatný formát dátumu. Použite DD/MM/RRRR (napríklad 01/06/1980).",
+      "no_events": "Nie je nastavená žiadna udalosť. Najprv vytvorte udalosť v rámci úvodného nastavenia.",
+      "event_required": "Vyberte udalosť na úpravu z rozbaľovacieho zoznamu.",
+      "invalid_action": "Neplatná akcia. Vyberte „Upraviť udalosť“.",
+      "update_failed": "Udalosť sa nepodarilo aktualizovať. Ďalšie podrobnosti nájdete v protokoloch.",
+      "invalid_memorial_date": "Neplatný dátum úmrtia pre spomienkovú udalosť. Použite DD/MM/RRRR s platným dátumom (napríklad 08/01/2018).",
+      "config_entry_not_found": "Položka konfigurácie sa nenašla. Preinštalujte integráciu.",
+      "creation_failed": "Položku sa nepodarilo vytvoriť."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Upraviť udalosť",
+        "notifications": "Nastaviť oznámenia 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Vyberte akciu: upraviť udalosť alebo nastaviť oznámenia.",
+        "data": {
+          "action": "Akcia"
+        }
+      },
+      "select_event": {
+        "description": "Vyberte udalosť na úpravu zo zoznamu nižšie.",
+        "data": {
+          "event": "Udalosť"
+        }
+      },
+      "edit_event_type": {
+        "description": "Vyberte typ upravovanej udalosti.",
+        "data": {
+          "type": "Typ udalosti"
+        }
+      },
+      "edit_event": {
+        "description": "Upravte podrobnosti udalosti (dátumy vo formáte DD/MM/RRRR).",
+        "data": {
+          "name": "Názov udalosti alebo meno osoby",
+          "first_name": "Krstné meno (voliteľné)",
+          "date": "Dátum narodenia (pre spomienku) alebo dátum (ostatné typy)",
+          "type": "Typ udalosti",
+          "death_date": "Dátum úmrtia (voliteľné, pre spomienku)",
+          "start_date": "Dátum nástupu do práce (pre odchod do dôchodku)",
+          "is_penible": "Namáhavá práca (znižuje počet rokov potrebných na medailu)",
+          "career_type": "Typ kariéry"
+        }
+      },
+      "notifications": {
+        "title": "Oznámenia 🔔",
+        "description": "Dostanete oznámenie v deň udalosti (a voliteľne pripomienku niekoľko dní vopred) vo zvolenom čase (miestny čas Home Assistant).",
+        "data": {
+          "enabled": "Povoliť oznámenia",
+          "targets": "Ciele oznámení (služby notify.*)",
+          "time": "Čas odoslania",
+          "reminder_days": "Pripomienka N dní vopred (0 = vypnuté)",
+          "persistent": "Vytvoriť aj trvalé oznámenie Home Assistant"
+        },
+        "data_description": {
+          "targets": "Jedna alebo viac služieb notify.* (napr. notify.mobile_app_moj_telefon). Názov môžete zadať aj ručne.",
+          "time": "Predvolene 09:00. Ak sa Home Assistant v deň udalosti reštartuje po tomto čase, oznámenie sa odošle raz pri spustení.",
+          "reminder_days": "Príklad: 7 na upozornenie týždeň vopred. 0 pripomienku vypne.",
+          "persistent": "Zobrazí správu aj v oznámeniach Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Neplatný formát dátumu. Použite DD/MM/RRRR (napríklad 01/06/1980).",
+      "no_events": "Nie je nastavená žiadna udalosť. Najprv vytvorte udalosť v rámci úvodného nastavenia.",
+      "event_required": "Vyberte udalosť na úpravu z rozbaľovacieho zoznamu.",
+      "invalid_action": "Neplatná akcia. Vyberte „Upraviť udalosť“.",
+      "update_failed": "Udalosť sa nepodarilo aktualizovať. Ďalšie podrobnosti nájdete v protokoloch.",
+      "invalid_memorial_date": "Neplatný dátum úmrtia pre spomienkovú udalosť. Použite DD/MM/RRRR s platným dátumom (napríklad 08/01/2018).",
+      "config_entry_not_found": "Položka konfigurácie sa nenašla. Preinštalujte integráciu.",
+      "no_notify_target": "Vyberte aspoň jeden cieľ notify.* alebo povoľte trvalé oznámenie.",
+      "invalid_notify_target": "Ciele musia byť služby notify.* (napr. notify.mobile_app_moj_telefon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Odoslať testovacie oznámenie",
+      "description": "Okamžite odošle testovacie oznámenie na nastavené ciele udalosti (trvalé oznámenie, ak nie je nastavený žiadny cieľ). Ignoruje ochranu proti duplicitám.",
+      "fields": {
+        "entry_id": {
+          "name": "Položka",
+          "description": "Položka Spomienky a Oslavy na otestovanie."
+        },
+        "entity_id": {
+          "name": "Senzor",
+          "description": "Senzor(y) udalosti na otestovanie (alternatíva k položke)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Položka Spomienky a Oslavy sa nenašla alebo nie je načítaná: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Senzor {entity_id} nepatrí k integrácii Spomienky a Oslavy."
+    }
+  }
+}
