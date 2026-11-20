@@ -15,7 +15,7 @@
   <img src="https://raw.githubusercontent.com/XAV59213/date_countdown/main/brand/logo.png" alt="Souvenirs et Célébrations" width="640">
 </p>
 
-**Souvenirs et Célébrations** (`date_countdown`) est une intégration personnalisée pour [Home Assistant](https://www.home-assistant.io) qui permet de suivre les jours restants avant des événements personnels : anniversaires, anniversaires de mariage, promotions, mémoriaux ou événements spéciaux.
+**Souvenirs et Célébrations** (`date_countdown`) est une intégration personnalisée pour [Home Assistant](https://www.home-assistant.io) qui permet de suivre les jours restants avant des événements personnels : anniversaires, anniversaires de mariage, promotions, mémoriaux, retraites ou événements spéciaux.
 
 Entièrement configurable via l’interface graphique, aucun YAML requis. Les capteurs sont automatiquement créés pour vos dashboards Lovelace, automatisations, notifications ou alertes.
 
@@ -36,6 +36,7 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
   - 🕯️ Mémorial (âge qu’aurait eu la personne, années depuis le décès)
   - 🏆 Promotion
   - 🌟 Événement spécial
+  - 🏖️ Retraite (estimation de la date, médailles du travail)
 - ⚙️ Capteurs automatiques :
   - État = nombre de jours restants
   - Attributs : type, date, prénom, années, intitulé des noces, etc.
@@ -72,15 +73,25 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
 
 ### ➕ Ajouter un événement
 
-- Type : sélectionnez parmi les 5 types disponibles
+- Dans **Paramètres > Appareils & services**, cliquez sur **Ajouter une intégration**, puis recherchez **Souvenirs et Célébrations**. Chaque événement correspond à une entrée distincte.
+- Type : sélectionnez parmi les 6 types disponibles
 - Nom (obligatoire), Prénom (optionnel)
 - Date : `JJ/MM/AAAA`
 - Pour les mémoriaux : date de décès (optionnelle)
+- Pour la retraite : date de début du travail, type de carrière, option « travaux pénibles »
 
-### 🔁 Modifier ou supprimer
+### 🔁 Modifier un événement
 
-- Dans l’intégration : `⋮ > Options`
-- Choisissez l’action souhaitée : ajouter, modifier ou supprimer un événement
+- Dans l’entrée de l’intégration : `⋮ > Options`
+- L’Options flow permet uniquement de **modifier** l’événement de cette entrée (pas d’ajout ni de suppression).
+
+### 🗑️ Supprimer un événement
+
+- Supprimez l’entrée correspondante dans **Paramètres > Appareils & services**.
+
+### 📅 29 février
+
+Les événements datés du 29 février sont observés le **28 février** les années non bissextiles (usage courant en France). Les années bissextiles, la date reste le 29 février. La date d’origine saisie n’est pas modifiée.
 
 ---
 
@@ -208,6 +219,8 @@ logger:
 | `__init__.py`                          | Initialisation du composant                     |
 | `config_flow.py`                       | Flux de configuration UI                        |
 | `sensor.py`                            | Création et mise à jour des capteurs            |
+| `calendar.py`                          | Calendrier des occurrences (50 ans)             |
+| `date_utils.py`                        | Dates d’anniversaire, y compris le 29 février   |
 | `const.py`                             | Types, formats, intitulés, noces                |
 | `translations/fr.json`                 | Traduction en français                          |
 | `manifest.json`                        | Métadonnées HACS                                |
