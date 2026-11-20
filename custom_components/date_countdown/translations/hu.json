@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Esemény hozzáadása"
+    },
     "step": {
       "user": {
         "title": "Emlékek és Ünnepek",

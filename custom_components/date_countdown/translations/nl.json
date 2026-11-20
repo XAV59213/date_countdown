@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Gebeurtenis toevoegen"
+    },
     "step": {
       "user": {
         "title": "Herinneringen en Vieringen",

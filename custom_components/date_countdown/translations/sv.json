@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Lägg till händelse"
+    },
     "step": {
       "user": {
         "title": "Minnen och Högtider",

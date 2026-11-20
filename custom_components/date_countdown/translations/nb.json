@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Legg til hendelse"
+    },
     "step": {
       "user": {
         "title": "Minner og Feiringer",

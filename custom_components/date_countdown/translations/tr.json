@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Etkinlik ekle"
+    },
     "step": {
       "user": {
         "title": "Anılar ve Kutlamalar",

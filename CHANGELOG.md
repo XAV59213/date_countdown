@@ -11,6 +11,8 @@
 ### Modifié
 - L’ancien appareil unique « Date Countdown » de chaque entrée est repris par le premier événement (même appareil, nom personnalisé conservé) ; nom, modèle et version mis à jour au démarrage ; appareils d’événements supprimés retirés.
 - Le capteur principal prend le nom de son appareil (texte identique : « Anais Descamps - Anniversaire ») ; ses attributs et son état sont inchangés, les `entity_id` existants aussi.
+- 🏷️ **Page de l’intégration** (Paramètres → Appareils et services → Souvenirs et Célébrations) : le bouton « Ajouter un hub » devient **« Ajouter un événement »** (traduction `config.initiate_flow.user`, 22 langues), et la section des entrées s’appelle **« Services »** au lieu de « Ponts » (`integration_type` : `hub` → `service`, comme les intégrations de calcul de dates du cœur : Workday, Season, Moon, Sun). Aucun effet sur les entrées, appareils, capteurs ou automatisations existants.
+- Tests : `tests/test_libelles.py`.
 
 ## 1.2.20 — 2026-11-20
 
