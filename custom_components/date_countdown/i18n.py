@@ -1,15 +1,24 @@
 """Textes générés côté Python (notifications, catégories d'âge, noces, médailles…).
 
 Ils suivent la langue de Home Assistant (``hass.config.language``) :
-- français et anglais : tous les textes ;
-- allemand, espagnol, italien : notifications, types d'événements et médailles
-  (catégories d'âge et noces en anglais) ;
+- français, anglais, allemand, espagnol, italien : tous les textes
+  (notifications, types, médailles, catégories d'âge accordées au genre, noces, calendrier) ;
 - autres langues : anglais.
 """
 
 from __future__ import annotations
 
+import re
 from typing import Any
+
+from .i18n_data import (
+    AGE_CATEGORIES_DE,
+    AGE_CATEGORIES_ES,
+    AGE_CATEGORIES_IT,
+    WEDDINGS_DE,
+    WEDDINGS_ES,
+    WEDDINGS_IT,
+)
 
 GENDER_UNSPECIFIED = "unspecified"
 GENDER_MALE = "male"
@@ -108,23 +117,55 @@ WEDDINGS_EN = [
     "Camellia", "Tourmaline", "Cherry Wood", "Sable", "Orchid", "Lapis Lazuli", "Azurite", "Maple", "Mink", "Diamond",
 ]
 
-# Formes féminines des catégories d'âge (premier mot)
-_FEMININE_FR = [
-    ("Super-Héros", "Super-Héroïne"), ("Héros", "Héroïne"), ("Roi ", "Reine "), ("Empereur", "Impératrice"),
-    ("Maître", "Maîtresse"), ("Sorcier", "Sorcière"), ("Champion", "Championne"), ("Majeur", "Majeure"),
-    ("Pré-Ado TikTokeur", "Pré-Ado TikTokeuse"),
-]
-_FEMININE_EN = [
-    ("Superhero", "Superheroine"), ("Intergalactic Hero", "Intergalactic Heroine"), ("King", "Queen"),
-    ("Emperor", "Empress"), ("Wizard", "Sorceress"),
-]
+# Formes féminines des catégories d'âge : (masculin, féminin), testées dans l'ordre,
+# première correspondance seulement (mot entier). Les titres absents sont épicènes
+# (Ninja, Jedi, Guru, As/Ass/Asso, Rockstar, Sage, Pirate, Artiste, Légende…).
+_FEMININE: dict[str, list[tuple[str, str]]] = {
+    "fr": [
+        ("Super-Héros", "Super-Héroïne"), ("Héros", "Héroïne"), ("Roi", "Reine"), ("Empereur", "Impératrice"),
+        ("Maître", "Maîtresse"), ("Sorcier", "Sorcière"), ("Champion", "Championne"), ("Majeur", "Majeure"),
+        ("Pré-Ado TikTokeur", "Pré-Ado TikTokeuse"),
+    ],
+    "en": [
+        ("Superhero", "Superheroine"), ("Hero", "Heroine"), ("King", "Queen"), ("Emperor", "Empress"),
+        ("Wizard", "Sorceress"),
+    ],
+    "de": [
+        ("Intergalaktischer Superheld", "Intergalaktische Superheldin"),
+        ("Intergalaktischer Held", "Intergalaktische Heldin"),
+        ("Superheld", "Superheldin"), ("König", "Königin"), ("Kaiser", "Kaiserin"), ("Meister", "Meisterin"),
+        ("Zauberer", "Zauberin"), ("Sieger", "Siegerin"), ("Pirat", "Piratin"), ("Künstler", "Künstlerin"),
+        ("Rebell", "Rebellin"), ("Philosoph", "Philosophin"), ("Visionär", "Visionärin"), ("Weiser", "Weise"),
+        ("TikToker", "TikTokerin"),
+    ],
+    "es": [
+        ("Superhéroe Intergaláctico", "Superheroína Intergaláctica"), ("Héroe Intergaláctico", "Heroína Intergaláctica"),
+        ("Superhéroe", "Superheroína"), ("Rey", "Reina"), ("Emperador", "Emperatriz"), ("Maestro", "Maestra"),
+        ("Mago", "Maga"), ("Campeón", "Campeona"), ("Filósofo", "Filósofa"), ("Visionario", "Visionaria"),
+        ("Sabio", "Sabia"),
+    ],
+    "it": [
+        ("Supereroe Intergalattico", "Supereroina Intergalattica"), ("Eroe Intergalattico", "Eroina Intergalattica"),
+        ("Supereroe", "Supereroina"), ("Re", "Regina"), ("Imperatore", "Imperatrice"), ("Maestro", "Maestra"),
+        ("Mago", "Maga"), ("Campione", "Campionessa"), ("Filosofo", "Filosofa"), ("Visionario", "Visionaria"),
+        ("Saggio", "Saggia"),
+    ],
+}
+# Langues romanes : le titre est le premier mot (« Sabio de los Sabios Consejos »…)
+_TITLE_FIRST = ("fr", "es", "it")
 
 
-def _feminine(text: str, pairs: list[tuple[str, str]]) -> str:
-    for masc, fem in pairs:
-        if masc in text:
-            return text.replace(masc, fem, 1)
+def _feminine(text: str, lang: str) -> str:
+    for masc, fem in _FEMININE.get(lang, []):
+        pattern = ("^" if lang in _TITLE_FIRST else r"(?<![\wÀ-ÿ])") + re.escape(masc) + r"(?![\wÀ-ÿ])"
+        new, count = re.subn(pattern, fem, text, count=1)
+        if count:
+            return new
     return text
+
+
+_AGE_CATEGORIES = {"en": AGE_CATEGORIES_EN, "de": AGE_CATEGORIES_DE, "es": AGE_CATEGORIES_ES, "it": AGE_CATEGORIES_IT}
+_WEDDINGS = {"de": WEDDINGS_DE, "es": WEDDINGS_ES, "it": WEDDINGS_IT}
 
 
 def age_category(age: int, category_fr: str | None, language: str, gender: str = GENDER_UNSPECIFIED) -> str | None:
@@ -133,9 +174,11 @@ def age_category(age: int, category_fr: str | None, language: str, gender: str =
         return None
     lang = resolve_language(language)
     if lang == "fr":
-        return _feminine(category_fr, _FEMININE_FR) if gender == GENDER_FEMALE else category_fr
-    text = AGE_CATEGORIES_EN[age] if 0 <= age < len(AGE_CATEGORIES_EN) else category_fr
-    return _feminine(text, _FEMININE_EN) if gender == GENDER_FEMALE else text
+        text = category_fr
+    else:
+        table = _AGE_CATEGORIES[lang]
+        text = table[age] if 0 <= age < len(table) else category_fr
+    return _feminine(text, lang) if gender == GENDER_FEMALE else text
 
 
 def wedding_name(years: int, wedding_fr: str | None, language: str) -> str | None:
@@ -144,6 +187,8 @@ def wedding_name(years: int, wedding_fr: str | None, language: str) -> str | Non
     lang = resolve_language(language)
     if lang == "fr" or not 1 <= years <= len(WEDDINGS_EN):
         return wedding_fr
+    if lang in _WEDDINGS:
+        return _WEDDINGS[lang][years - 1]
     return f"{WEDDINGS_EN[years - 1]} anniversary"
 
 
@@ -210,6 +255,7 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_no_medal": "Aucune",
         "cal_memorial": "{name} (Âge si vivant : {age}, Depuis décès : {since})",
         "cal_memorial_nosince": "{name} (Âge si vivant : {age})",
+        "cal_death": "{name} (Anniversaire du décès : {since})",
     },
     "en": {
         "year_one": "{n} year", "year_other": "{n} years",
@@ -256,6 +302,7 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_no_medal": "None",
         "cal_memorial": "{name} (Age if alive: {age}, Since death: {since})",
         "cal_memorial_nosince": "{name} (Age if alive: {age})",
+        "cal_death": "{name} (Anniversary of passing: {since})",
     },
     "de": {
         "year_one": "{n} Jahr", "year_other": "{n} Jahre",
@@ -300,6 +347,7 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_no_medal": "Keine",
         "cal_memorial": "{name} (Alter, wenn noch am Leben: {age}, seit dem Tod: {since})",
         "cal_memorial_nosince": "{name} (Alter, wenn noch am Leben: {age})",
+        "cal_death": "{name} (Todestag: {since})",
     },
     "es": {
         "year_one": "{n} año", "year_other": "{n} años",
@@ -342,6 +390,7 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_no_medal": "Ninguna",
         "cal_memorial": "{name} (Edad si viviera: {age}, Desde el fallecimiento: {since})",
         "cal_memorial_nosince": "{name} (Edad si viviera: {age})",
+        "cal_death": "{name} (Aniversario del fallecimiento: {since})",
     },
     "it": {
         "year_one": "{n} anno", "year_other": "{n} anni",
@@ -386,6 +435,7 @@ MESSAGES: dict[str, dict[str, str]] = {
         "cal_no_medal": "Nessuna",
         "cal_memorial": "{name} (Età se in vita: {age}, Dalla scomparsa: {since})",
         "cal_memorial_nosince": "{name} (Età se in vita: {age})",
+        "cal_death": "{name} (Anniversario della scomparsa: {since})",
     },
 }
 

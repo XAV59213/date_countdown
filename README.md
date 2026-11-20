@@ -99,6 +99,8 @@ Les événements datés du 29 février sont observés le **28 février** les ann
 
 Pour les anniversaires, mémoriaux, retraites et promotions, un champ **Genre** (*Non précisé* par défaut, *Homme*, *Femme*) accorde les textes : « Disparue depuis 5 ans », « retraitée », « et sera une Super-Héroïne des To-Do Lists ». Les entrées existantes sont migrées automatiquement en *Non précisé* (textes neutres « Disparu(e) », comme avant). L’attribut `gender` est exposé sur chaque capteur.
 
+Avec *Femme*, **toutes** les catégories d’âge ont leur forme féminine, dans chaque langue prise en charge (« Reine des Toboggans », « Queen of the Slides », « Königin der Rutschen », « Reina de los Toboganes », « Regina degli Scivoli »…). Les titres épicènes restent identiques (Ninja, Jedi, Guru, As, Rockstar, Sage, Légende…) ; en anglais, *Master* et *Champion* restent tels quels. Avec *Non précisé* ou *Homme*, c’est la forme masculine habituelle.
+
 ---
 
 ## 🐞 Capteurs générés
@@ -356,6 +358,8 @@ Rappel J-N : « ⏳ Dans 7 jours : anniversaire d’Océane (25 ans) » (« Dema
 
 Anniversaire du décès (option `death_anniversary`) : « 🕯️ Il y a 6 ans aujourd’hui, Jeanne nous quittait. Une pensée en sa mémoire. » et, avec un rappel J-N, « ⏳ Dans 7 jours : anniversaire du décès de Jeanne (6 ans) ». Anti-doublon séparé de celui du jour J.
 
+> 📅 Indépendamment de cette option, le **calendrier** d’un mémorial affiche toujours l’anniversaire du décès, avec un texte sobre : « Jeanne Martin - Mémorial (Anniversaire du décès : 6 ans) ». L’option ne règle que la notification (comme le calendrier affiche les anniversaires sans que les notifications soient actives).
+
 Les messages suivent la **langue de Home Assistant** (français, anglais, allemand, espagnol, italien ; anglais pour les autres langues) et le **genre** choisi pour l’événement (« Disparu » / « Disparue » / « Disparu(e) »).
 
 **Fonctionnement :**
@@ -432,8 +436,10 @@ Les **textes générés** suivent aussi la langue de Home Assistant (`hass.confi
 |---|---|
 | Noms des capteurs (`Océane Dupont - Birthday`…), listes « Type d’événement », « Type de carrière », « Genre » | les 22 langues |
 | Messages des notifications, libellés des types, médailles, résumés du calendrier | fr, en, de, es, it (anglais sinon) |
-| Catégories d’âge humoristiques, noces | fr, en (anglais sinon) |
-| Cartes Lovelace (textes) | fr, en, de, es, it selon la langue du profil (anglais sinon) ; éditeurs fr / en |
+| Catégories d’âge humoristiques (accordées au genre), noces | fr, en, de, es, it (anglais sinon) |
+| Cartes Lovelace (textes et éditeurs) | fr, en, de, es, it selon la langue du profil (anglais sinon) |
+
+> Les noms des noces suivent la liste française de l’intégration (Coton, Cuir, Froment…) traduite matière par matière : « Silberhochzeit », « Bodas de Plata », « Nozze d’Oro »… Ils peuvent différer des traditions locales.
 
 > Les attributs `age_category`, `wedding_type` et `work_medal` sont donc traduits : une automatisation qui compare leur valeur en français doit en tenir compte.
 
@@ -455,6 +461,8 @@ python3 scripts/check_translations.py
 | `calendar.py`                          | Calendrier des occurrences (50 ans)             |
 | `date_utils.py`                        | Dates d’anniversaire, y compris le 29 février   |
 | `const.py`                             | Types, formats, intitulés, noces                |
+| `i18n.py`, `i18n_data.py`              | Textes générés multilingues (fr, en, de, es, it) |
+| `notifications.py`                     | Notifications natives                           |
 | `translations/*.json`                  | Traductions de l’interface (22 langues)         |
 | `manifest.json`                        | Métadonnées HACS                                |
 | `brand/icon.png`                       | Icône HACS (512×512)                            |

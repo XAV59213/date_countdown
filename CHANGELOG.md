@@ -2,6 +2,16 @@
 
 ## Non publié
 
+### Ajouté
+- 📅 **Calendrier des mémoriaux** : l’anniversaire du décès apparaît chaque année (à partir de l’année suivant le décès, 29 février → 28 février) avec un texte sobre « Jeanne Martin - Mémorial (Anniversaire du décès : 6 ans) », traduit en fr, en, de, es, it. Toujours affiché, indépendamment de l’option de notification `death_anniversary`. L’état du calendrier (prochain événement) prend la date la plus proche entre anniversaire de naissance et anniversaire du décès.
+- 🌍 **Catégories d’âge et noces en allemand, espagnol et italien** (121 catégories, 60 noces par langue) ; repli anglais conservé pour les autres langues.
+- 🚻 **Formes féminines pour toutes les catégories d’âge** en fr, en, de, es, it (« Impératrice », « Königin », « Emperatriz », « Campionessa », « Weise »…) ; titres épicènes inchangés.
+- 🎨 Éditeurs des cartes Lovelace et sélecteur de cartes en allemand, espagnol et italien.
+- Tests : `tests/test_finitions.py` (tables complètes, féminin de chaque catégorie dans chaque langue, noces, calendrier des mémoriaux, clés des éditeurs).
+
+### Modifié
+- Formes féminines appliquées par mot entier (plus de remplacement partiel) ; nouveau module `i18n_data.py` pour les tables de/es/it.
+
 ### Corrigé
 - 🐛 **Options → Modifier un événement** : l’écran « Sélectionnez un événement à modifier » s’affichait d’emblée avec l’erreur « Veuillez sélectionner un événement… », même avec l’événement coché. L’étape de sélection était appelée avec une saisie vide (`{}`) au lieu d’être simplement affichée. Le formulaire s’affiche maintenant sans erreur, le premier événement est pré-sélectionné et la valeur est validée de façon robuste.
 - Message d’erreur « event_required » : « dans la liste » au lieu de « dans la liste déroulante » (fr, en).
