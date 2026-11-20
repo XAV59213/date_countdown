@@ -1,0 +1,9 @@
+# Carte « Frise des mois » 📅 — les 12 prochains mois
+type: custom:date-countdown-timeline-card
+title: Frise des célébrations
+months: 12             # 1 à 12
+layout: frise          # frise (verticale) ou grid (grille de mois)
+show_empty_months: true
+show_details: true
+# types: [birthday, anniversary]
+# entities: [...]      # vide = détection automatique

@@ -126,6 +126,8 @@ L'intégration fournit sa propre carte **« Informations »**, chargée automati
 
 **Ajout via l'interface** : Tableau de bord → ✏️ Modifier → **Ajouter une carte** → chercher **« Souvenirs et Célébrations — Informations »**. L'éditeur permet de régler le titre, de choisir les capteurs d'événements (vide = tous les anniversaires détectés) et les options d'affichage.
 
+![Carte Informations](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/informations.png)
+
 Exemple de rendu :
 
 > **Informations** 🎂
@@ -147,6 +149,136 @@ show_upcoming: true
 ```
 
 > Si la carte n'apparaît pas après une mise à jour, vider le cache du navigateur. En dernier recours, ajouter manuellement la ressource `/date_countdown/date-countdown-card.js` (module JavaScript).
+
+## 🎨 Cartes Lovelace
+
+En plus de la carte **Informations**, l'intégration livre **4 cartes natives** dans le même module (`/date_countdown/date-countdown-card.js`, chargé automatiquement). Elles se trouvent dans **Ajouter une carte** en cherchant **« Souvenirs et Célébrations »**, avec aperçu en direct et éditeur visuel en français. Elles suivent le thème Home Assistant (clair / sombre), détectent seules les capteurs de l'intégration, et un clic sur un événement ouvre sa fiche (*more-info*). Aucune dépendance externe.
+
+| Carte | Type | Rôle |
+|---|---|---|
+| Liste / Agenda | `custom:date-countdown-list-card` | Tous les événements, groupés par type ou en liste unique |
+| Compte à rebours | `custom:date-countdown-countdown-card` | Un événement en grand, anneau de progression, confettis le jour J |
+| Frise des mois | `custom:date-countdown-timeline-card` | Les N prochains mois et leurs événements |
+| Mémoriaux | `custom:date-countdown-memorial-card` | Carte sobre en mémoire des disparus |
+
+**Aperçu de toutes les cartes** (thème clair, puis sombre) :
+
+![Aperçu de toutes les cartes](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/apercu-global.png)
+
+<details><summary>Thème sombre</summary>
+
+![Aperçu de toutes les cartes, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/apercu-global-sombre.png)
+
+</details>
+
+Badges : **Aujourd'hui !** (rose), **Demain / J-1 à J-6** (orange), **J-7 à J-29** (bleu), au-delà gris. 🔔 = notifications natives actives pour l'événement.
+
+### 📋 Liste / Agenda
+
+| | |
+|---|---|
+| ![Liste](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste.png) | ![Liste le jour J](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste-jour-j.png) |
+| ![Liste compacte](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste-compacte.png) | ![Liste compacte, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/liste-compacte-sombre.png) |
+
+Sections 🎂 Anniversaires, 💍 Mariages, 🕯️ Mémoriaux, 🏆 Promotions, ⭐ Événements, 🏖️ Retraites, triées par proximité. Chaque ligne affiche la date (« mercredi 13 janvier »), l'âge à venir, la catégorie d'âge, les noces, l'âge qu'aurait eu la personne, la médaille du travail…
+
+| Option | Défaut | Description |
+|---|---|---|
+| `title` | `Souvenirs et Célébrations` | Titre (vide = pas d'en-tête) |
+| `entities` | *(auto)* | Sélection manuelle de capteurs ; vide = tous les capteurs de l'intégration |
+| `types` | *(tous)* | `birthday`, `anniversary`, `memorial`, `promotion`, `special_event`, `retirement` |
+| `group_by_type` | `true` | Sections par type, sinon liste unique triée |
+| `max_items` | `0` | Nombre maximum d'événements (0 = illimité) |
+| `horizon_days` | `0` | N'affiche que les N prochains jours (0 = sans limite) |
+| `hide_today` | `false` | Masque les événements du jour |
+| `hide_past` | `false` | Masque les retraites déjà passées |
+| `compact` | `false` | Lignes resserrées |
+| `show_date` / `show_details` | `true` | Date / détails (âge, noces, catégorie…) |
+| `show_icon` | `true` | Emoji dans le titre |
+
+```yaml
+type: custom:date-countdown-list-card
+title: Souvenirs et Célébrations
+group_by_type: true
+max_items: 10
+horizon_days: 120
+```
+
+### ⏳ Compte à rebours
+
+| | |
+|---|---|
+| ![Compte à rebours](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours.png) | ![Jour J avec confettis](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours-jour-j.png) |
+| ![Choix automatique (mariages)](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours-auto.png) | ![Thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/compte-a-rebours-sombre.png) |
+
+Le prochain événement (ou celui choisi) en grand : nombre de jours, anneau de progression sur l'année (sur la carrière pour une retraite), sous-titre « Océane aura 25 ans · Super-Héros des To-Do Lists ». Le jour J : 🎉, fond festif et confettis CSS légers (jamais pour un mémorial ; désactivés si le système demande de réduire les animations).
+
+| Option | Défaut | Description |
+|---|---|---|
+| `entity` | *(auto)* | Capteur à afficher ; vide = le prochain événement |
+| `title` | *(selon le type)* | « Prochain anniversaire », « Prochaine retraite »… |
+| `types` | *(tous)* | Types pris en compte pour le choix automatique |
+| `show_ring` | `true` | Anneau de progression |
+| `show_date` / `show_details` | `true` | Date / catégorie, noces, médaille… |
+| `celebrate` | `true` | Animation festive le jour J |
+
+```yaml
+type: custom:date-countdown-countdown-card
+entity: sensor.oceane_dupont_anniversaire
+celebrate: true
+```
+
+### 📅 Frise des mois
+
+| | |
+|---|---|
+| ![Frise verticale](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/frise.png) | ![Frise en grille](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/frise-grille.png) |
+
+Les 12 (ou N) prochains mois, en frise verticale ou en grille ; puces colorées par type, badge pour les événements à moins de 30 jours, légende.
+
+| Option | Défaut | Description |
+|---|---|---|
+| `title` | `Frise des célébrations` | Titre |
+| `months` | `12` | Nombre de mois (1 à 12) |
+| `layout` | `frise` | `frise` (verticale) ou `grid` (grille de mois) |
+| `show_empty_months` | `true` | Affiche les mois sans événement |
+| `show_details` | `true` | Âge / détail à côté du nom |
+| `entities` / `types` | *(auto / tous)* | Comme la carte Liste |
+
+```yaml
+type: custom:date-countdown-timeline-card
+months: 6
+layout: grid
+show_empty_months: false
+```
+
+### 🕯️ Mémoriaux
+
+| | |
+|---|---|
+| ![Mémoriaux](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/memoriaux.png) | ![Mémoriaux, thème sombre](https://raw.githubusercontent.com/XAV59213/date_countdown/main/docs/cartes/memoriaux-sombre.png) |
+
+Ton sobre, bougie à la flamme douce : « aurait eu 92 ans le 17 décembre », « disparu(e) depuis 8 ans · † 3 mai 2018 · à 83 ans ».
+
+| Option | Défaut | Description |
+|---|---|---|
+| `title` | `En mémoire` | Titre |
+| `entities` | *(auto)* | Capteurs de mémoriaux ; vide = tous |
+| `sort` | `date` | `date` (le plus proche) ou `name` |
+| `max_items` | `0` | Nombre maximum (0 = illimité) |
+| `show_death_date` / `show_age_at_death` | `true` | Date et âge au décès |
+| `show_countdown` | `true` | Badge « dans N jours » |
+| `flicker` | `true` | Flamme animée (désactivée si « réduire les animations ») |
+
+```yaml
+type: custom:date-countdown-memorial-card
+title: En mémoire
+sort: date
+```
+
+D'autres exemples (dont une vue *sections* complète) sont dans [`examples/lovelace/`](examples/lovelace/). Un aperçu local avec des données fictives est disponible dans [`docs/apercu-cartes.html`](docs/apercu-cartes.html) (`python3 -m http.server` à la racine du dépôt, puis `/docs/apercu-cartes.html`, `?theme=dark`, `?jourj=1`).
+
+> Attributs ajoutés aux capteurs pour les cartes : `notifications_enabled` (🔔) sur tous les capteurs, `retirement_date` (JJ/MM/AAAA) sur les retraites.
 
 ## 🖼️ Exemple Lovelace (mémoriaux à venir)
 

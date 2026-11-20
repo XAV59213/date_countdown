@@ -8,7 +8,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.util import dt as dt_util
 
-from .const import DOMAIN, EVENT_TYPES, WEDDING_ANNIVERSARIES, AGE_CATEGORIES, AGE_CATEGORY_ICONS, WORK_MEDAL_LEVELS, WORK_MEDAL_PENIBLE_LEVELS
+from .const import CONF_NOTIFICATIONS, CONF_NOTIFY_ENABLED, DOMAIN, EVENT_TYPES, WEDDING_ANNIVERSARIES, AGE_CATEGORIES, AGE_CATEGORY_ICONS, WORK_MEDAL_LEVELS, WORK_MEDAL_PENIBLE_LEVELS
 from .date_utils import anniversary_in_year, years_elapsed
 
 _LOGGER = logging.getLogger(__name__)
@@ -21,6 +21,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         hass.data[DOMAIN] = {}
 
     events = entry.options.get("events", [])
+    # Notifications natives actives pour cette entrée ? (exposé en attribut pour les cartes 🔔)
+    notify_enabled = bool((entry.options.get(CONF_NOTIFICATIONS) or {}).get(CONF_NOTIFY_ENABLED, False))
     if not events:
         _LOGGER.warning("No events configured for Date Countdown integration. No event sensors will be created.")
     for event in events:
@@ -62,6 +64,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             event.get("is_penible", False),
             event.get("career_type", "normale")
         )
+        event_sensor.notifications_enabled = notify_enabled
         sensors.append(event_sensor)
         _LOGGER.info("Created DateCountdownSensor with unique_id: %s, name: %s", event_sensor.unique_id, event_sensor.name)
 
@@ -109,6 +112,8 @@ class DateCountdownSensor(SensorEntity):
         self._years_retired = None
         self._work_medal = None
         self._age_at_death = None  # Nouvelle variable pour l'âge au décès
+        self._retirement_date = None
+        self.notifications_enabled = False
         unique_id_base = f"{event_type}_{name.lower().replace(' ', '_')}"
         unique_id_date = (start_date or event_date or "").replace('/', '')
         self._attr_unique_id = f"{unique_id_base}_{unique_id_date}"
@@ -152,12 +157,15 @@ class DateCountdownSensor(SensorEntity):
         attributes = {
             "event_type": self._event_type,
             "first_name": self._first_name,
-            "friendly_name": self._attr_name
+            "friendly_name": self._attr_name,
+            "notifications_enabled": self.notifications_enabled,
         }
         if self._event_type == "retirement":
             attributes["start_date"] = self._start_date
             attributes["is_penible"] = self._is_penible
             attributes["career_type"] = self._career_type
+            if self._retirement_date is not None:
+                attributes["retirement_date"] = self._retirement_date.strftime("%d/%m/%Y")
             if self._years is not None:
                 attributes["years_worked"] = self._years
             if self._years_remaining is not None:
@@ -204,6 +212,7 @@ class DateCountdownSensor(SensorEntity):
                 self._years_remaining = None
                 self._years_retired = None
                 self._work_medal = None
+                self._retirement_date = None
                 return
 
             # Calculer les années travaillées
@@ -224,6 +233,7 @@ class DateCountdownSensor(SensorEntity):
 
             retirement_year = start_date.year + years_to_retirement
             retirement_date = anniversary_in_year(start_date.month, start_date.day, retirement_year)
+            self._retirement_date = retirement_date
 
             # Gérer retraite passée ou future
             if retirement_date <= today:

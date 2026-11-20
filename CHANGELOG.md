@@ -5,13 +5,20 @@
 ### Ajouté
 - 🌍 **Traductions de l’interface en 22 langues** : allemand (`de`), espagnol (`es`), italien (`it`), portugais (`pt`), portugais du Brésil (`pt-BR`), néerlandais (`nl`), polonais (`pl`), russe (`ru`), suédois (`sv`), norvégien bokmål (`nb`), danois (`da`), finnois (`fi`), tchèque (`cs`), slovaque (`sk`), hongrois (`hu`), turc (`tr`), grec (`el`), roumain (`ro`), ukrainien (`uk`) et catalan (`ca`), en plus du français et de l’anglais. Couvre l’assistant d’ajout, les Options, les notifications, le service de test et les messages d’erreur.
 - Script `scripts/check_translations.py` (et test `tests/test_translations.py`) : chaque fichier de traduction doit être du JSON valide, avoir exactement les mêmes clés que `en.json` et les mêmes placeholders `{...}`.
+- 📋 **Carte Liste / Agenda** `custom:date-countdown-list-card` : tous les capteurs de l'intégration détectés automatiquement, sections par type (🎂 💍 🕯️ 🏆 ⭐ 🏖️) ou liste unique, badge J-N coloré, âge à venir, noces, catégorie d'âge, médaille, date en français, 🔔, filtres (types, horizon, max, masquer aujourd'hui / retraites passées), mode compact.
+- ⏳ **Carte Compte à rebours** `custom:date-countdown-countdown-card` : un événement en grand (prochain automatique ou choisi), anneau de progression, sous-titre, confettis CSS le jour J (désactivables, respectent « réduire les animations »).
+- 📅 **Carte Frise des mois** `custom:date-countdown-timeline-card` : les 12 (ou N) prochains mois en frise verticale ou en grille, puces colorées par type, légende.
+- 🕯️ **Carte Mémoriaux** `custom:date-countdown-memorial-card` : ton sobre, « aurait eu N ans », « disparu(e) depuis N ans », date et âge au décès.
+- Éditeur visuel natif en français, aperçu dans le sélecteur de cartes, thème clair/sombre, clic = fiche de l'entité, compatibles vue *sections*.
+- Attributs de capteur `notifications_enabled` et `retirement_date` (retraites), utilisés par les cartes.
+- Exemples `examples/lovelace/`, aperçu local `docs/apercu-cartes.html` et captures `docs/cartes/`.
 
 ### Corrigé
 - `fr.json` : titres des étapes d’ajout et erreur `creation_failed` manquants.
 - `strings.json` aligné sur `en.json` / `fr.json` (étapes et erreurs des Options qui manquaient).
 
 ### Remarque
-- Les textes générés en Python (messages de notification, catégories d’âge, noces, noms des capteurs, listes de types) et la carte Lovelace restent en français pour l’instant.
+- Les textes générés en Python (messages de notification, catégories d’âge, noces, noms des capteurs, listes de types) et les cartes Lovelace restent en français pour l’instant.
 
 ## 1.2.17 — 2026-11-20
 
