@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 1.2.21 — 2026-11-20
 
 ### Ajouté
 - 📟 **Un appareil par événement** : nom = l’événement (« Anais Descamps - Anniversaire », traduit selon le type, 22 langues), fabricant `XAV59213`, modèle = type d’événement traduit, version de l’intégration, type *service*. Le capteur principal (qui n’avait pas d’appareil) et le calendrier y sont rattachés.
