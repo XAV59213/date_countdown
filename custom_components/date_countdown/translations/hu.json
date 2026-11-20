@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Nyugdíj"
+      },
+      "days_remaining": {
+        "name": "Hátralévő napok"
+      },
+      "next_date": {
+        "name": "Következő dátum"
+      },
+      "age": {
+        "name": "Életkor",
+        "unit_of_measurement": "év"
+      },
+      "next_age": {
+        "name": "Életkor a következő születésnapon",
+        "unit_of_measurement": "év"
+      },
+      "age_category": {
+        "name": "Korosztály"
+      },
+      "wedding": {
+        "name": "Házassági évforduló neve"
+      },
+      "years_elapsed": {
+        "name": "Eltelt évek",
+        "unit_of_measurement": "év"
+      },
+      "age_if_alive": {
+        "name": "Életkor, ha élne",
+        "unit_of_measurement": "év"
+      },
+      "years_since_death": {
+        "name": "Évek a halál óta",
+        "unit_of_measurement": "év"
+      },
+      "death_anniversary_days": {
+        "name": "Napok a halál évfordulójáig"
+      },
+      "retirement_date": {
+        "name": "Nyugdíjba vonulás dátuma"
+      },
+      "years_worked": {
+        "name": "Ledolgozott évek",
+        "unit_of_measurement": "év"
+      },
+      "work_medal": {
+        "name": "Munkaérem",
+        "state": {
+          "none": "Nincs",
+          "silver": "Ezüst",
+          "vermeil": "Vermeil",
+          "gold": "Arany",
+          "grand_gold": "Nagy arany"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Ma (a nagy nap)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Születésnap"
+    },
+    "anniversary": {
+      "name": "{person} - Házassági évforduló"
+    },
+    "memorial": {
+      "name": "{person} - Megemlékezés"
+    },
+    "promotion": {
+      "name": "{person} - Előléptetés"
+    },
+    "special_event": {
+      "name": "{person} - Különleges esemény"
+    },
+    "retirement": {
+      "name": "{person} - Nyugdíj"
     }
   }
 }

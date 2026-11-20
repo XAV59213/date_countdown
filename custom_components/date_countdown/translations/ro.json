@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Pensionare"
+      },
+      "days_remaining": {
+        "name": "Zile rămase"
+      },
+      "next_date": {
+        "name": "Data următoare"
+      },
+      "age": {
+        "name": "Vârstă",
+        "unit_of_measurement": "ani"
+      },
+      "next_age": {
+        "name": "Vârsta la următoarea aniversare",
+        "unit_of_measurement": "ani"
+      },
+      "age_category": {
+        "name": "Categorie de vârstă"
+      },
+      "wedding": {
+        "name": "Numele aniversării nunții"
+      },
+      "years_elapsed": {
+        "name": "Ani scurși",
+        "unit_of_measurement": "ani"
+      },
+      "age_if_alive": {
+        "name": "Vârsta dacă ar fi trăit",
+        "unit_of_measurement": "ani"
+      },
+      "years_since_death": {
+        "name": "Ani de la deces",
+        "unit_of_measurement": "ani"
+      },
+      "death_anniversary_days": {
+        "name": "Zile până la comemorarea decesului"
+      },
+      "retirement_date": {
+        "name": "Data pensionării"
+      },
+      "years_worked": {
+        "name": "Ani lucrați",
+        "unit_of_measurement": "ani"
+      },
+      "work_medal": {
+        "name": "Medalia muncii",
+        "state": {
+          "none": "Niciuna",
+          "silver": "Argint",
+          "vermeil": "Vermeil",
+          "gold": "Aur",
+          "grand_gold": "Mare Aur"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Astăzi (ziua cea mare)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Zi de naștere"
+    },
+    "anniversary": {
+      "name": "{person} - Aniversare de căsătorie"
+    },
+    "memorial": {
+      "name": "{person} - Comemorare"
+    },
+    "promotion": {
+      "name": "{person} - Promovare"
+    },
+    "special_event": {
+      "name": "{person} - Eveniment special"
+    },
+    "retirement": {
+      "name": "{person} - Pensionare"
     }
   }
 }

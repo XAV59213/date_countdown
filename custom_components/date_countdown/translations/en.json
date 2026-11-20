@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Retirement"
+      },
+      "days_remaining": {
+        "name": "Days remaining"
+      },
+      "next_date": {
+        "name": "Next date"
+      },
+      "age": {
+        "name": "Age",
+        "unit_of_measurement": "years"
+      },
+      "next_age": {
+        "name": "Age at next birthday",
+        "unit_of_measurement": "years"
+      },
+      "age_category": {
+        "name": "Age category"
+      },
+      "wedding": {
+        "name": "Wedding anniversary name"
+      },
+      "years_elapsed": {
+        "name": "Years elapsed",
+        "unit_of_measurement": "years"
+      },
+      "age_if_alive": {
+        "name": "Age if alive",
+        "unit_of_measurement": "years"
+      },
+      "years_since_death": {
+        "name": "Years since passing",
+        "unit_of_measurement": "years"
+      },
+      "death_anniversary_days": {
+        "name": "Days to death anniversary"
+      },
+      "retirement_date": {
+        "name": "Retirement date"
+      },
+      "years_worked": {
+        "name": "Years worked",
+        "unit_of_measurement": "years"
+      },
+      "work_medal": {
+        "name": "Work medal",
+        "state": {
+          "none": "None",
+          "silver": "Silver",
+          "vermeil": "Vermeil",
+          "gold": "Gold",
+          "grand_gold": "Grand Gold"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Today (big day)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Birthday"
+    },
+    "anniversary": {
+      "name": "{person} - Wedding anniversary"
+    },
+    "memorial": {
+      "name": "{person} - Memorial"
+    },
+    "promotion": {
+      "name": "{person} - Promotion"
+    },
+    "special_event": {
+      "name": "{person} - Special event"
+    },
+    "retirement": {
+      "name": "{person} - Retirement"
     }
   }
 }

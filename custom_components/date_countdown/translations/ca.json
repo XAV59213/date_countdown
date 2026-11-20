@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Jubilació"
+      },
+      "days_remaining": {
+        "name": "Dies restants"
+      },
+      "next_date": {
+        "name": "Propera data"
+      },
+      "age": {
+        "name": "Edat",
+        "unit_of_measurement": "anys"
+      },
+      "next_age": {
+        "name": "Edat al proper aniversari",
+        "unit_of_measurement": "anys"
+      },
+      "age_category": {
+        "name": "Categoria d'edat"
+      },
+      "wedding": {
+        "name": "Noces"
+      },
+      "years_elapsed": {
+        "name": "Anys transcorreguts",
+        "unit_of_measurement": "anys"
+      },
+      "age_if_alive": {
+        "name": "Edat si visqués",
+        "unit_of_measurement": "anys"
+      },
+      "years_since_death": {
+        "name": "Anys des de la defunció",
+        "unit_of_measurement": "anys"
+      },
+      "death_anniversary_days": {
+        "name": "Dies fins a l'aniversari de la defunció"
+      },
+      "retirement_date": {
+        "name": "Data de jubilació"
+      },
+      "years_worked": {
+        "name": "Anys treballats",
+        "unit_of_measurement": "anys"
+      },
+      "work_medal": {
+        "name": "Medalla del treball",
+        "state": {
+          "none": "Cap",
+          "silver": "Plata",
+          "vermeil": "Vermeil",
+          "gold": "Or",
+          "grand_gold": "Gran Or"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Avui (el gran dia)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Aniversari"
+    },
+    "anniversary": {
+      "name": "{person} - Aniversari de casament"
+    },
+    "memorial": {
+      "name": "{person} - Memorial"
+    },
+    "promotion": {
+      "name": "{person} - Promoció"
+    },
+    "special_event": {
+      "name": "{person} - Esdeveniment especial"
+    },
+    "retirement": {
+      "name": "{person} - Jubilació"
     }
   }
 }

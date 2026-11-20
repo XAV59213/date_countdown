@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Emeklilik"
+      },
+      "days_remaining": {
+        "name": "Kalan gün"
+      },
+      "next_date": {
+        "name": "Sonraki tarih"
+      },
+      "age": {
+        "name": "Yaş",
+        "unit_of_measurement": "yıl"
+      },
+      "next_age": {
+        "name": "Sonraki doğum gününde yaş",
+        "unit_of_measurement": "yıl"
+      },
+      "age_category": {
+        "name": "Yaş kategorisi"
+      },
+      "wedding": {
+        "name": "Evlilik yıl dönümü adı"
+      },
+      "years_elapsed": {
+        "name": "Geçen yıllar",
+        "unit_of_measurement": "yıl"
+      },
+      "age_if_alive": {
+        "name": "Hayatta olsaydı yaşı",
+        "unit_of_measurement": "yıl"
+      },
+      "years_since_death": {
+        "name": "Vefatından bu yana geçen yıl",
+        "unit_of_measurement": "yıl"
+      },
+      "death_anniversary_days": {
+        "name": "Vefat yıl dönümüne kalan gün"
+      },
+      "retirement_date": {
+        "name": "Emeklilik tarihi"
+      },
+      "years_worked": {
+        "name": "Çalışılan yıllar",
+        "unit_of_measurement": "yıl"
+      },
+      "work_medal": {
+        "name": "Çalışma madalyası",
+        "state": {
+          "none": "Yok",
+          "silver": "Gümüş",
+          "vermeil": "Vermeil",
+          "gold": "Altın",
+          "grand_gold": "Büyük Altın"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Bugün (büyük gün)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Doğum günü"
+    },
+    "anniversary": {
+      "name": "{person} - Evlilik yıldönümü"
+    },
+    "memorial": {
+      "name": "{person} - Anma"
+    },
+    "promotion": {
+      "name": "{person} - Terfi"
+    },
+    "special_event": {
+      "name": "{person} - Özel etkinlik"
+    },
+    "retirement": {
+      "name": "{person} - Emeklilik"
     }
   }
 }

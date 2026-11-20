@@ -2,7 +2,15 @@
 
 ## Non publié
 
+### Ajouté
+- 📟 **Un appareil par événement** : nom = l’événement (« Anais Descamps - Anniversaire », traduit selon le type, 22 langues), fabricant `XAV59213`, modèle = type d’événement traduit, version de l’intégration, type *service*. Le capteur principal (qui n’avait pas d’appareil) et le calendrier y sont rattachés.
+- ➕ **Entités séparées par événement** (créées selon le type) : jours restants, prochaine date, âge et âge au prochain anniversaire, catégorie d’âge, années écoulées, noces, âge si vivant, années depuis le décès, jours avant l’anniversaire du décès, date de retraite, années travaillées, médaille du travail (`enum` traduit) et `binary_sensor` « Aujourd’hui (jour J) ». Noms via `translation_key` (22 langues), `unique_id` stables, icônes, `device_class` / unités adaptés, recalcul au démarrage et à minuit.
+- Le service `send_test_notification` accepte aussi une entité secondaire de l’événement.
+- Tests : `tests/test_capteurs.py` (appareils, entités par type, valeurs, minuit, jour J, migration de l’ancien appareil, nom personnalisé conservé, entity_id inchangés).
+
 ### Modifié
+- L’ancien appareil unique « Date Countdown » de chaque entrée est repris par le premier événement (même appareil, nom personnalisé conservé) ; nom, modèle et version mis à jour au démarrage ; appareils d’événements supprimés retirés.
+- Le capteur principal prend le nom de son appareil (texte identique : « Anais Descamps - Anniversaire ») ; ses attributs et son état sont inchangés, les `entity_id` existants aussi.
 - 🏷️ **Page de l’intégration** (Paramètres → Appareils et services → Souvenirs et Célébrations) : le bouton « Ajouter un hub » devient **« Ajouter un événement »** (traduction `config.initiate_flow.user`, 22 langues), et la section des entrées s’appelle **« Services »** au lieu de « Ponts » (`integration_type` : `hub` → `service`, comme les intégrations de calcul de dates du cœur : Workday, Season, Moon, Sun). Aucun effet sur les entrées, appareils, capteurs ou automatisations existants.
 - Tests : `tests/test_libelles.py`.
 

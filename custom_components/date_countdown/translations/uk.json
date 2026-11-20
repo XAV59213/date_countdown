@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Пенсія"
+      },
+      "days_remaining": {
+        "name": "Залишилось днів"
+      },
+      "next_date": {
+        "name": "Наступна дата"
+      },
+      "age": {
+        "name": "Вік",
+        "unit_of_measurement": "років"
+      },
+      "next_age": {
+        "name": "Вік на наступний день народження",
+        "unit_of_measurement": "років"
+      },
+      "age_category": {
+        "name": "Вікова категорія"
+      },
+      "wedding": {
+        "name": "Назва річниці весілля"
+      },
+      "years_elapsed": {
+        "name": "Минуло років",
+        "unit_of_measurement": "років"
+      },
+      "age_if_alive": {
+        "name": "Вік, якби був(ла) живий(а)",
+        "unit_of_measurement": "років"
+      },
+      "years_since_death": {
+        "name": "Років від смерті",
+        "unit_of_measurement": "років"
+      },
+      "death_anniversary_days": {
+        "name": "Днів до річниці смерті"
+      },
+      "retirement_date": {
+        "name": "Дата виходу на пенсію"
+      },
+      "years_worked": {
+        "name": "Відпрацьовано років",
+        "unit_of_measurement": "років"
+      },
+      "work_medal": {
+        "name": "Трудова медаль",
+        "state": {
+          "none": "Немає",
+          "silver": "Срібло",
+          "vermeil": "Вермель",
+          "gold": "Золото",
+          "grand_gold": "Велике золото"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Сьогодні (особливий день)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - День народження"
+    },
+    "anniversary": {
+      "name": "{person} - Річниця весілля"
+    },
+    "memorial": {
+      "name": "{person} - Пам'ять"
+    },
+    "promotion": {
+      "name": "{person} - Підвищення"
+    },
+    "special_event": {
+      "name": "{person} - Особлива подія"
+    },
+    "retirement": {
+      "name": "{person} - Пенсія"
     }
   }
 }

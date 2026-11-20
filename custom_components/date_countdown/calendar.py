@@ -6,6 +6,7 @@ from typing import Optional, Callable, List
 from homeassistant.components.calendar import CalendarEntity, CalendarEvent
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.util import dt as dt_util
 
 from .const import (
@@ -17,6 +18,7 @@ from .const import (
     WORK_MEDAL_LEVELS,
     WORK_MEDAL_PENIBLE_LEVELS,
 )
+from .entity import async_event_models, event_device_info
 from .date_utils import anniversary_in_year, years_elapsed
 from .i18n import GENDER_UNSPECIFIED, Texts, age_category as tr_age_category, event_type_label, medal_name, wedding_name
 
@@ -26,6 +28,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     """Set up Date Countdown calendars from a config entry."""
     calendars = []
     events = entry.options.get("events", [])
+    models = await async_event_models(hass)
     for event in events:
         name = event.get("name")
         first_name = event.get("first_name", "")
@@ -51,6 +54,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             entry_id=entry.entry_id,
             gender=event.get("gender", GENDER_UNSPECIFIED),
             language=hass.config.language,
+            device_info=event_device_info(entry.entry_id, event, models, hass.config.language),
         ))
 
     if calendars:
@@ -74,6 +78,7 @@ class DateCountdownCalendar(CalendarEntity):
         entry_id: str,
         gender: str = GENDER_UNSPECIFIED,
         language: str = "fr",
+        device_info: Optional[DeviceInfo] = None,
     ):
         """Initialize the calendar entity."""
         self._name = name
@@ -90,6 +95,10 @@ class DateCountdownCalendar(CalendarEntity):
         self._language = language
         self._attr_name = f"{f'{first_name} {name}'.strip()} - {event_type_label(event_type, language)}"
         self._entry_id = entry_id
+        # Appareil de l'événement (partagé avec les capteurs) ; repli : ancien appareil de l'entrée
+        self._attr_device_info = device_info or DeviceInfo(
+            identifiers={(DOMAIN, entry_id)}, name="Date Countdown", manufacturer="XAV59213"
+        )
         self._next_event: Optional[CalendarEvent] = None
 
     def _parse_date(self, date_str: str) -> Optional[date]:
@@ -100,15 +109,6 @@ class DateCountdownCalendar(CalendarEntity):
         except Exception as e:
             _LOGGER.error("Invalid date format for %s: %s", self._name, e)
             return None
-
-    @property
-    def device_info(self):
-        """Return device information."""
-        return {
-            "identifiers": {(DOMAIN, self._entry_id)},
-            "name": "Date Countdown",
-            "manufacturer": "XAV59213"
-        }
 
     @property
     def event(self) -> Optional[CalendarEvent]:

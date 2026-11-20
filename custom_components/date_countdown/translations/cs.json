@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Důchod"
+      },
+      "days_remaining": {
+        "name": "Zbývající dny"
+      },
+      "next_date": {
+        "name": "Další datum"
+      },
+      "age": {
+        "name": "Věk",
+        "unit_of_measurement": "let"
+      },
+      "next_age": {
+        "name": "Věk při příštích narozeninách",
+        "unit_of_measurement": "let"
+      },
+      "age_category": {
+        "name": "Věková kategorie"
+      },
+      "wedding": {
+        "name": "Název výročí svatby"
+      },
+      "years_elapsed": {
+        "name": "Uplynulé roky",
+        "unit_of_measurement": "let"
+      },
+      "age_if_alive": {
+        "name": "Věk, kdyby žil(a)",
+        "unit_of_measurement": "let"
+      },
+      "years_since_death": {
+        "name": "Roky od úmrtí",
+        "unit_of_measurement": "let"
+      },
+      "death_anniversary_days": {
+        "name": "Dny do výročí úmrtí"
+      },
+      "retirement_date": {
+        "name": "Datum odchodu do důchodu"
+      },
+      "years_worked": {
+        "name": "Odpracované roky",
+        "unit_of_measurement": "let"
+      },
+      "work_medal": {
+        "name": "Pracovní medaile",
+        "state": {
+          "none": "Žádná",
+          "silver": "Stříbrná",
+          "vermeil": "Vermeil",
+          "gold": "Zlatá",
+          "grand_gold": "Velká zlatá"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Dnes (velký den)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Narozeniny"
+    },
+    "anniversary": {
+      "name": "{person} - Výročí svatby"
+    },
+    "memorial": {
+      "name": "{person} - Vzpomínka"
+    },
+    "promotion": {
+      "name": "{person} - Povýšení"
+    },
+    "special_event": {
+      "name": "{person} - Zvláštní událost"
+    },
+    "retirement": {
+      "name": "{person} - Důchod"
     }
   }
 }

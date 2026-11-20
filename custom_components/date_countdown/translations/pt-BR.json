@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Aposentadoria"
+      },
+      "days_remaining": {
+        "name": "Dias restantes"
+      },
+      "next_date": {
+        "name": "Próxima data"
+      },
+      "age": {
+        "name": "Idade",
+        "unit_of_measurement": "anos"
+      },
+      "next_age": {
+        "name": "Idade no próximo aniversário",
+        "unit_of_measurement": "anos"
+      },
+      "age_category": {
+        "name": "Categoria de idade"
+      },
+      "wedding": {
+        "name": "Bodas"
+      },
+      "years_elapsed": {
+        "name": "Anos decorridos",
+        "unit_of_measurement": "anos"
+      },
+      "age_if_alive": {
+        "name": "Idade se estivesse vivo(a)",
+        "unit_of_measurement": "anos"
+      },
+      "years_since_death": {
+        "name": "Anos desde o falecimento",
+        "unit_of_measurement": "anos"
+      },
+      "death_anniversary_days": {
+        "name": "Dias até o aniversário de falecimento"
+      },
+      "retirement_date": {
+        "name": "Data da aposentadoria"
+      },
+      "years_worked": {
+        "name": "Anos trabalhados",
+        "unit_of_measurement": "anos"
+      },
+      "work_medal": {
+        "name": "Medalha do trabalho",
+        "state": {
+          "none": "Nenhuma",
+          "silver": "Prata",
+          "vermeil": "Vermeil",
+          "gold": "Ouro",
+          "grand_gold": "Grande Ouro"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Hoje (dia D)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Aniversário"
+    },
+    "anniversary": {
+      "name": "{person} - Aniversário de casamento"
+    },
+    "memorial": {
+      "name": "{person} - Memorial"
+    },
+    "promotion": {
+      "name": "{person} - Promoção"
+    },
+    "special_event": {
+      "name": "{person} - Evento especial"
+    },
+    "retirement": {
+      "name": "{person} - Aposentadoria"
     }
   }
 }

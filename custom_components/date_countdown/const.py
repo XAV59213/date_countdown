@@ -5,7 +5,7 @@ import logging
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "date_countdown"
-PLATFORMS = ["sensor", "calendar"]
+PLATFORMS = ["sensor", "binary_sensor", "calendar"]
 DATE_FORMAT = "DD/MM/YYYY"
 
 # Carte Lovelace native (servie par l'intégration)

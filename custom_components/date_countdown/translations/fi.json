@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Eläkkeelle jääminen"
+      },
+      "days_remaining": {
+        "name": "Päiviä jäljellä"
+      },
+      "next_date": {
+        "name": "Seuraava päivämäärä"
+      },
+      "age": {
+        "name": "Ikä",
+        "unit_of_measurement": "vuotta"
+      },
+      "next_age": {
+        "name": "Ikä seuraavana syntymäpäivänä",
+        "unit_of_measurement": "vuotta"
+      },
+      "age_category": {
+        "name": "Ikäluokka"
+      },
+      "wedding": {
+        "name": "Hääpäivän nimi"
+      },
+      "years_elapsed": {
+        "name": "Kuluneet vuodet",
+        "unit_of_measurement": "vuotta"
+      },
+      "age_if_alive": {
+        "name": "Ikä, jos elossa",
+        "unit_of_measurement": "vuotta"
+      },
+      "years_since_death": {
+        "name": "Vuosia kuolemasta",
+        "unit_of_measurement": "vuotta"
+      },
+      "death_anniversary_days": {
+        "name": "Päiviä kuoleman vuosipäivään"
+      },
+      "retirement_date": {
+        "name": "Eläkkeelle jäämisen päivä"
+      },
+      "years_worked": {
+        "name": "Työvuodet",
+        "unit_of_measurement": "vuotta"
+      },
+      "work_medal": {
+        "name": "Työmitali",
+        "state": {
+          "none": "Ei mitään",
+          "silver": "Hopea",
+          "vermeil": "Vermeil",
+          "gold": "Kulta",
+          "grand_gold": "Suuri kulta"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Tänään (suuri päivä)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - Syntymäpäivä"
+    },
+    "anniversary": {
+      "name": "{person} - Hääpäivä"
+    },
+    "memorial": {
+      "name": "{person} - Muistopäivä"
+    },
+    "promotion": {
+      "name": "{person} - Ylennys"
+    },
+    "special_event": {
+      "name": "{person} - Erityinen tapahtuma"
+    },
+    "retirement": {
+      "name": "{person} - Eläkkeelle jääminen"
     }
   }
 }

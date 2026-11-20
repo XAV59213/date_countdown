@@ -129,7 +129,42 @@ sensor.memorial_jean_01011950:
     notifications_enabled: false
 ```
 
-> Le nom des capteurs est traduit par Home Assistant (`entity.sensor.<type>.name`). Les capteurs **existants** gardent leur `entity_id` ; un capteur **créé** après la mise à jour reçoit un `entity_id` basé sur le nom anglais (ex. `sensor.oceane_dupont_birthday`).
+> Le capteur principal porte le nom de son appareil (« Jean Dupont - Mémorial », traduit selon le type). Les capteurs **existants** gardent leur `entity_id` ; un capteur **créé** après la mise à jour reçoit un `entity_id` basé sur ce nom dans la langue de Home Assistant (ex. `sensor.anais_descamps_anniversaire`).
+
+### 📟 Un appareil par événement
+
+Chaque événement a son **appareil** : nom = l’événement (« Anais Descamps - Anniversaire », traduit selon le type dans les 22 langues), fabricant `XAV59213`, modèle = type d’événement traduit (« Anniversaire »), version = version de l’intégration, type *service*. Le capteur principal, le calendrier et les entités ci-dessous y sont rattachés.
+
+À la mise à jour, l’ancien appareil unique « Date Countdown » de l’entrée est **repris** par le premier événement (même appareil : pièce, étiquettes et nom personnalisé conservés) ; les autres événements de l’entrée reçoivent leur propre appareil. Le nom, le modèle et la version sont mis à jour au démarrage **sans écraser un nom personnalisé**. Les appareils d’événements supprimés sont retirés.
+
+> ℹ️ Avant cette version, seul le **calendrier** était rattaché à l’appareil : la page de l’appareil n’affichait donc qu’une entité avec une icône calendrier, à l’état « Désactivé ». C’est l’état normal d’une entité `calendar` (`off`) quand aucun événement n’est en cours ; elle passe à « Activé » (`on`) le jour J. Le capteur principal n’avait pas d’appareil.
+
+### ➕ Entités par événement
+
+En plus du capteur principal (inchangé : état = jours restants, mêmes attributs) et du calendrier, chaque événement a des entités séparées, recalculées au démarrage et chaque nuit à minuit :
+
+| Entité (`translation_key`) | Anniversaire | Mariage | Mémorial | Promotion / Événement | Retraite | Détails |
+|---|:-:|:-:|:-:|:-:|:-:|---|
+| Jours restants (`days_remaining`) | ✅ | ✅ | ✅ | ✅ | ✅ | durée en jours (`d`), `measurement` |
+| Prochaine date (`next_date`) | ✅ | ✅ | ✅ | ✅ | | `device_class: date` |
+| Âge (`age`) | ✅ | | | | | âge actuel, `years` |
+| Âge au prochain anniversaire (`next_age`) | ✅ | | | | | `years` |
+| Catégorie d’âge (`age_category`) | ✅ | | | | | texte traduit, accordé au genre |
+| Années écoulées (`years_elapsed`) | | ✅ | | ✅ | | `years` |
+| Noces (`wedding`) | | ✅ | | | | noces du prochain anniversaire |
+| Âge si vivant (`age_if_alive`) | | | ✅ | | | `years` |
+| Années depuis le décès (`years_since_death`) | | | ✅¹ | | | `years` |
+| Jours avant l’anniversaire du décès (`death_anniversary_days`) | | | ✅¹ | | | durée en jours |
+| Date de retraite (`retirement_date`) | | | | | ✅ | `device_class: date` |
+| Années travaillées (`years_worked`) | | | | | ✅ | `years` |
+| Médaille du travail (`work_medal`) | | | | | ✅ | `enum` : `none`, `silver`, `vermeil`, `gold`, `grand_gold` (traduits) |
+| Aujourd’hui (jour J) (`today`, *binary_sensor*) | ✅ | ✅ | ✅² | ✅ | ✅³ | attribut `occasion` |
+
+¹ seulement si une date de décès est renseignée · ² aussi le jour anniversaire du décès (`occasion: death_anniversary`) · ³ le jour du départ à la retraite
+
+`unique_id` stables : `<unique_id du capteur principal>_<clé>` (ex. `birthday_descamps_15062001_days_remaining`). Exemple d’`entity_id` en français : `sensor.anais_descamps_anniversaire_jours_restants`, `binary_sensor.anais_descamps_anniversaire_aujourd_hui_jour_j`.
+
+> Les cartes Lovelace ne détectent que les capteurs principaux (attribut `event_type`) : les nouvelles entités ne s’y ajoutent pas.
 
 ---
 
@@ -459,6 +494,8 @@ python3 scripts/check_translations.py
 | `config_flow.py`                       | Flux de configuration UI                        |
 | `sensor.py`                            | Création et mise à jour des capteurs            |
 | `calendar.py`                          | Calendrier des occurrences (50 ans)             |
+| `binary_sensor.py`                     | Entité « Aujourd’hui (jour J) »                  |
+| `entity.py`                            | Appareil par événement                           |
 | `date_utils.py`                        | Dates d’anniversaire, y compris le 29 février   |
 | `const.py`                             | Types, formats, intitulés, noces                |
 | `i18n.py`, `i18n_data.py`              | Textes générés multilingues (fr, en, de, es, it) |

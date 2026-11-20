@@ -212,7 +212,84 @@
       },
       "retirement": {
         "name": "{person} - Пенсия"
+      },
+      "days_remaining": {
+        "name": "Осталось дней"
+      },
+      "next_date": {
+        "name": "Следующая дата"
+      },
+      "age": {
+        "name": "Возраст",
+        "unit_of_measurement": "лет"
+      },
+      "next_age": {
+        "name": "Возраст в следующий день рождения",
+        "unit_of_measurement": "лет"
+      },
+      "age_category": {
+        "name": "Возрастная категория"
+      },
+      "wedding": {
+        "name": "Название годовщины свадьбы"
+      },
+      "years_elapsed": {
+        "name": "Прошло лет",
+        "unit_of_measurement": "лет"
+      },
+      "age_if_alive": {
+        "name": "Возраст, если бы был(а) жив(а)",
+        "unit_of_measurement": "лет"
+      },
+      "years_since_death": {
+        "name": "Лет со дня смерти",
+        "unit_of_measurement": "лет"
+      },
+      "death_anniversary_days": {
+        "name": "Дней до годовщины смерти"
+      },
+      "retirement_date": {
+        "name": "Дата выхода на пенсию"
+      },
+      "years_worked": {
+        "name": "Отработано лет",
+        "unit_of_measurement": "лет"
+      },
+      "work_medal": {
+        "name": "Трудовая медаль",
+        "state": {
+          "none": "Нет",
+          "silver": "Серебро",
+          "vermeil": "Вермель",
+          "gold": "Золото",
+          "grand_gold": "Большое золото"
+        }
       }
+    },
+    "binary_sensor": {
+      "today": {
+        "name": "Сегодня (особый день)"
+      }
+    }
+  },
+  "device": {
+    "birthday": {
+      "name": "{person} - День рождения"
+    },
+    "anniversary": {
+      "name": "{person} - Годовщина свадьбы"
+    },
+    "memorial": {
+      "name": "{person} - Память"
+    },
+    "promotion": {
+      "name": "{person} - Повышение"
+    },
+    "special_event": {
+      "name": "{person} - Особое событие"
+    },
+    "retirement": {
+      "name": "{person} - Пенсия"
     }
   }
 }
