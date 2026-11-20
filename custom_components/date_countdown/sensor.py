@@ -9,6 +9,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN, EVENT_TYPES, WEDDING_ANNIVERSARIES, AGE_CATEGORIES, AGE_CATEGORY_ICONS, WORK_MEDAL_LEVELS, WORK_MEDAL_PENIBLE_LEVELS
+from .date_utils import anniversary_in_year, years_elapsed
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -203,9 +204,7 @@ class DateCountdownSensor(SensorEntity):
                 return
 
             # Calculer les années travaillées
-            self._years = today.year - start_date.year
-            if (today.month, today.day) < (start_date.month, start_date.day):
-                self._years -= 1
+            self._years = years_elapsed(start_date, today)
             _LOGGER.debug("Sensor %s: Years worked calculated as %s", self._attr_unique_id, self._years)
 
             # Estimer la date de retraite
@@ -221,23 +220,13 @@ class DateCountdownSensor(SensorEntity):
                 years_to_retirement = retirement_age - age_at_start  # 45 ans
 
             retirement_year = start_date.year + years_to_retirement
-            try:
-                retirement_date = date(retirement_year, start_date.month, start_date.day)
-            except ValueError as e:
-                _LOGGER.error("Invalid retirement date for sensor %s: %s", self._attr_unique_id, e)
-                self._state = None
-                self._years_remaining = None
-                self._years_retired = None
-                self._work_medal = None
-                return
+            retirement_date = anniversary_in_year(start_date.month, start_date.day, retirement_year)
 
             # Gérer retraite passée ou future
             if retirement_date <= today:
                 self._state = 0
                 self._years_remaining = 0
-                self._years_retired = today.year - retirement_date.year
-                if (today.month, today.day) < (retirement_date.month, retirement_date.day):
-                    self._years_retired -= 1
+                self._years_retired = years_elapsed(retirement_date, today)
                 _LOGGER.debug("Sensor %s: Retirement passed, years retired=%s", self._attr_unique_id, self._years_retired)
             else:
                 self._state = (retirement_date - today).days
@@ -272,9 +261,9 @@ class DateCountdownSensor(SensorEntity):
                 self._age_at_death = None
                 return
 
-            next_event = date(today.year, event_date.month, event_date.day)
+            next_event = anniversary_in_year(event_date.month, event_date.day, today.year)
             if next_event < today:
-                next_event = date(today.year + 1, event_date.month, event_date.day)
+                next_event = anniversary_in_year(event_date.month, event_date.day, today.year + 1)
 
             self._state = (next_event - today).days
             self._years = next_event.year - event_date.year
@@ -286,16 +275,12 @@ class DateCountdownSensor(SensorEntity):
                 self._wedding_type = None
 
             if self._event_type == "memorial":
-                self._age_if_alive = today.year - event_date.year
-                if (today.month, today.day) < (event_date.month, event_date.day):
-                    self._age_if_alive -= 1
+                self._age_if_alive = years_elapsed(event_date, today)
                 if self._death_date:
                     try:
                         day, month, year = map(int, self._death_date.split('/'))
                         death_date = date(year, month, day)
-                        self._years_since_death = today.year - death_date.year
-                        if (today.month, today.day) < (death_date.month, death_date.day):
-                            self._years_since_death -= 1
+                        self._years_since_death = years_elapsed(death_date, today)
                         self._age_at_death = death_date.year - event_date.year
                         if (death_date.month, death_date.day) < (event_date.month, event_date.day):
                             self._age_at_death -= 1
