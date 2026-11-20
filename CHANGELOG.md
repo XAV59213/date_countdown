@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.24 — 2026-11-20
+
+### Ajouté
+- 🏷️ Badge **Forum Domotique** en haut du README : bouton cliquable vers le [sujet de présentation](https://forumdomotique.com/forums/topic/4093-%F0%9F%8E%82-int%C3%A9gration-home-assistant-souvenirs-et-c%C3%A9l%C3%A9brations/) sur Forum Domotique.
+- ⭐ Badge **GitHub Stars** en haut du README, à côté des autres badges, vers la [page des étoiles](https://github.com/XAV59213/date_countdown/stargazers) du dépôt.
+
 ## 1.2.23 — 2026-11-20
 
 ### Ajouté
