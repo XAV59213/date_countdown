@@ -1,0 +1,9 @@
+# Carte « Compte à rebours » ⏳ — un événement en grand
+type: custom:date-countdown-countdown-card
+# entity: sensor.oceane_dupont_anniversaire   # facultatif : vide = prochain événement automatique
+# title: Prochain anniversaire                # facultatif : vide = titre selon le type
+types: [birthday]      # pour le choix automatique ; vide = tous les types
+show_ring: true        # anneau de progression sur l'année
+show_date: true
+show_details: true
+celebrate: true        # confettis le jour J (respecte « réduire les animations »)

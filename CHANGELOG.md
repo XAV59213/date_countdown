@@ -1,5 +1,16 @@
 # Changelog
 
+## Non publié
+
+### Ajouté — Cartes Lovelace
+- 📋 **Carte Liste / Agenda** `custom:date-countdown-list-card` : tous les capteurs de l'intégration détectés automatiquement, sections par type (🎂 💍 🕯️ 🏆 ⭐ 🏖️) ou liste unique, badge J-N coloré, âge à venir, noces, catégorie d'âge, médaille, date en français, 🔔, filtres (types, horizon, max, masquer aujourd'hui / retraites passées), mode compact.
+- ⏳ **Carte Compte à rebours** `custom:date-countdown-countdown-card` : un événement en grand (prochain automatique ou choisi), anneau de progression, sous-titre, confettis CSS le jour J (désactivables, respectent « réduire les animations »).
+- 📅 **Carte Frise des mois** `custom:date-countdown-timeline-card` : les 12 (ou N) prochains mois en frise verticale ou en grille, puces colorées par type, légende.
+- 🕯️ **Carte Mémoriaux** `custom:date-countdown-memorial-card` : ton sobre, « aurait eu N ans », « disparu(e) depuis N ans », date et âge au décès.
+- Éditeur visuel natif en français, aperçu dans le sélecteur de cartes, thème clair/sombre, clic = fiche de l'entité, compatibles vue *sections*.
+- Attributs de capteur `notifications_enabled` et `retirement_date` (retraites), utilisés par les cartes.
+- Exemples `examples/lovelace/`, aperçu local `docs/apercu-cartes.html` et captures `docs/cartes/`.
+
 ## 1.2.17 — 2026-11-20
 
 ### Ajouté

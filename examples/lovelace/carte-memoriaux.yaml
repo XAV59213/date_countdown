@@ -1,0 +1,10 @@
+# Carte « Mémoriaux » 🕯️ — en mémoire des disparus
+type: custom:date-countdown-memorial-card
+title: En mémoire
+sort: date             # date (la plus proche) ou name
+max_items: 0           # 0 = illimité
+show_death_date: true
+show_age_at_death: true
+show_countdown: true
+flicker: true          # flamme animée douce (désactivée si « réduire les animations »)
+# entities: [...]      # vide = tous les mémoriaux détectés

@@ -1,0 +1,14 @@
+# Carte « Liste / Agenda » 📋 — tous les événements Souvenirs et Célébrations
+type: custom:date-countdown-list-card
+title: Souvenirs et Célébrations
+# entities:            # facultatif : vide = détection automatique de tous les capteurs
+#   - sensor.oceane_dupont_anniversaire
+types: []              # vide = tous (birthday, anniversary, memorial, promotion, special_event, retirement)
+group_by_type: true    # sections 🎂 Anniversaires, 💍 Mariages, 🕯️ Mémoriaux…
+max_items: 0           # 0 = illimité
+horizon_days: 0        # 0 = pas de limite (ex. 60 = les 60 prochains jours)
+hide_today: false
+hide_past: false       # masque les retraites déjà passées
+compact: false
+show_date: true
+show_details: true

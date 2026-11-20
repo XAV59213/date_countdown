@@ -1,0 +1,17 @@
+# Exemple de vue « sections » regroupant toutes les cartes
+title: Souvenirs et Célébrations
+type: sections
+sections:
+  - cards:
+      - type: custom:date-countdown-countdown-card
+      - type: custom:date-countdown-informations-card
+        title: Informations
+      - type: custom:date-countdown-memorial-card
+  - cards:
+      - type: custom:date-countdown-list-card
+        max_items: 10
+  - cards:
+      - type: custom:date-countdown-timeline-card
+        layout: grid
+        months: 6
+        show_empty_months: false
