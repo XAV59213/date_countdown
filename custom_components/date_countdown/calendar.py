@@ -155,12 +155,31 @@ class DateCountdownCalendar(CalendarEntity):
                 self._event_date.month, self._event_date.day, today.year + 1
             )
 
-        start = datetime.combine(next_date, time(0, 0), tzinfo=tzinfo)
-        end = datetime.combine(next_date, time(23, 59), tzinfo=tzinfo)
         years = next_date.year - self._event_date.year
         summary = self._generate_event_summary(years)
 
+        # Mémorial : l'anniversaire du décès peut arriver avant l'anniversaire de naissance
+        death_next = self._next_death_anniversary(today)
+        if death_next is not None and death_next < next_date:
+            next_date = death_next
+            summary = self._death_summary(death_next.year - self._death_date.year)
+
+        start = datetime.combine(next_date, time(0, 0), tzinfo=tzinfo)
+        end = datetime.combine(next_date, time(23, 59), tzinfo=tzinfo)
         return CalendarEvent(start=start, end=end, summary=summary)
+
+    def _next_death_anniversary(self, today: date) -> Optional[date]:
+        """Prochain anniversaire du décès (mémoriaux), après l'année du décès."""
+        if self._event_type != "memorial" or not self._death_date:
+            return None
+        year = max(today.year, self._death_date.year + 1)
+        candidate = anniversary_in_year(self._death_date.month, self._death_date.day, year)
+        if candidate < today:
+            candidate = anniversary_in_year(self._death_date.month, self._death_date.day, year + 1)
+        return candidate
+
+    def _death_summary(self, years_since: int) -> str:
+        return self._t.fmt("cal_death", name=self._attr_name, since=self._t.years(years_since))
 
     def _calculate_work_medal(self, years_worked: int) -> Optional[str]:
         """Calculate the work medal based on years worked."""
@@ -252,6 +271,17 @@ class DateCountdownCalendar(CalendarEntity):
                 summary = self._generate_event_summary(years)
                 events.append(CalendarEvent(start=start, end=end, summary=summary))
 
+            # Mémorial : anniversaire du décès (toujours affiché, texte sobre)
+            if self._event_type == "memorial" and self._death_date and year > self._death_date.year:
+                death_day = anniversary_in_year(self._death_date.month, self._death_date.day, year)
+                if start_date.date() <= death_day <= end_date.date():
+                    events.append(CalendarEvent(
+                        start=datetime.combine(death_day, time(0, 0), tzinfo=tzinfo),
+                        end=datetime.combine(death_day, time(23, 59), tzinfo=tzinfo),
+                        summary=self._death_summary(year - self._death_date.year),
+                    ))
+
+        events.sort(key=lambda ev: ev.start)
         _LOGGER.debug("Generated %d events for %s between %s and %s", len(events), self._attr_name, start_date, end_date)
         return events
 

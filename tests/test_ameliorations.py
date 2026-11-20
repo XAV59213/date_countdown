@@ -211,7 +211,7 @@ async def _refresh(hass: HomeAssistant, freezer: FrozenDateTimeFactory) -> None:
     [
         ("en", "Océane Dupont - Birthday", "Superheroine of To-Do Lists"),
         ("fr", "Océane Dupont - Anniversaire", "Super-Héroïne des To-Do Lists"),
-        ("de", "Océane Dupont - Geburtstag", "Superheroine of To-Do Lists"),
+        ("de", "Océane Dupont - Geburtstag", "Superheldin der To-do-Listen"),
     ],
 )
 async def test_sensor_follows_language(hass: HomeAssistant, freezer: FrozenDateTimeFactory, language, name, category):
@@ -237,4 +237,6 @@ async def test_memorial_attributes_and_calendar(hass: HomeAssistant, freezer: Fr
     sensor = hass.states.get(reg.async_get_entity_id("sensor", DOMAIN, "memorial_martin_01031946"))
     assert sensor.attributes["days_to_death_anniversary"] == 7
     calendar = hass.states.get(reg.async_get_entity_id("calendar", DOMAIN, "memorial_martin_01031946"))
-    assert calendar.attributes["message"] == "Jeanne Martin - Memorial (Age if alive: 81 years, Since death: 5 years)"
+    # Le prochain événement est l'anniversaire du décès (10/10), avant celui de naissance (01/03)
+    assert calendar.attributes["message"] == "Jeanne Martin - Memorial (Anniversary of passing: 6 years)"
+    assert calendar.attributes["start_time"] == "2026-10-10 00:00:00"
