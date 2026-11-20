@@ -220,12 +220,10 @@
         "name": "Следующая дата"
       },
       "age": {
-        "name": "Возраст",
-        "unit_of_measurement": "лет"
+        "name": "Возраст"
       },
       "next_age": {
-        "name": "Возраст в следующий день рождения",
-        "unit_of_measurement": "лет"
+        "name": "Возраст в следующий день рождения"
       },
       "age_category": {
         "name": "Возрастная категория"
@@ -234,16 +232,13 @@
         "name": "Название годовщины свадьбы"
       },
       "years_elapsed": {
-        "name": "Прошло лет",
-        "unit_of_measurement": "лет"
+        "name": "Прошло лет"
       },
       "age_if_alive": {
-        "name": "Возраст, если бы был(а) жив(а)",
-        "unit_of_measurement": "лет"
+        "name": "Возраст, если бы был(а) жив(а)"
       },
       "years_since_death": {
-        "name": "Лет со дня смерти",
-        "unit_of_measurement": "лет"
+        "name": "Лет со дня смерти"
       },
       "death_anniversary_days": {
         "name": "Дней до годовщины смерти"
@@ -252,8 +247,7 @@
         "name": "Дата выхода на пенсию"
       },
       "years_worked": {
-        "name": "Отработано лет",
-        "unit_of_measurement": "лет"
+        "name": "Отработано лет"
       },
       "work_medal": {
         "name": "Трудовая медаль",
@@ -264,6 +258,24 @@
           "gold": "Золото",
           "grand_gold": "Большое золото"
         }
+      },
+      "birth_date": {
+        "name": "Дата рождения"
+      },
+      "wedding_date": {
+        "name": "Дата свадьбы"
+      },
+      "promotion_date": {
+        "name": "Дата повышения"
+      },
+      "event_date": {
+        "name": "Дата события"
+      },
+      "start_date": {
+        "name": "Дата начала карьеры"
+      },
+      "death_date": {
+        "name": "Дата смерти"
       }
     },
     "binary_sensor": {

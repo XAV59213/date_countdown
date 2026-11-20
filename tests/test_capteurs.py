@@ -11,7 +11,7 @@ from homeassistant.helpers import entity_registry as er
 from homeassistant.util import dt as dt_util
 
 from custom_components.date_countdown.const import DOMAIN, VERSION
-from custom_components.date_countdown.entity import find_device
+from custom_components.date_countdown.entity import event_unique_id, find_device
 
 BIRTHDAY = {"name": "Descamps", "first_name": "Anais", "type": "birthday", "date": "15/06/2001", "gender": "female"}
 WEDDING = {"name": "Paul et Marie", "type": "anniversary", "date": "20/11/2001", "gender": "unspecified"}
@@ -68,7 +68,7 @@ async def test_device_and_birthday_sensors(hass: HomeAssistant, freezer: FrozenD
 
     entities = _entities(hass, entry)
     expected = {uid, f"{uid}_days_remaining", f"{uid}_next_date", f"{uid}_age", f"{uid}_next_age",
-                f"{uid}_age_category", f"{uid}_today"}
+                f"{uid}_age_category", f"{uid}_birth_date", f"{uid}_today"}
     assert set(entities) == expected
     # Tout est rattaché à l'appareil de l'événement (y compris le capteur principal et le calendrier)
     assert {e.device_id for e in entities.values()} == {device.id}
@@ -90,7 +90,7 @@ async def test_device_and_birthday_sensors(hass: HomeAssistant, freezer: FrozenD
     assert _state(hass, entry, "sensor", f"{uid}_next_date").state == "2026-06-15"
     age = _state(hass, entry, "sensor", f"{uid}_age")
     assert age.state == "24"
-    assert age.attributes["unit_of_measurement"] == "years"  # HA prend toujours l’unité traduite en anglais
+    assert age.attributes["unit_of_measurement"] == "ans"  # unité localisée (1.2.23)
     assert _state(hass, entry, "sensor", f"{uid}_next_age").state == "25"
     assert _state(hass, entry, "sensor", f"{uid}_age_category").state == "Super-Héroïne des To-Do Lists"
     today = _state(hass, entry, "binary_sensor", f"{uid}_today")
@@ -119,21 +119,21 @@ async def test_midnight_update_and_big_day(hass: HomeAssistant, freezer: FrozenD
 @pytest.mark.parametrize(
     ("event", "keys"),
     [
-        (WEDDING, {"days_remaining", "next_date", "years_elapsed", "wedding", "today"}),
-        (MEMORIAL, {"days_remaining", "next_date", "age_if_alive", "years_since_death", "death_anniversary_days", "today"}),
-        (MEMORIAL_NO_DEATH, {"days_remaining", "next_date", "age_if_alive", "today"}),
-        (PROMOTION, {"days_remaining", "next_date", "years_elapsed", "today"}),
-        (SPECIAL, {"days_remaining", "next_date", "years_elapsed", "today"}),
-        (RETIREMENT, {"days_remaining", "retirement_date", "years_worked", "work_medal", "today"}),
+        (WEDDING, {"days_remaining", "next_date", "years_elapsed", "wedding", "wedding_date", "today"}),
+        (MEMORIAL, {"days_remaining", "next_date", "age_if_alive", "years_since_death", "death_anniversary_days",
+                    "birth_date", "death_date", "today"}),
+        (MEMORIAL_NO_DEATH, {"days_remaining", "next_date", "age_if_alive", "birth_date", "today"}),
+        (PROMOTION, {"days_remaining", "next_date", "years_elapsed", "promotion_date", "today"}),
+        (SPECIAL, {"days_remaining", "next_date", "years_elapsed", "event_date", "today"}),
+        (RETIREMENT, {"days_remaining", "retirement_date", "years_worked", "work_medal", "start_date", "today"}),
     ],
 )
 async def test_entities_by_type(hass: HomeAssistant, freezer: FrozenDateTimeFactory, event, keys):
     entry = await _setup(hass, freezer, [event])
-    suffixes = {uid.rsplit("_", 1)[-1] for uid in _entities(hass, entry)}
-    names = {uid for uid in _entities(hass, entry)}
-    base = next(u for u in names if not any(u.endswith(f"_{k}") for k in keys))
-    assert {u[len(base) + 1:] for u in names if u != base} == keys
-    assert suffixes  # au moins le capteur principal
+    base = event_unique_id(event)
+    uids = set(_entities(hass, entry))
+    assert base in uids  # capteur principal (et calendrier)
+    assert {u[len(base) + 1:] for u in uids if u != base} == keys
 
 
 async def test_values_wedding_memorial_retirement(hass: HomeAssistant, freezer: FrozenDateTimeFactory):

@@ -220,12 +220,10 @@
         "name": "Sonraki tarih"
       },
       "age": {
-        "name": "Yaş",
-        "unit_of_measurement": "yıl"
+        "name": "Yaş"
       },
       "next_age": {
-        "name": "Sonraki doğum gününde yaş",
-        "unit_of_measurement": "yıl"
+        "name": "Sonraki doğum gününde yaş"
       },
       "age_category": {
         "name": "Yaş kategorisi"
@@ -234,16 +232,13 @@
         "name": "Evlilik yıl dönümü adı"
       },
       "years_elapsed": {
-        "name": "Geçen yıllar",
-        "unit_of_measurement": "yıl"
+        "name": "Geçen yıllar"
       },
       "age_if_alive": {
-        "name": "Hayatta olsaydı yaşı",
-        "unit_of_measurement": "yıl"
+        "name": "Hayatta olsaydı yaşı"
       },
       "years_since_death": {
-        "name": "Vefatından bu yana geçen yıl",
-        "unit_of_measurement": "yıl"
+        "name": "Vefatından bu yana geçen yıl"
       },
       "death_anniversary_days": {
         "name": "Vefat yıl dönümüne kalan gün"
@@ -252,8 +247,7 @@
         "name": "Emeklilik tarihi"
       },
       "years_worked": {
-        "name": "Çalışılan yıllar",
-        "unit_of_measurement": "yıl"
+        "name": "Çalışılan yıllar"
       },
       "work_medal": {
         "name": "Çalışma madalyası",
@@ -264,6 +258,24 @@
           "gold": "Altın",
           "grand_gold": "Büyük Altın"
         }
+      },
+      "birth_date": {
+        "name": "Doğum tarihi"
+      },
+      "wedding_date": {
+        "name": "Düğün tarihi"
+      },
+      "promotion_date": {
+        "name": "Terfi tarihi"
+      },
+      "event_date": {
+        "name": "Etkinlik tarihi"
+      },
+      "start_date": {
+        "name": "Kariyer başlangıç tarihi"
+      },
+      "death_date": {
+        "name": "Vefat tarihi"
       }
     },
     "binary_sensor": {

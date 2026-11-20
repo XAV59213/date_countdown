@@ -1,6 +1,9 @@
 {
   "domain": "date_countdown",
   "name": "Souvenirs et Célébrations",
+  "after_dependencies": [
+    "recorder"
+  ],
   "codeowners": [
     "@XAV59213"
   ],

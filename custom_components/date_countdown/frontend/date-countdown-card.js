@@ -303,6 +303,7 @@ function _langOf(hass) {
   return String(hass?.locale?.language || hass?.language || "").toLowerCase();
 }
 function _setLang(hass) {
+  if (hass?.states) _dcHass = hass;
   const l = _langOf(hass);
   if (l) _dcLang = l;
 }
@@ -416,6 +417,42 @@ function _isDcSensor(hass, id) {
   const ent = hass.entities?.[id];
   if (ent && ent.platform) return ent.platform === DC_DOMAIN;
   return true;
+}
+// Entité secondaire (1.2.21+ : jours restants, âge, binary_sensor « Aujourd'hui »…) → capteur principal
+// du même appareil (registre des entités : hass.entities[id].device_id). Inconnue : renvoyée telle quelle.
+function _resolveMain(hass, id) {
+  if (!id || !hass || _isDcSensor(hass, id)) return id;
+  const deviceId = hass.entities?.[id]?.device_id;
+  if (!deviceId) return id;
+  const main = Object.values(hass.entities || {}).find(
+    (e) => e && e.device_id === deviceId && e.platform === DC_DOMAIN && _isDcSensor(hass, e.entity_id)
+  );
+  return main ? main.entity_id : id;
+}
+// Liste configurée → capteurs principaux, sans doublons (ordre conservé)
+function _resolveIds(hass, ids) {
+  const out = [];
+  for (const id of ids) {
+    const main = _resolveMain(hass, id);
+    if (main && !out.includes(main)) out.push(main);
+  }
+  return out;
+}
+// Dernier hass connu (pour proposer les bons capteurs dans les éditeurs)
+let _dcHass = null;
+function _knownHass() {
+  return _dcHass || document.querySelector("home-assistant")?.hass || null;
+}
+// Sélecteur d'entités des éditeurs : uniquement les capteurs principaux (du type voulu) si hass est connu
+function _entitySelector(type, multiple) {
+  const sel = { filter: { domain: "sensor", integration: DC_DOMAIN } };
+  if (multiple) sel.multiple = true;
+  const hass = _knownHass();
+  if (hass?.states) {
+    const found = _detectAll(hass, type);
+    if (found.length) sel.include_entities = found;
+  }
+  return { entity: sel };
 }
 function _detectAll(hass, type) {
   return Object.keys(hass?.states || {})
@@ -606,7 +643,7 @@ class DateCountdownBaseCard extends HTMLElement {
   _entityIds() {
     if (!this._hass) return [];
     const conf = _asList(this._config.entities).map((e) => (typeof e === "string" ? e : e?.entity)).filter(Boolean);
-    return conf.length ? conf : _detectAll(this._hass);
+    return conf.length ? _resolveIds(this._hass, conf) : _detectAll(this._hass);
   }
 
   _typesFilter() {
@@ -676,9 +713,9 @@ function _form(schema, labels = {}) {
     computeHelper: (s) => (helpers[s.name] ? _te(helpers[s.name]) : undefined),
   };
 }
-const _entitiesField = (helper = "h_entities") => ({
+const _entitiesField = (helper = "h_entities", type) => ({
   name: "entities",
-  selector: { entity: { multiple: true, filter: { domain: "sensor", integration: DC_DOMAIN } } },
+  selector: _entitySelector(type, true),
   _helper: helper,
 });
 const _typesField = (helper = "h_types") => ({ name: "types", selector: { select: { multiple: true, mode: "list", options: _typeOptions() } }, _helper: helper });
@@ -697,7 +734,7 @@ class DateCountdownInformationsCard extends DateCountdownBaseCard {
     return _form(
       [
         { name: "title", selector: { text: {} } },
-        _entitiesField("h_birthday"),
+        _entitiesField("h_birthday", "birthday"),
         _grid([_bool("show_icon"), _bool("show_category"), _bool("show_upcoming")]),
       ],
       { entities: "entities.birthday" }
@@ -723,7 +760,7 @@ class DateCountdownInformationsCard extends DateCountdownBaseCard {
   _entityIds() {
     if (!this._hass) return [];
     const conf = _asList(this._config.entities).map((e) => (typeof e === "string" ? e : e?.entity)).filter(Boolean);
-    return conf.length ? conf : _detectAll(this._hass, "birthday");
+    return conf.length ? _resolveIds(this._hass, conf) : _detectAll(this._hass, "birthday");
   }
 
   _typesFilter() {
@@ -914,7 +951,7 @@ class DateCountdownCountdownCard extends DateCountdownBaseCard {
   static getConfigForm() {
     return _form(
       [
-        { name: "entity", selector: { entity: { filter: { domain: "sensor", integration: DC_DOMAIN } } }, _helper: "h_entity" },
+        { name: "entity", selector: _entitySelector(undefined, false), _helper: "h_entity" },
         { name: "title", selector: { text: {} }, _helper: "h_title_auto" },
         _typesField("h_types_auto"),
         _grid([_bool("show_ring"), _bool("show_date"), _bool("show_details"), _bool("celebrate", "h_celebrate")]),
@@ -937,7 +974,7 @@ class DateCountdownCountdownCard extends DateCountdownBaseCard {
 
   _entityIds() {
     if (!this._hass) return [];
-    if (this._config.entity) return [this._config.entity];
+    if (this._config.entity) return _resolveIds(this._hass, [this._config.entity]);
     return super._entityIds();
   }
 
@@ -1184,7 +1221,7 @@ class DateCountdownMemorialCard extends DateCountdownBaseCard {
     return _form(
       [
         { name: "title", selector: { text: {} } },
-        _entitiesField("h_memorial"),
+        _entitiesField("h_memorial", "memorial"),
         _grid([
           { name: "max_items", selector: { number: { min: 0, max: 50, mode: "box" } }, _helper: "h_unlimited" },
           {

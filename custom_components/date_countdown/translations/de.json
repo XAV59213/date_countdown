@@ -220,12 +220,10 @@
         "name": "Nächstes Datum"
       },
       "age": {
-        "name": "Alter",
-        "unit_of_measurement": "Jahre"
+        "name": "Alter"
       },
       "next_age": {
-        "name": "Alter am nächsten Geburtstag",
-        "unit_of_measurement": "Jahre"
+        "name": "Alter am nächsten Geburtstag"
       },
       "age_category": {
         "name": "Alterskategorie"
@@ -234,16 +232,13 @@
         "name": "Hochzeitsjubiläum"
       },
       "years_elapsed": {
-        "name": "Vergangene Jahre",
-        "unit_of_measurement": "Jahre"
+        "name": "Vergangene Jahre"
       },
       "age_if_alive": {
-        "name": "Alter, wenn noch am Leben",
-        "unit_of_measurement": "Jahre"
+        "name": "Alter, wenn noch am Leben"
       },
       "years_since_death": {
-        "name": "Jahre seit dem Tod",
-        "unit_of_measurement": "Jahre"
+        "name": "Jahre seit dem Tod"
       },
       "death_anniversary_days": {
         "name": "Tage bis zum Todestag"
@@ -252,8 +247,7 @@
         "name": "Ruhestandsdatum"
       },
       "years_worked": {
-        "name": "Gearbeitete Jahre",
-        "unit_of_measurement": "Jahre"
+        "name": "Gearbeitete Jahre"
       },
       "work_medal": {
         "name": "Arbeitsmedaille",
@@ -264,6 +258,24 @@
           "gold": "Gold",
           "grand_gold": "Großgold"
         }
+      },
+      "birth_date": {
+        "name": "Geburtsdatum"
+      },
+      "wedding_date": {
+        "name": "Hochzeitsdatum"
+      },
+      "promotion_date": {
+        "name": "Beförderungsdatum"
+      },
+      "event_date": {
+        "name": "Datum des Ereignisses"
+      },
+      "start_date": {
+        "name": "Beginn der Laufbahn"
+      },
+      "death_date": {
+        "name": "Sterbedatum"
       }
     },
     "binary_sensor": {

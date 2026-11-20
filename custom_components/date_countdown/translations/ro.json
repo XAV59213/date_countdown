@@ -220,12 +220,10 @@
         "name": "Data următoare"
       },
       "age": {
-        "name": "Vârstă",
-        "unit_of_measurement": "ani"
+        "name": "Vârstă"
       },
       "next_age": {
-        "name": "Vârsta la următoarea aniversare",
-        "unit_of_measurement": "ani"
+        "name": "Vârsta la următoarea aniversare"
       },
       "age_category": {
         "name": "Categorie de vârstă"
@@ -234,16 +232,13 @@
         "name": "Numele aniversării nunții"
       },
       "years_elapsed": {
-        "name": "Ani scurși",
-        "unit_of_measurement": "ani"
+        "name": "Ani scurși"
       },
       "age_if_alive": {
-        "name": "Vârsta dacă ar fi trăit",
-        "unit_of_measurement": "ani"
+        "name": "Vârsta dacă ar fi trăit"
       },
       "years_since_death": {
-        "name": "Ani de la deces",
-        "unit_of_measurement": "ani"
+        "name": "Ani de la deces"
       },
       "death_anniversary_days": {
         "name": "Zile până la comemorarea decesului"
@@ -252,8 +247,7 @@
         "name": "Data pensionării"
       },
       "years_worked": {
-        "name": "Ani lucrați",
-        "unit_of_measurement": "ani"
+        "name": "Ani lucrați"
       },
       "work_medal": {
         "name": "Medalia muncii",
@@ -264,6 +258,24 @@
           "gold": "Aur",
           "grand_gold": "Mare Aur"
         }
+      },
+      "birth_date": {
+        "name": "Data nașterii"
+      },
+      "wedding_date": {
+        "name": "Data nunții"
+      },
+      "promotion_date": {
+        "name": "Data promovării"
+      },
+      "event_date": {
+        "name": "Data evenimentului"
+      },
+      "start_date": {
+        "name": "Data începerii carierei"
+      },
+      "death_date": {
+        "name": "Data decesului"
       }
     },
     "binary_sensor": {

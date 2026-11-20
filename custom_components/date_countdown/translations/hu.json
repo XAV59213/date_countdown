@@ -220,12 +220,10 @@
         "name": "Következő dátum"
       },
       "age": {
-        "name": "Életkor",
-        "unit_of_measurement": "év"
+        "name": "Életkor"
       },
       "next_age": {
-        "name": "Életkor a következő születésnapon",
-        "unit_of_measurement": "év"
+        "name": "Életkor a következő születésnapon"
       },
       "age_category": {
         "name": "Korosztály"
@@ -234,16 +232,13 @@
         "name": "Házassági évforduló neve"
       },
       "years_elapsed": {
-        "name": "Eltelt évek",
-        "unit_of_measurement": "év"
+        "name": "Eltelt évek"
       },
       "age_if_alive": {
-        "name": "Életkor, ha élne",
-        "unit_of_measurement": "év"
+        "name": "Életkor, ha élne"
       },
       "years_since_death": {
-        "name": "Évek a halál óta",
-        "unit_of_measurement": "év"
+        "name": "Évek a halál óta"
       },
       "death_anniversary_days": {
         "name": "Napok a halál évfordulójáig"
@@ -252,8 +247,7 @@
         "name": "Nyugdíjba vonulás dátuma"
       },
       "years_worked": {
-        "name": "Ledolgozott évek",
-        "unit_of_measurement": "év"
+        "name": "Ledolgozott évek"
       },
       "work_medal": {
         "name": "Munkaérem",
@@ -264,6 +258,24 @@
           "gold": "Arany",
           "grand_gold": "Nagy arany"
         }
+      },
+      "birth_date": {
+        "name": "Születési dátum"
+      },
+      "wedding_date": {
+        "name": "Esküvő dátuma"
+      },
+      "promotion_date": {
+        "name": "Előléptetés dátuma"
+      },
+      "event_date": {
+        "name": "Esemény dátuma"
+      },
+      "start_date": {
+        "name": "Pályakezdés dátuma"
+      },
+      "death_date": {
+        "name": "Halálozás dátuma"
       }
     },
     "binary_sensor": {

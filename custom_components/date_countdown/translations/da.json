@@ -220,12 +220,10 @@
         "name": "Næste dato"
       },
       "age": {
-        "name": "Alder",
-        "unit_of_measurement": "år"
+        "name": "Alder"
       },
       "next_age": {
-        "name": "Alder ved næste fødselsdag",
-        "unit_of_measurement": "år"
+        "name": "Alder ved næste fødselsdag"
       },
       "age_category": {
         "name": "Alderskategori"
@@ -234,16 +232,13 @@
         "name": "Bryllupsdagens navn"
       },
       "years_elapsed": {
-        "name": "Forløbne år",
-        "unit_of_measurement": "år"
+        "name": "Forløbne år"
       },
       "age_if_alive": {
-        "name": "Alder hvis i live",
-        "unit_of_measurement": "år"
+        "name": "Alder hvis i live"
       },
       "years_since_death": {
-        "name": "År siden bortgangen",
-        "unit_of_measurement": "år"
+        "name": "År siden bortgangen"
       },
       "death_anniversary_days": {
         "name": "Dage til dødsdagen"
@@ -252,8 +247,7 @@
         "name": "Pensionsdato"
       },
       "years_worked": {
-        "name": "Arbejdsår",
-        "unit_of_measurement": "år"
+        "name": "Arbejdsår"
       },
       "work_medal": {
         "name": "Arbejdsmedalje",
@@ -264,6 +258,24 @@
           "gold": "Guld",
           "grand_gold": "Stor guld"
         }
+      },
+      "birth_date": {
+        "name": "Fødselsdato"
+      },
+      "wedding_date": {
+        "name": "Bryllupsdato"
+      },
+      "promotion_date": {
+        "name": "Forfremmelsesdato"
+      },
+      "event_date": {
+        "name": "Dato for begivenheden"
+      },
+      "start_date": {
+        "name": "Startdato for karrieren"
+      },
+      "death_date": {
+        "name": "Dødsdato"
       }
     },
     "binary_sensor": {

@@ -496,3 +496,21 @@ class Texts:
 class _Safe(dict):
     def __missing__(self, key: str) -> str:
         return ""
+
+
+# Unité des capteurs en années, par langue de Home Assistant (repli anglais)
+YEAR_UNITS = {
+    "en": "years", "fr": "ans", "de": "Jahre", "es": "años", "it": "anni", "pt": "anos", "pt-BR": "anos",
+    "nl": "jaar", "pl": "lat", "ru": "лет", "sv": "år", "nb": "år", "da": "år", "fi": "vuotta",
+    "cs": "let", "sk": "rokov", "hu": "év", "tr": "yıl", "el": "έτη", "ro": "ani", "uk": "років", "ca": "anys",
+}
+
+
+def year_unit(language: str | None) -> str:
+    """« ans », « years », « Jahre »… selon la langue de HA (fr-CA → fr, pt-BR exact)."""
+    lang = (language or "").strip().replace("_", "-")
+    for candidate in (lang, lang.split("-", 1)[0].lower()):
+        for key, unit in YEAR_UNITS.items():
+            if key.lower() == candidate.lower():
+                return unit
+    return YEAR_UNITS["en"]

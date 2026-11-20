@@ -220,12 +220,10 @@
         "name": "Propera data"
       },
       "age": {
-        "name": "Edat",
-        "unit_of_measurement": "anys"
+        "name": "Edat"
       },
       "next_age": {
-        "name": "Edat al proper aniversari",
-        "unit_of_measurement": "anys"
+        "name": "Edat al proper aniversari"
       },
       "age_category": {
         "name": "Categoria d'edat"
@@ -234,16 +232,13 @@
         "name": "Noces"
       },
       "years_elapsed": {
-        "name": "Anys transcorreguts",
-        "unit_of_measurement": "anys"
+        "name": "Anys transcorreguts"
       },
       "age_if_alive": {
-        "name": "Edat si visqués",
-        "unit_of_measurement": "anys"
+        "name": "Edat si visqués"
       },
       "years_since_death": {
-        "name": "Anys des de la defunció",
-        "unit_of_measurement": "anys"
+        "name": "Anys des de la defunció"
       },
       "death_anniversary_days": {
         "name": "Dies fins a l'aniversari de la defunció"
@@ -252,8 +247,7 @@
         "name": "Data de jubilació"
       },
       "years_worked": {
-        "name": "Anys treballats",
-        "unit_of_measurement": "anys"
+        "name": "Anys treballats"
       },
       "work_medal": {
         "name": "Medalla del treball",
@@ -264,6 +258,24 @@
           "gold": "Or",
           "grand_gold": "Gran Or"
         }
+      },
+      "birth_date": {
+        "name": "Data de naixement"
+      },
+      "wedding_date": {
+        "name": "Data del casament"
+      },
+      "promotion_date": {
+        "name": "Data de la promoció"
+      },
+      "event_date": {
+        "name": "Data de l'esdeveniment"
+      },
+      "start_date": {
+        "name": "Data d'inici de la carrera"
+      },
+      "death_date": {
+        "name": "Data de defunció"
       }
     },
     "binary_sensor": {

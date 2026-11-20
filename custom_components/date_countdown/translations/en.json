@@ -220,12 +220,10 @@
         "name": "Next date"
       },
       "age": {
-        "name": "Age",
-        "unit_of_measurement": "years"
+        "name": "Age"
       },
       "next_age": {
-        "name": "Age at next birthday",
-        "unit_of_measurement": "years"
+        "name": "Age at next birthday"
       },
       "age_category": {
         "name": "Age category"
@@ -234,16 +232,13 @@
         "name": "Wedding anniversary name"
       },
       "years_elapsed": {
-        "name": "Years elapsed",
-        "unit_of_measurement": "years"
+        "name": "Years elapsed"
       },
       "age_if_alive": {
-        "name": "Age if alive",
-        "unit_of_measurement": "years"
+        "name": "Age if alive"
       },
       "years_since_death": {
-        "name": "Years since passing",
-        "unit_of_measurement": "years"
+        "name": "Years since passing"
       },
       "death_anniversary_days": {
         "name": "Days to death anniversary"
@@ -252,8 +247,7 @@
         "name": "Retirement date"
       },
       "years_worked": {
-        "name": "Years worked",
-        "unit_of_measurement": "years"
+        "name": "Years worked"
       },
       "work_medal": {
         "name": "Work medal",
@@ -264,6 +258,24 @@
           "gold": "Gold",
           "grand_gold": "Grand Gold"
         }
+      },
+      "birth_date": {
+        "name": "Date of birth"
+      },
+      "wedding_date": {
+        "name": "Wedding date"
+      },
+      "promotion_date": {
+        "name": "Promotion date"
+      },
+      "event_date": {
+        "name": "Event date"
+      },
+      "start_date": {
+        "name": "Career start date"
+      },
+      "death_date": {
+        "name": "Date of death"
       }
     },
     "binary_sensor": {

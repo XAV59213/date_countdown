@@ -1,5 +1,19 @@
 # Changelog
 
+## Non publié
+
+### Ajouté
+- 📅 **Capteurs de dates d’origine** : « Date de naissance » (anniversaires, mémoriaux), « Date du mariage », « Date de la promotion », « Date de l’événement », « Date de début de carrière » (retraites) et « Date de décès » (mémoriaux avec date de décès). `device_class: date`, `unique_id` `<principal>_<clé>` (`birth_date`, `wedding_date`, `promotion_date`, `event_date`, `start_date`, `death_date`), noms en 22 langues.
+- 🩺 **Diagnostics** (entrée et appareil) : version, langue, options, événements, appareils, entités (états, attributs), anti-doublon des notifications. Noms des personnes pseudonymisés (`event_1`…), titre, noms personnalisés et cibles de notification masqués ; dates conservées.
+- 🎨 **Cartes** : une entité secondaire (jours restants, âge, date, `binary_sensor` « Aujourd’hui »…) est remplacée par le capteur principal du même appareil (`hass.entities` / `device_id`) ; pas de doublon dans les listes. Les éditeurs ne proposent que les capteurs principaux (du bon type pour Informations et Mémoriaux).
+- Tests : `tests/test_unites_diagnostics.py`, `tests/test_statistiques.py`, `tests/test_cards_js.py` (+ `tests/js/resolve_test.js`).
+
+### Modifié
+- 🌍 **Unité des années localisée** (« ans », « Jahre », « años »… 22 langues) au lieu de « years » : Home Assistant n’applique que la traduction anglaise des unités déclarées en traduction, l’intégration fixe donc l’unité selon la langue de HA. Les statistiques existantes en « years » sont renommées au démarrage (mêmes valeurs) : pas de réparation « unité modifiée ».
+- `unit_of_measurement` retiré des fichiers de traduction (remplacé par l’unité localisée).
+- `manifest.json` : `recorder` ajouté à `after_dependencies` (réétiquetage des statistiques, l’enregistreur reste facultatif).
+- 🧱 **Version minimale de Home Assistant : 2024.7.0** (`hacs.json`, README) au lieu de 2024.6.0 : le code utilise `StaticPathConfig` / `async_register_static_paths` (2024.7), les entités `notify.send_message` avec titre (2024.6) et les noms d’appareils traduits (2024.3). Le libellé « Ajouter un événement » (`config.initiate_flow`) n’apparaît qu’à partir de 2026.2 (libellé par défaut avant).
+
 ## 1.2.22 — 2026-11-20
 
 ### Modifié

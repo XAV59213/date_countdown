@@ -220,12 +220,10 @@
         "name": "Další datum"
       },
       "age": {
-        "name": "Věk",
-        "unit_of_measurement": "let"
+        "name": "Věk"
       },
       "next_age": {
-        "name": "Věk při příštích narozeninách",
-        "unit_of_measurement": "let"
+        "name": "Věk při příštích narozeninách"
       },
       "age_category": {
         "name": "Věková kategorie"
@@ -234,16 +232,13 @@
         "name": "Název výročí svatby"
       },
       "years_elapsed": {
-        "name": "Uplynulé roky",
-        "unit_of_measurement": "let"
+        "name": "Uplynulé roky"
       },
       "age_if_alive": {
-        "name": "Věk, kdyby žil(a)",
-        "unit_of_measurement": "let"
+        "name": "Věk, kdyby žil(a)"
       },
       "years_since_death": {
-        "name": "Roky od úmrtí",
-        "unit_of_measurement": "let"
+        "name": "Roky od úmrtí"
       },
       "death_anniversary_days": {
         "name": "Dny do výročí úmrtí"
@@ -252,8 +247,7 @@
         "name": "Datum odchodu do důchodu"
       },
       "years_worked": {
-        "name": "Odpracované roky",
-        "unit_of_measurement": "let"
+        "name": "Odpracované roky"
       },
       "work_medal": {
         "name": "Pracovní medaile",
@@ -264,6 +258,24 @@
           "gold": "Zlatá",
           "grand_gold": "Velká zlatá"
         }
+      },
+      "birth_date": {
+        "name": "Datum narození"
+      },
+      "wedding_date": {
+        "name": "Datum svatby"
+      },
+      "promotion_date": {
+        "name": "Datum povýšení"
+      },
+      "event_date": {
+        "name": "Datum události"
+      },
+      "start_date": {
+        "name": "Datum začátku kariéry"
+      },
+      "death_date": {
+        "name": "Datum úmrtí"
       }
     },
     "binary_sensor": {
