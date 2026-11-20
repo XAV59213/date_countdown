@@ -2,6 +2,8 @@
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz) [![Release](https://img.shields.io/github/v/release/XAV59213/date_countdown?label=release)](https://github.com/XAV59213/date_countdown/releases/latest) [![Hassfest](https://img.shields.io/github/actions/workflow/status/XAV59213/date_countdown/hassfest.yml?branch=main&label=Hassfest&logo=github)](https://github.com/XAV59213/date_countdown/actions/workflows/hassfest.yml) [![HACS validation](https://img.shields.io/github/actions/workflow/status/XAV59213/date_countdown/hacs.yml?branch=main&label=HACS%20validation&logo=github)](https://github.com/XAV59213/date_countdown/actions/workflows/hacs.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Downloads](https://img.shields.io/github/downloads/XAV59213/date_countdown/total.svg?label=Downloads)](https://github.com/XAV59213/date_countdown/releases) [![Version](https://img.shields.io/github/v/release/XAV59213/date_countdown?label=VERSION&color=blue)](https://github.com/XAV59213/date_countdown/releases/latest) [![Home Assistant](https://img.shields.io/badge/HOME%20ASSISTANT-%3E%3D2024.7.0-41BDF5.svg)](https://www.home-assistant.io)
 
+[![Discuter sur Forum Domotique](docs/badges/forum-domotique-badge-40.svg)](https://forumdomotique.com/forums/topic/4093-%F0%9F%8E%82-int%C3%A9gration-home-assistant-souvenirs-et-c%C3%A9l%C3%A9brations/)
+
 [![Buy Me A Coffee](https://img.buymeacoffee.com/button-api/?text=xav59213&emoji=&slug=xav59213&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00)](https://www.buymeacoffee.com/xav59213)
 
 ## Via HACS (recommandé)
