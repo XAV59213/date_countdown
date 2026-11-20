@@ -1,5 +1,11 @@
 # Changelog
 
+## Non publié
+
+### Modifié
+- 🏷️ **Page de l’intégration** (Paramètres → Appareils et services → Souvenirs et Célébrations) : le bouton « Ajouter un hub » devient **« Ajouter un événement »** (traduction `config.initiate_flow.user`, 22 langues), et la section des entrées s’appelle **« Services »** au lieu de « Ponts » (`integration_type` : `hub` → `service`, comme les intégrations de calcul de dates du cœur : Workday, Season, Moon, Sun). Aucun effet sur les entrées, appareils, capteurs ou automatisations existants.
+- Tests : `tests/test_libelles.py`.
+
 ## 1.2.20 — 2026-11-20
 
 ### Ajouté

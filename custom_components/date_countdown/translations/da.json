@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Tilføj begivenhed"
+    },
     "step": {
       "user": {
         "title": "Minder og Fejringer",

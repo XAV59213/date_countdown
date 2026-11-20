@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Afegeix un esdeveniment"
+    },
     "step": {
       "user": {
         "title": "Records i Celebracions",

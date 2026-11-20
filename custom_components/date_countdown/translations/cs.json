@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Přidat událost"
+    },
     "step": {
       "user": {
         "title": "Vzpomínky a Oslavy",

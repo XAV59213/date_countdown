@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Dodaj wydarzenie"
+    },
     "step": {
       "user": {
         "title": "Wspomnienia i Uroczystości",

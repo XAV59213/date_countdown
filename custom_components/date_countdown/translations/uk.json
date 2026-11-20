@@ -1,5 +1,8 @@
 {
   "config": {
+    "initiate_flow": {
+      "user": "Додати подію"
+    },
     "step": {
       "user": {
         "title": "Спогади та свята",
