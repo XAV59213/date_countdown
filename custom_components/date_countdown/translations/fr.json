@@ -2,12 +2,14 @@
   "config": {
     "step": {
       "user": {
+        "title": "Souvenirs et Célébrations",
         "description": "Sélectionnez le type d'événement à configurer.",
         "data": {
           "type": "Type d'événement"
         }
       },
       "event_details": {
+        "title": "Détails de l'événement",
         "description": "Ajoutez les détails de l'événement (dates au format JJ/MM/AAAA).",
         "data": {
           "name": "Nom de l'événement ou de la personne",
@@ -59,7 +61,8 @@
       "invalid_action": "Action invalide. Veuillez sélectionner 'Modifier'.",
       "update_failed": "Échec de la mise à jour de l'événement. Vérifiez les logs pour plus de détails.",
       "invalid_memorial_date": "Date de décès invalide pour l'événement mémorial. Utilisez JJ/MM/AAAA avec une date valide (par exemple, 08/01/2018).",
-      "config_entry_not_found": "Entrée de configuration introuvable. Veuillez réinstaller l'intégration."
+      "config_entry_not_found": "Entrée de configuration introuvable. Veuillez réinstaller l'intégration.",
+      "creation_failed": "Impossible de créer l'entrée."
     }
   },
   "selector": {

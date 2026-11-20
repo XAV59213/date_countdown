@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Amintiri și Sărbători",
+        "description": "Selectați tipul de eveniment de configurat.",
+        "data": {
+          "type": "Tip de eveniment"
+        }
+      },
+      "event_details": {
+        "title": "Detaliile evenimentului",
+        "description": "Introduceți detaliile evenimentului (date în formatul ZZ/LL/AAAA).",
+        "data": {
+          "name": "Numele evenimentului sau al persoanei",
+          "first_name": "Prenume (opțional)",
+          "date": "Data nașterii (pentru comemorare) sau data (alte tipuri)",
+          "type": "Tip de eveniment",
+          "death_date": "Data decesului (opțional, pentru comemorare)",
+          "start_date": "Data începerii activității (pentru pensionare)",
+          "is_penible": "Muncă în condiții grele (reduce anii necesari pentru medalie)",
+          "career_type": "Tip de carieră"
+        }
+      },
+      "init": {
+        "description": "Selectați acțiunea pentru a modifica un eveniment",
+        "data": {
+          "action": "Acțiune"
+        }
+      },
+      "select_event": {
+        "description": "Selectați din lista de mai jos un eveniment de modificat.",
+        "data": {
+          "event": "Eveniment"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selectați tipul evenimentului de modificat.",
+        "data": {
+          "type": "Tip de eveniment"
+        }
+      },
+      "edit_event": {
+        "description": "Modificați detaliile evenimentului (date în formatul ZZ/LL/AAAA).",
+        "data": {
+          "name": "Numele evenimentului sau al persoanei",
+          "first_name": "Prenume (opțional)",
+          "date": "Data nașterii (pentru comemorare) sau data (alte tipuri)",
+          "type": "Tip de eveniment",
+          "death_date": "Data decesului (opțional, pentru comemorare)",
+          "start_date": "Data începerii activității (pentru pensionare)",
+          "is_penible": "Muncă în condiții grele (reduce anii necesari pentru medalie)",
+          "career_type": "Tip de carieră"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Format de dată nevalid. Folosiți ZZ/LL/AAAA (de exemplu, 01/06/1980).",
+      "no_events": "Niciun eveniment configurat. Creați mai întâi un eveniment prin configurarea inițială.",
+      "event_required": "Selectați din lista derulantă un eveniment de modificat.",
+      "invalid_action": "Acțiune nevalidă. Selectați „Modificați un eveniment”.",
+      "update_failed": "Actualizarea evenimentului a eșuat. Verificați jurnalele pentru mai multe detalii.",
+      "invalid_memorial_date": "Dată a decesului nevalidă pentru evenimentul comemorativ. Folosiți ZZ/LL/AAAA cu o dată validă (de exemplu, 08/01/2018).",
+      "config_entry_not_found": "Intrarea de configurare nu a fost găsită. Reinstalați integrarea.",
+      "creation_failed": "Intrarea nu a putut fi creată."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Modificați un eveniment",
+        "notifications": "Configurați notificările 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Alegeți o acțiune: modificați un eveniment sau configurați notificările.",
+        "data": {
+          "action": "Acțiune"
+        }
+      },
+      "select_event": {
+        "description": "Selectați din lista de mai jos un eveniment de modificat.",
+        "data": {
+          "event": "Eveniment"
+        }
+      },
+      "edit_event_type": {
+        "description": "Selectați tipul evenimentului de modificat.",
+        "data": {
+          "type": "Tip de eveniment"
+        }
+      },
+      "edit_event": {
+        "description": "Modificați detaliile evenimentului (date în formatul ZZ/LL/AAAA).",
+        "data": {
+          "name": "Numele evenimentului sau al persoanei",
+          "first_name": "Prenume (opțional)",
+          "date": "Data nașterii (pentru comemorare) sau data (alte tipuri)",
+          "type": "Tip de eveniment",
+          "death_date": "Data decesului (opțional, pentru comemorare)",
+          "start_date": "Data începerii activității (pentru pensionare)",
+          "is_penible": "Muncă în condiții grele (reduce anii necesari pentru medalie)",
+          "career_type": "Tip de carieră"
+        }
+      },
+      "notifications": {
+        "title": "Notificări 🔔",
+        "description": "Primiți o notificare în ziua evenimentului (și, opțional, un memento cu câteva zile înainte) la ora aleasă (ora locală a Home Assistant).",
+        "data": {
+          "enabled": "Activați notificările",
+          "targets": "Destinatarii notificărilor (servicii notify.*)",
+          "time": "Ora de trimitere",
+          "reminder_days": "Memento cu N zile înainte (0 = dezactivat)",
+          "persistent": "Creați și o notificare persistentă Home Assistant"
+        },
+        "data_description": {
+          "targets": "Unul sau mai multe servicii notify.* (de ex. notify.mobile_app_telefonul_meu). Puteți introduce și un nume manual.",
+          "time": "Implicit 09:00. Dacă Home Assistant repornește după această oră în ziua evenimentului, notificarea este trimisă o singură dată la pornire.",
+          "reminder_days": "Exemplu: 7 pentru a fi anunțat cu o săptămână înainte. 0 dezactivează mementoul.",
+          "persistent": "Afișează mesajul și în notificările Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Format de dată nevalid. Folosiți ZZ/LL/AAAA (de exemplu, 01/06/1980).",
+      "no_events": "Niciun eveniment configurat. Creați mai întâi un eveniment prin configurarea inițială.",
+      "event_required": "Selectați din lista derulantă un eveniment de modificat.",
+      "invalid_action": "Acțiune nevalidă. Selectați „Modificați un eveniment”.",
+      "update_failed": "Actualizarea evenimentului a eșuat. Verificați jurnalele pentru mai multe detalii.",
+      "invalid_memorial_date": "Dată a decesului nevalidă pentru evenimentul comemorativ. Folosiți ZZ/LL/AAAA cu o dată validă (de exemplu, 08/01/2018).",
+      "config_entry_not_found": "Intrarea de configurare nu a fost găsită. Reinstalați integrarea.",
+      "no_notify_target": "Alegeți cel puțin un destinatar notify.* sau activați notificarea persistentă.",
+      "invalid_notify_target": "Destinatarii trebuie să fie servicii notify.* (de ex. notify.mobile_app_telefonul_meu)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Trimiteți o notificare de test",
+      "description": "Trimite imediat o notificare de test către destinatarii configurați ai unui eveniment (notificare persistentă dacă nu este configurat niciun destinatar). Ignoră protecția împotriva duplicatelor.",
+      "fields": {
+        "entry_id": {
+          "name": "Intrare",
+          "description": "Intrarea Amintiri și Sărbători de testat."
+        },
+        "entity_id": {
+          "name": "Senzor",
+          "description": "Senzorul (senzorii) de eveniment de testat (alternativă la intrare)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Intrarea Amintiri și Sărbători nu a fost găsită sau nu este încărcată: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Senzorul {entity_id} nu aparține integrării Amintiri și Sărbători."
+    }
+  }
+}

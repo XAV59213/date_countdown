@@ -41,7 +41,7 @@ Entièrement configurable via l’interface graphique, aucun YAML requis. Les ca
   - État = nombre de jours restants
   - Attributs : type, date, prénom, années, intitulé des noces, etc.
 - 🎨 Icônes dynamiques selon le type
-- 🇫🇷 Interface et traduction en français
+- 🌍 Interface de configuration traduite en 22 langues (voir [Langues](#-langues))
 - 🔔 Prêt pour Lovelace, automatisations, TTS, notifications
 
 ---
@@ -261,6 +261,24 @@ logger:
 
 ---
 
+## 🌍 Langues
+
+L’interface de configuration (assistant d’ajout, Options, notifications, service de test, messages d’erreur) est traduite en **22 langues** :
+
+🇫🇷 français (`fr`) · 🇬🇧 anglais (`en`) · 🇩🇪 allemand (`de`) · 🇪🇸 espagnol (`es`) · 🇮🇹 italien (`it`) · 🇵🇹 portugais (`pt`) · 🇧🇷 portugais du Brésil (`pt-BR`) · 🇳🇱 néerlandais (`nl`) · 🇵🇱 polonais (`pl`) · 🇷🇺 russe (`ru`) · 🇸🇪 suédois (`sv`) · 🇳🇴 norvégien bokmål (`nb`) · 🇩🇰 danois (`da`) · 🇫🇮 finnois (`fi`) · 🇨🇿 tchèque (`cs`) · 🇸🇰 slovaque (`sk`) · 🇭🇺 hongrois (`hu`) · 🇹🇷 turc (`tr`) · 🇬🇷 grec (`el`) · 🇷🇴 roumain (`ro`) · 🇺🇦 ukrainien (`uk`) · catalan (`ca`)
+
+Home Assistant choisit automatiquement la langue de votre profil.
+
+> ⚠️ **Restent en français pour l’instant**, quelle que soit la langue : les textes générés par le code Python, c’est-à-dire les messages des notifications, les catégories d’âge humoristiques, les intitulés des noces, les noms et attributs des capteurs et du calendrier, les listes de choix « Type d’événement » et « Type de carrière » de l’assistant, ainsi que la carte Lovelace « Informations ».
+
+Pour vérifier les fichiers de traduction (JSON valide, mêmes clés et mêmes placeholders `{...}` que `en.json`) :
+
+```bash
+python3 scripts/check_translations.py
+```
+
+---
+
 ## 📁 Structure technique
 
 | Fichier                                | Rôle                                             |
@@ -271,7 +289,7 @@ logger:
 | `calendar.py`                          | Calendrier des occurrences (50 ans)             |
 | `date_utils.py`                        | Dates d’anniversaire, y compris le 29 février   |
 | `const.py`                             | Types, formats, intitulés, noces                |
-| `translations/fr.json`                 | Traduction en français                          |
+| `translations/*.json`                  | Traductions de l’interface (22 langues)         |
 | `manifest.json`                        | Métadonnées HACS                                |
 | `brand/icon.png`                       | Icône HACS (512×512)                            |
 | `brand/logo.png`                       | Logo                                            |

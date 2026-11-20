@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Anılar ve Kutlamalar",
+        "description": "Yapılandırılacak etkinlik türünü seçin.",
+        "data": {
+          "type": "Etkinlik türü"
+        }
+      },
+      "event_details": {
+        "title": "Etkinlik ayrıntıları",
+        "description": "Etkinlik ayrıntılarını girin (tarihler GG/AA/YYYY biçiminde).",
+        "data": {
+          "name": "Etkinliğin veya kişinin adı",
+          "first_name": "Ad (isteğe bağlı)",
+          "date": "Doğum tarihi (anma için) veya tarih (diğer türler)",
+          "type": "Etkinlik türü",
+          "death_date": "Ölüm tarihi (isteğe bağlı, anma için)",
+          "start_date": "İşe başlama tarihi (emeklilik için)",
+          "is_penible": "Ağır iş (madalya için gereken yıl sayısını azaltır)",
+          "career_type": "Kariyer türü"
+        }
+      },
+      "init": {
+        "description": "Bir etkinliği düzenlemek için işlemi seçin",
+        "data": {
+          "action": "İşlem"
+        }
+      },
+      "select_event": {
+        "description": "Aşağıdaki listeden düzenlenecek bir etkinlik seçin.",
+        "data": {
+          "event": "Etkinlik"
+        }
+      },
+      "edit_event_type": {
+        "description": "Düzenlenecek etkinliğin türünü seçin.",
+        "data": {
+          "type": "Etkinlik türü"
+        }
+      },
+      "edit_event": {
+        "description": "Etkinlik ayrıntılarını düzenleyin (tarihler GG/AA/YYYY biçiminde).",
+        "data": {
+          "name": "Etkinliğin veya kişinin adı",
+          "first_name": "Ad (isteğe bağlı)",
+          "date": "Doğum tarihi (anma için) veya tarih (diğer türler)",
+          "type": "Etkinlik türü",
+          "death_date": "Ölüm tarihi (isteğe bağlı, anma için)",
+          "start_date": "İşe başlama tarihi (emeklilik için)",
+          "is_penible": "Ağır iş (madalya için gereken yıl sayısını azaltır)",
+          "career_type": "Kariyer türü"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Geçersiz tarih biçimi. GG/AA/YYYY kullanın (örneğin 01/06/1980).",
+      "no_events": "Yapılandırılmış etkinlik yok. Lütfen önce ilk kurulum üzerinden bir etkinlik oluşturun.",
+      "event_required": "Lütfen açılır listeden düzenlenecek bir etkinlik seçin.",
+      "invalid_action": "Geçersiz işlem. Lütfen “Bir etkinliği düzenle” seçeneğini seçin.",
+      "update_failed": "Etkinlik güncellenemedi. Daha fazla ayrıntı için günlüklere bakın.",
+      "invalid_memorial_date": "Anma etkinliği için geçersiz ölüm tarihi. Geçerli bir tarihle GG/AA/YYYY kullanın (örneğin 08/01/2018).",
+      "config_entry_not_found": "Yapılandırma girdisi bulunamadı. Lütfen entegrasyonu yeniden yükleyin.",
+      "creation_failed": "Girdi oluşturulamadı."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Bir etkinliği düzenle",
+        "notifications": "Bildirimleri yapılandır 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Bir işlem seçin: bir etkinliği düzenleyin veya bildirimleri yapılandırın.",
+        "data": {
+          "action": "İşlem"
+        }
+      },
+      "select_event": {
+        "description": "Aşağıdaki listeden düzenlenecek bir etkinlik seçin.",
+        "data": {
+          "event": "Etkinlik"
+        }
+      },
+      "edit_event_type": {
+        "description": "Düzenlenecek etkinliğin türünü seçin.",
+        "data": {
+          "type": "Etkinlik türü"
+        }
+      },
+      "edit_event": {
+        "description": "Etkinlik ayrıntılarını düzenleyin (tarihler GG/AA/YYYY biçiminde).",
+        "data": {
+          "name": "Etkinliğin veya kişinin adı",
+          "first_name": "Ad (isteğe bağlı)",
+          "date": "Doğum tarihi (anma için) veya tarih (diğer türler)",
+          "type": "Etkinlik türü",
+          "death_date": "Ölüm tarihi (isteğe bağlı, anma için)",
+          "start_date": "İşe başlama tarihi (emeklilik için)",
+          "is_penible": "Ağır iş (madalya için gereken yıl sayısını azaltır)",
+          "career_type": "Kariyer türü"
+        }
+      },
+      "notifications": {
+        "title": "Bildirimler 🔔",
+        "description": "Etkinlik günü seçilen saatte (Home Assistant yerel saati) bir bildirim alın; isterseniz birkaç gün önce bir hatırlatma da alabilirsiniz.",
+        "data": {
+          "enabled": "Bildirimleri etkinleştir",
+          "targets": "Bildirim hedefleri (notify.* servisleri)",
+          "time": "Gönderim saati",
+          "reminder_days": "N gün önce hatırlatma (0 = devre dışı)",
+          "persistent": "Ayrıca kalıcı bir Home Assistant bildirimi oluştur"
+        },
+        "data_description": {
+          "targets": "Bir veya daha fazla notify.* servisi (ör. notify.mobile_app_telefonum). Bir adı elle de yazabilirsiniz.",
+          "time": "Varsayılan 09:00. Home Assistant etkinlik günü bu saatten sonra yeniden başlarsa bildirim başlangıçta bir kez gönderilir.",
+          "reminder_days": "Örnek: bir hafta önce uyarılmak için 7. 0 hatırlatmayı devre dışı bırakır.",
+          "persistent": "Mesajı Home Assistant bildirimlerinde de gösterir."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Geçersiz tarih biçimi. GG/AA/YYYY kullanın (örneğin 01/06/1980).",
+      "no_events": "Yapılandırılmış etkinlik yok. Lütfen önce ilk kurulum üzerinden bir etkinlik oluşturun.",
+      "event_required": "Lütfen açılır listeden düzenlenecek bir etkinlik seçin.",
+      "invalid_action": "Geçersiz işlem. Lütfen “Bir etkinliği düzenle” seçeneğini seçin.",
+      "update_failed": "Etkinlik güncellenemedi. Daha fazla ayrıntı için günlüklere bakın.",
+      "invalid_memorial_date": "Anma etkinliği için geçersiz ölüm tarihi. Geçerli bir tarihle GG/AA/YYYY kullanın (örneğin 08/01/2018).",
+      "config_entry_not_found": "Yapılandırma girdisi bulunamadı. Lütfen entegrasyonu yeniden yükleyin.",
+      "no_notify_target": "En az bir notify.* hedefi seçin veya kalıcı bildirimi etkinleştirin.",
+      "invalid_notify_target": "Hedefler notify.* servisleri olmalıdır (ör. notify.mobile_app_telefonum)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Test bildirimi gönder",
+      "description": "Bir etkinliğin yapılandırılmış hedeflerine hemen bir test bildirimi gönderir (hedef yapılandırılmamışsa kalıcı bildirim). Yinelenme korumasını yok sayar.",
+      "fields": {
+        "entry_id": {
+          "name": "Girdi",
+          "description": "Test edilecek Anılar ve Kutlamalar girdisi."
+        },
+        "entity_id": {
+          "name": "Sensör",
+          "description": "Test edilecek etkinlik sensör(ler)i (girdiye alternatif)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Anılar ve Kutlamalar girdisi bulunamadı veya yüklenmedi: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "{entity_id} sensörü Anılar ve Kutlamalar entegrasyonuna ait değil."
+    }
+  }
+}

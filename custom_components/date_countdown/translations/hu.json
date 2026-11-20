@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Emlékek és Ünnepek",
+        "description": "Válaszd ki a beállítandó esemény típusát.",
+        "data": {
+          "type": "Eseménytípus"
+        }
+      },
+      "event_details": {
+        "title": "Esemény részletei",
+        "description": "Add meg az esemény részleteit (dátumok NN/HH/ÉÉÉÉ formátumban).",
+        "data": {
+          "name": "Az esemény vagy a személy neve",
+          "first_name": "Keresztnév (opcionális)",
+          "date": "Születési dátum (megemlékezéshez) vagy dátum (egyéb típusok)",
+          "type": "Eseménytípus",
+          "death_date": "Halálozás dátuma (opcionális, megemlékezéshez)",
+          "start_date": "Munkakezdés dátuma (nyugdíjazáshoz)",
+          "is_penible": "Nehéz fizikai munka (csökkenti az érmhez szükséges évek számát)",
+          "career_type": "Pályafutás típusa"
+        }
+      },
+      "init": {
+        "description": "Válaszd ki a műveletet egy esemény szerkesztéséhez",
+        "data": {
+          "action": "Művelet"
+        }
+      },
+      "select_event": {
+        "description": "Válaszd ki a szerkesztendő eseményt az alábbi listából.",
+        "data": {
+          "event": "Esemény"
+        }
+      },
+      "edit_event_type": {
+        "description": "Válaszd ki a szerkesztendő esemény típusát.",
+        "data": {
+          "type": "Eseménytípus"
+        }
+      },
+      "edit_event": {
+        "description": "Szerkeszd az esemény részleteit (dátumok NN/HH/ÉÉÉÉ formátumban).",
+        "data": {
+          "name": "Az esemény vagy a személy neve",
+          "first_name": "Keresztnév (opcionális)",
+          "date": "Születési dátum (megemlékezéshez) vagy dátum (egyéb típusok)",
+          "type": "Eseménytípus",
+          "death_date": "Halálozás dátuma (opcionális, megemlékezéshez)",
+          "start_date": "Munkakezdés dátuma (nyugdíjazáshoz)",
+          "is_penible": "Nehéz fizikai munka (csökkenti az érmhez szükséges évek számát)",
+          "career_type": "Pályafutás típusa"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Érvénytelen dátumformátum. Használd az NN/HH/ÉÉÉÉ formátumot (például 01/06/1980).",
+      "no_events": "Nincs beállított esemény. Először hozz létre egy eseményt a kezdeti beállítás során.",
+      "event_required": "Válaszd ki a szerkesztendő eseményt a legördülő listából.",
+      "invalid_action": "Érvénytelen művelet. Válaszd az „Esemény szerkesztése” lehetőséget.",
+      "update_failed": "Nem sikerült frissíteni az eseményt. További részletek a naplókban.",
+      "invalid_memorial_date": "Érvénytelen halálozási dátum a megemlékezéshez. Használd az NN/HH/ÉÉÉÉ formátumot érvényes dátummal (például 08/01/2018).",
+      "config_entry_not_found": "A konfigurációs bejegyzés nem található. Telepítsd újra az integrációt.",
+      "creation_failed": "Nem sikerült létrehozni a bejegyzést."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Esemény szerkesztése",
+        "notifications": "Értesítések beállítása 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Válassz műveletet: esemény szerkesztése vagy értesítések beállítása.",
+        "data": {
+          "action": "Művelet"
+        }
+      },
+      "select_event": {
+        "description": "Válaszd ki a szerkesztendő eseményt az alábbi listából.",
+        "data": {
+          "event": "Esemény"
+        }
+      },
+      "edit_event_type": {
+        "description": "Válaszd ki a szerkesztendő esemény típusát.",
+        "data": {
+          "type": "Eseménytípus"
+        }
+      },
+      "edit_event": {
+        "description": "Szerkeszd az esemény részleteit (dátumok NN/HH/ÉÉÉÉ formátumban).",
+        "data": {
+          "name": "Az esemény vagy a személy neve",
+          "first_name": "Keresztnév (opcionális)",
+          "date": "Születési dátum (megemlékezéshez) vagy dátum (egyéb típusok)",
+          "type": "Eseménytípus",
+          "death_date": "Halálozás dátuma (opcionális, megemlékezéshez)",
+          "start_date": "Munkakezdés dátuma (nyugdíjazáshoz)",
+          "is_penible": "Nehéz fizikai munka (csökkenti az érmhez szükséges évek számát)",
+          "career_type": "Pályafutás típusa"
+        }
+      },
+      "notifications": {
+        "title": "Értesítések 🔔",
+        "description": "Kapj értesítést az esemény napján (és ha szeretnéd, emlékeztetőt néhány nappal előtte) a választott időpontban (a Home Assistant helyi ideje szerint).",
+        "data": {
+          "enabled": "Értesítések engedélyezése",
+          "targets": "Értesítési célok (notify.* szolgáltatások)",
+          "time": "Küldés időpontja",
+          "reminder_days": "Emlékeztető N nappal előtte (0 = kikapcsolva)",
+          "persistent": "Állandó Home Assistant értesítés létrehozása is"
+        },
+        "data_description": {
+          "targets": "Egy vagy több notify.* szolgáltatás (pl. notify.mobile_app_telefonom). Nevet kézzel is megadhatsz.",
+          "time": "Alapértelmezés: 09:00. Ha a Home Assistant az esemény napján ezen időpont után indul újra, az értesítés indításkor egyszer kerül elküldésre.",
+          "reminder_days": "Példa: 7, ha egy héttel előtte szeretnél emlékeztetőt. A 0 kikapcsolja az emlékeztetőt.",
+          "persistent": "Az üzenetet a Home Assistant értesítései között is megjeleníti."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Érvénytelen dátumformátum. Használd az NN/HH/ÉÉÉÉ formátumot (például 01/06/1980).",
+      "no_events": "Nincs beállított esemény. Először hozz létre egy eseményt a kezdeti beállítás során.",
+      "event_required": "Válaszd ki a szerkesztendő eseményt a legördülő listából.",
+      "invalid_action": "Érvénytelen művelet. Válaszd az „Esemény szerkesztése” lehetőséget.",
+      "update_failed": "Nem sikerült frissíteni az eseményt. További részletek a naplókban.",
+      "invalid_memorial_date": "Érvénytelen halálozási dátum a megemlékezéshez. Használd az NN/HH/ÉÉÉÉ formátumot érvényes dátummal (például 08/01/2018).",
+      "config_entry_not_found": "A konfigurációs bejegyzés nem található. Telepítsd újra az integrációt.",
+      "no_notify_target": "Válassz legalább egy notify.* célt, vagy engedélyezd az állandó értesítést.",
+      "invalid_notify_target": "A céloknak notify.* szolgáltatásoknak kell lenniük (pl. notify.mobile_app_telefonom)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Tesztértesítés küldése",
+      "description": "Azonnal tesztértesítést küld egy esemény beállított céljainak (állandó értesítést, ha nincs beállított cél). Figyelmen kívül hagyja az ismétlődés elleni védelmet.",
+      "fields": {
+        "entry_id": {
+          "name": "Bejegyzés",
+          "description": "A tesztelendő Emlékek és Ünnepek bejegyzés."
+        },
+        "entity_id": {
+          "name": "Érzékelő",
+          "description": "A tesztelendő eseményérzékelő(k) (a bejegyzés alternatívája)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Az Emlékek és Ünnepek bejegyzés nem található vagy nincs betöltve: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "A(z) {entity_id} érzékelő nem tartozik az Emlékek és Ünnepek integrációhoz."
+    }
+  }
+}

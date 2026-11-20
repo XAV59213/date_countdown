@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Minner og Feiringer",
+        "description": "Velg hvilken type hendelse du vil konfigurere.",
+        "data": {
+          "type": "Hendelsestype"
+        }
+      },
+      "event_details": {
+        "title": "Hendelsesdetaljer",
+        "description": "Angi detaljene for hendelsen (datoer i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Navn på hendelsen eller personen",
+          "first_name": "Fornavn (valgfritt)",
+          "date": "Fødselsdato (for minnedag) eller dato (andre typer)",
+          "type": "Hendelsestype",
+          "death_date": "Dødsdato (valgfritt, for minnedag)",
+          "start_date": "Startdato for arbeid (for pensjon)",
+          "is_penible": "Tungt arbeid (reduserer antall år som kreves for medaljen)",
+          "career_type": "Karrieretype"
+        }
+      },
+      "init": {
+        "description": "Velg handlingen for å redigere en hendelse",
+        "data": {
+          "action": "Handling"
+        }
+      },
+      "select_event": {
+        "description": "Velg en hendelse å redigere fra listen nedenfor.",
+        "data": {
+          "event": "Hendelse"
+        }
+      },
+      "edit_event_type": {
+        "description": "Velg typen hendelse som skal redigeres.",
+        "data": {
+          "type": "Hendelsestype"
+        }
+      },
+      "edit_event": {
+        "description": "Rediger detaljene for hendelsen (datoer i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Navn på hendelsen eller personen",
+          "first_name": "Fornavn (valgfritt)",
+          "date": "Fødselsdato (for minnedag) eller dato (andre typer)",
+          "type": "Hendelsestype",
+          "death_date": "Dødsdato (valgfritt, for minnedag)",
+          "start_date": "Startdato for arbeid (for pensjon)",
+          "is_penible": "Tungt arbeid (reduserer antall år som kreves for medaljen)",
+          "career_type": "Karrieretype"
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ugyldig datoformat. Bruk DD/MM/ÅÅÅÅ (for eksempel 01/06/1980).",
+      "no_events": "Ingen hendelse er konfigurert. Opprett først en hendelse via førstegangsoppsettet.",
+      "event_required": "Velg en hendelse å redigere fra nedtrekkslisten.",
+      "invalid_action": "Ugyldig handling. Velg «Rediger en hendelse».",
+      "update_failed": "Kunne ikke oppdatere hendelsen. Se loggene for flere detaljer.",
+      "invalid_memorial_date": "Ugyldig dødsdato for minnehendelsen. Bruk DD/MM/ÅÅÅÅ med en gyldig dato (for eksempel 08/01/2018).",
+      "config_entry_not_found": "Fant ikke konfigurasjonsoppføringen. Installer integrasjonen på nytt.",
+      "creation_failed": "Kunne ikke opprette oppføringen."
+    }
+  },
+  "selector": {
+    "action": {
+      "options": {
+        "edit": "Rediger en hendelse",
+        "notifications": "Konfigurer varsler 🔔"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "description": "Velg en handling: rediger en hendelse eller konfigurer varsler.",
+        "data": {
+          "action": "Handling"
+        }
+      },
+      "select_event": {
+        "description": "Velg en hendelse å redigere fra listen nedenfor.",
+        "data": {
+          "event": "Hendelse"
+        }
+      },
+      "edit_event_type": {
+        "description": "Velg typen hendelse som skal redigeres.",
+        "data": {
+          "type": "Hendelsestype"
+        }
+      },
+      "edit_event": {
+        "description": "Rediger detaljene for hendelsen (datoer i formatet DD/MM/ÅÅÅÅ).",
+        "data": {
+          "name": "Navn på hendelsen eller personen",
+          "first_name": "Fornavn (valgfritt)",
+          "date": "Fødselsdato (for minnedag) eller dato (andre typer)",
+          "type": "Hendelsestype",
+          "death_date": "Dødsdato (valgfritt, for minnedag)",
+          "start_date": "Startdato for arbeid (for pensjon)",
+          "is_penible": "Tungt arbeid (reduserer antall år som kreves for medaljen)",
+          "career_type": "Karrieretype"
+        }
+      },
+      "notifications": {
+        "title": "Varsler 🔔",
+        "description": "Få et varsel på dagen for hendelsen (og eventuelt en påminnelse noen dager før) til valgt tidspunkt (lokal tid i Home Assistant).",
+        "data": {
+          "enabled": "Aktiver varsler",
+          "targets": "Varslingsmål (notify.*-tjenester)",
+          "time": "Sendetidspunkt",
+          "reminder_days": "Påminnelse N dager før (0 = deaktivert)",
+          "persistent": "Opprett også et vedvarende varsel i Home Assistant"
+        },
+        "data_description": {
+          "targets": "Én eller flere notify.*-tjenester (f.eks. notify.mobile_app_min_telefon). Du kan også skrive inn et navn.",
+          "time": "Standard 09:00. Hvis Home Assistant startes på nytt etter dette tidspunktet på dagen for hendelsen, sendes varselet én gang ved oppstart.",
+          "reminder_days": "Eksempel: 7 for å bli varslet en uke før. 0 deaktiverer påminnelsen.",
+          "persistent": "Viser også meldingen i varslene i Home Assistant."
+        }
+      }
+    },
+    "error": {
+      "invalid_date_format": "Ugyldig datoformat. Bruk DD/MM/ÅÅÅÅ (for eksempel 01/06/1980).",
+      "no_events": "Ingen hendelse er konfigurert. Opprett først en hendelse via førstegangsoppsettet.",
+      "event_required": "Velg en hendelse å redigere fra nedtrekkslisten.",
+      "invalid_action": "Ugyldig handling. Velg «Rediger en hendelse».",
+      "update_failed": "Kunne ikke oppdatere hendelsen. Se loggene for flere detaljer.",
+      "invalid_memorial_date": "Ugyldig dødsdato for minnehendelsen. Bruk DD/MM/ÅÅÅÅ med en gyldig dato (for eksempel 08/01/2018).",
+      "config_entry_not_found": "Fant ikke konfigurasjonsoppføringen. Installer integrasjonen på nytt.",
+      "no_notify_target": "Velg minst ett notify.*-mål eller aktiver det vedvarende varselet.",
+      "invalid_notify_target": "Målene må være notify.*-tjenester (f.eks. notify.mobile_app_min_telefon)."
+    }
+  },
+  "services": {
+    "send_test_notification": {
+      "name": "Send et testvarsel",
+      "description": "Sender umiddelbart et testvarsel til de konfigurerte målene for en hendelse (vedvarende varsel hvis ingen mål er konfigurert). Ignorerer duplikatbeskyttelsen.",
+      "fields": {
+        "entry_id": {
+          "name": "Oppføring",
+          "description": "Oppføring i Minner og Feiringer som skal testes."
+        },
+        "entity_id": {
+          "name": "Sensor",
+          "description": "Hendelsessensor(er) som skal testes (alternativ til oppføringen)."
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "unknown_entry": {
+      "message": "Oppføring i Minner og Feiringer ble ikke funnet eller er ikke lastet inn: {entry_id}"
+    },
+    "unknown_entity": {
+      "message": "Sensoren {entity_id} tilhører ikke Minner og Feiringer."
+    }
+  }
+}
