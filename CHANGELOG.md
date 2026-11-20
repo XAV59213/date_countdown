@@ -11,6 +11,7 @@
 ### Modifié
 - 🌍 **Unité des années localisée** (« ans », « Jahre », « años »… 22 langues) au lieu de « years » : Home Assistant n’applique que la traduction anglaise des unités déclarées en traduction, l’intégration fixe donc l’unité selon la langue de HA. Les statistiques existantes en « years » sont renommées au démarrage (mêmes valeurs) : pas de réparation « unité modifiée ».
 - `unit_of_measurement` retiré des fichiers de traduction (remplacé par l’unité localisée).
+- 🧱 **Version minimale de Home Assistant : 2024.7.0** (`hacs.json`, README) au lieu de 2024.6.0 : le code utilise `StaticPathConfig` / `async_register_static_paths` (2024.7), les entités `notify.send_message` avec titre (2024.6) et les noms d’appareils traduits (2024.3). Le libellé « Ajouter un événement » (`config.initiate_flow`) n’apparaît qu’à partir de 2026.2 (libellé par défaut avant).
 
 ## 1.2.22 — 2026-11-20
 
