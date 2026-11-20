@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 1.2.23 — 2026-11-20
 
 ### Ajouté
 - 📅 **Capteurs de dates d’origine** : « Date de naissance » (anniversaires, mémoriaux), « Date du mariage », « Date de la promotion », « Date de l’événement », « Date de début de carrière » (retraites) et « Date de décès » (mémoriaux avec date de décès). `device_class: date`, `unique_id` `<principal>_<clé>` (`birth_date`, `wedding_date`, `promotion_date`, `event_date`, `start_date`, `death_date`), noms en 22 langues.

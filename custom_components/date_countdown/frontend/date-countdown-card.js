@@ -6,7 +6,7 @@
  * Langue : hass.locale.language / hass.language (fr, en, de, es, it ; repli anglais).
  */
 const CARD_TAG = "date-countdown-informations-card";
-const CARD_VERSION = "1.2.22";
+const CARD_VERSION = "1.2.23";
 const DC_DOMAIN = "date_countdown";
 const DC_DOC = "https://github.com/XAV59213/date_countdown#-cartes-lovelace";
 
