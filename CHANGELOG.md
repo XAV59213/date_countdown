@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 1.2.22 — 2026-11-20
 
 ### Modifié
 - 🌍 **Plus de français en dur dans les constantes** : `const.py` ne contient plus que des clés stables. Catégories d’âge : la clé est l’âge, et les icônes sont indexées par âge. Noces : `cotton` … `silver` (25 ans) … `gold` (50 ans) … `diamond` (60 ans). Médailles : `silver`, `vermeil`, `gold`, `grand_gold`. Les libellés sont traduits à l’affichage : `i18n_data.py` pour les catégories d’âge et les noces (fr, en, de, es, it), `translations/*.json` pour le reste.
