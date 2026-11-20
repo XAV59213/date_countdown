@@ -1,6 +1,6 @@
 # Changelog
 
-## Non publié
+## 1.2.19 — 2026-11-20
 
 ### Ajouté
 - 🔔 **Entités de notification modernes** : nouveau champ « Entités de notification » (`entities`) dans *Configurer les notifications*, envoi via `notify.send_message` avec `entity_id`, combinable avec les services `notify.*` classiques. Une ancienne cible `targets` qui n’est plus un service mais une entité est envoyée automatiquement par `notify.send_message`.
